@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Cairo', ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #6366f1; /* Indigo - more professional */
+  --color-primary-dark: #4f46e5;
+  --color-accent: #f59e0b; /* Amber */
+  --color-surface-light: #f8fafc;
+  --color-surface-dark: #0f172a;
+}
+
+@layer base {
+  :root {
+    --bg-color: #ffffff;
+    --surface-color: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border-color: #e2e8f0;
+    --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .dark {
+    --bg-color: #020617; /* Very deep blue-black */
+    --surface-color: #0f172a;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #1e293b;
+    --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+  }
+
+  body {
+    @apply bg-white dark:bg-slate-950 text-[var(--text-primary)] font-sans antialiased overflow-x-hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  * {
+    @apply box-border;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+
+  /* Main App Container */
+  .app-frame {
+    @apply relative w-full flex flex-col bg-[var(--bg-color)] transition-all duration-300 z-10;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  /* On large screens (desktop), keep it centered with a reasonable max-width */
+  @media (min-width: 1024px) {
+    .app-frame {
+      max-width: 480px;
+      margin: 20px auto;
+      border-radius: 40px;
+      box-shadow: 0 0 100px rgba(0,0,0,0.2);
+      height: calc(100vh - 40px);
+    }
+  }
+
+  /* Area for scrolling content - FIXED SCROLLING LOGIC */
+  .scroll-content {
+    @apply flex-1 w-full relative flex flex-col;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    height: 100%; /* Ensure it fills parent */
+  }
+
+  .scroll-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Standard Page Padding - REFACTORED */
+  .page-container {
+    @apply px-6 pb-10 flex flex-col w-full;
+    min-height: min-content;
+    flex-shrink: 0;
+    overflow-x: hidden; /* Prevent decorative elements from causing horizontal shaking */
+  }
+
+  .with-nav-padding {
+    @apply pb-32; /* Extra space for BottomNav */
+  }
+
+  .auth-page {
+    @apply px-6 pb-6 flex flex-col w-full justify-center flex-1;
+  }
+
+  .chat-page {
+    @apply flex flex-col h-full w-full overflow-hidden;
+  }
+
+  /* Ensure no horizontal scroll on all direct children */
+  .scroll-content > * {
+    max-width: 100%;
+  }
+
+  /* Custom Animations */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  /* Scrollbar Hide for overflow-x-auto elements */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

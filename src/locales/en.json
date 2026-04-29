@@ -1,0 +1,141 @@
+{
+  "welcome": "Welcome",
+  "login": "Login",
+  "register": "Register",
+  "home": {
+    "title": "Home",
+    "welcomeBack": "Welcome back",
+    "newRequest": "New Request"
+  },
+  "crafts": {
+    "title": "Crafts",
+    "desc": "Select a specialty"
+  },
+  "ControlPanel": {
+    "title": "لوحة التحكم"
+  },
+  "chat": {
+    "title": "Messages",
+    "desc": "Connect with craftsmen and track orders",
+    "search": "Search messages...",
+    "since": "Since",
+    "typeMessage": "Type a message...",
+    "replies": {
+      "ok": "Okay, I'll talk to you soon.",
+      "working": "Working on it, what time works for you?",
+      "gotIt": "Got it, following up now.",
+      "welcome": "Hello! Happy to help with any questions."
+    },
+    "chatDetail": "Chat"
+  },
+  "account": {
+    "title": "Account",
+    "desc": "Manage your profile and settings",
+    "balance": "Available Balance",
+    "currency": "EGP",
+    "topUp": "Top up",
+    "myOrders": "My Orders",
+    "payments": "Payments",
+    "help": "Help Center",
+    "settings": "Settings",
+    "editProfile": "Edit Profile",
+    "notifications": "Notifications",
+    "security": "Security",
+    "goldClient": "Gold Client",
+    "verifiedCraftsman": "Verified Craftsman",
+    "workSettings": "Work Settings",
+    "customize": "Customize"
+  },
+  "craftsmen": {
+    "title": "Craftsmen",
+    "desc": "Find the right pro",
+    "priceHr": "Price/hr",
+    "rating": "Rating",
+    "verified": "Verified",
+    "reviews": "Reviews",
+    "jobsDone": "Jobs Done",
+    "experience": "Experience",
+    "priceLabel": "EGP/hour",
+    "aboutMe": "About Me",
+    "servicesTitle": "Services & Offers",
+    "portfolio": "Portfolio",
+    "reviewsTitle": "Reviews",
+    "quickChat": "Quick Chat",
+    "bookNow": "Book Now",
+    "bioFallback": "Professional expert providing top-quality services with precision and punctuality...",
+    "perHr": "/ hr",
+    "profile": "Profile"
+  },
+  "request": {
+    "newTitle": "New Request",
+    "newDesc": "Tell us what you need and we will help",
+    "step1": "1. Select Craft",
+    "step2": "2. Request Details",
+    "step3": "3. Budget",
+    "step4": "4. Special Requirements",
+    "title": "Title",
+    "titlePlaceholder": "e.g., Fix Water Tap",
+    "description": "Description",
+    "descPlaceholder": "Describe what you need...",
+    "date": "Date",
+    "location": "Location",
+    "locationPlaceholder": "Area...",
+    "reqPlaceholder": "Add requirement...",
+    "fillRequired": "Please fill all required fields",
+    "submit": "Confirm & Post Request"
+  },
+  "settings": {
+    "desc": "Customize your settings",
+    "phone": "Phone Number",
+    "save": "Save Changes",
+    "comingSoon": "Coming Soon",
+    "comingSoonDesc": "We are working hard to bring this feature to you",
+    "back": "Go Back"
+  },
+  "search": "Search for service...",
+  "logout": "Logout",
+  "viewAll": "View All",
+  "topRated": "Top Rated",
+  "featured": "Featured",
+  "auth": {
+    "email": "Email Address",
+    "fullName": "Full Name",
+    "password": "Password",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loginDesc": "Sign in to access the best craftsmen",
+    "registerDesc": "Join us today and start your journey",
+    "welcomeBack": "Welcome Back",
+    "client": "Client",
+    "craftsman": "Craftsman",
+    "demoLogin": "Demo Login",
+    "invalid": "Invalid email or password"
+  },
+  "common": {
+    "daysAgo": "{{count}} days ago"
+  },
+  "payment": {
+    "title": "Payment & Security",
+    "desc": "Select your preferred method",
+    "total": "Total Payable",
+    "methods": "Payment Methods",
+    "wallet": "Mobulle Wallet",
+    "balance": "Balance",
+    "secure": "100% SECURE PAYMENT",
+    "complete": "Complete Payment",
+    "success": "Success! Paid",
+    "successDesc": "Your order is confirmed. Connecting you with the nearest craftsman.",
+    "redirecting": "Redirecting..."
+  },
+  "order": {
+    "details": "Order Details",
+    "notFound": "Order not found",
+    "statusOrdered": "Ordered",
+    "statusProcessing": "Processing",
+    "statusFinished": "Finished",
+    "liveTracking": "Live Tracking",
+    "stageCompleted": "Stage Completed",
+    "pendingStage": "Pending Stage",
+    "contactSupport": "Need help? Contact Support"
+  }
+}

@@ -1,4 +1,12 @@
 {
+  "nav": {
+    "home": "الرئيسية",
+    "categories": "الأقسام",
+    "craftsmen": "الحرفيين",
+    "chat": "الدردشة",
+    "account": "حسابي",
+    "notifications": "التنبيهات"
+  },
   "welcome": "أهلاً بك",
   "login": "تسجيل الدخول",
   "register": "إنشاء حساب",

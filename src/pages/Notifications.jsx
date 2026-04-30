@@ -49,22 +49,14 @@ const Notifications = () => {
       <div className="flex flex-col space-y-8 flex-1 min-h-0 relative z-10">
         {/* Header */}
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => navigate(-1)}
-              className="w-12 h-12 bg-[var(--surface-color)] rounded-2xl flex items-center justify-center text-primary border border-[var(--border-color)] shadow-sm"
-            >
-              <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
-            </motion.button>
-            <div className="space-y-0.5">
-              <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
-                {t('account.notifications')}
-              </h2>
-              <p className="text-[10px] text-[var(--text-secondary)] font-black uppercase tracking-widest opacity-60">
-                {notifications.filter(n => n.unread).length} {lang === 'ar' ? 'رسائل جديدة' : 'New Messages'}
-              </p>
-            </div>
+          <div className="flex flex-col space-y-1 px-1">
+            <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)]">
+              {t('nav.notifications')}
+            </h2>
+            <p className="text-[10px] text-[var(--text-secondary)] font-black uppercase tracking-widest opacity-60 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+              {notifications.filter(n => n.unread).length} {lang === 'ar' ? 'تنبيهات جديدة' : 'New Notifications'}
+            </p>
           </div>
           
           <div className="flex gap-2">

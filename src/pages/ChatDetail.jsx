@@ -84,28 +84,28 @@ const ChatDetail = () => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-slate-950 overflow-hidden relative">
+    <div className="flex flex-col h-full bg-[var(--bg-color)] overflow-hidden relative">
       {/* Decorative background blobs */}
       <div className="absolute top-1/4 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full -mr-32 -z-10" />
       <div className="absolute bottom-1/4 left-0 w-48 h-48 bg-indigo-500/5 blur-[80px] rounded-full -ml-24 -z-10" />
 
       {/* Fixed Header with Partner Info */}
-      <div className="h-24 bg-slate-950/80 backdrop-blur-2xl border-b border-white/5 z-[1001] flex items-center px-6 gap-4 shrink-0 relative">
+      <div className="h-24 glass border-b border-white/5 z-[1001] flex items-center px-6 gap-4 shrink-0 relative">
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={() => navigate(-1)}
-          className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-white border border-white/10"
+          className="w-12 h-12 bg-white/10 dark:bg-white/5 rounded-2xl flex items-center justify-center text-[var(--text-primary)] border border-white/10 shadow-sm"
         >
           <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
         </motion.button>
         
         <div className="flex items-center gap-3 flex-1">
           <div className="relative">
-            <img src={partner?.image} className="w-11 h-11 rounded-xl object-cover border border-white/10" alt={partner?.name} />
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-slate-950" />
+            <img src={partner?.image} className="w-11 h-11 rounded-xl object-cover border border-[var(--border-color)]" alt={partner?.name} />
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-[var(--bg-color)]" />
           </div>
           <div className="min-w-0">
-            <h4 className="font-black text-white text-base truncate">{partner?.name}</h4>
+            <h4 className="font-black text-[var(--text-primary)] text-base truncate">{partner?.name}</h4>
             <p className="text-[10px] text-green-500 font-bold uppercase tracking-widest">{t('chat.online') || 'متصل الآن'}</p>
           </div>
         </div>
@@ -115,7 +115,7 @@ const ChatDetail = () => {
             <motion.button 
               whileTap={{ scale: 0.9 }} 
               onClick={() => setShowMenu(!showMenu)}
-              className={`w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center border border-white/10 transition-colors ${showMenu ? 'text-primary' : 'text-white/60'}`}
+              className={`w-11 h-11 bg-white/10 dark:bg-white/5 rounded-xl flex items-center justify-center border border-white/10 transition-colors ${showMenu ? 'text-primary' : 'text-[var(--text-secondary)]'}`}
             >
               <MoreVertical size={18} />
             </motion.button>
@@ -126,7 +126,7 @@ const ChatDetail = () => {
                   initial={{ opacity: 0, scale: 0.9, y: 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9, y: 10 }}
-                  className="absolute top-14 end-0 w-48 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl p-2 z-50 overflow-hidden"
+                  className="absolute top-14 end-0 w-48 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-2xl shadow-2xl p-2 z-50 overflow-hidden"
                 >
                    <button 
                     onClick={clearChat}
@@ -156,7 +156,7 @@ const ChatDetail = () => {
             >
               <div className={`max-w-[85%] p-4 rounded-[28px] text-sm font-bold shadow-sm relative ${msg.sender === 'me'
                   ? 'bg-primary text-white rounded-br-none shadow-primary/20'
-                  : 'bg-white/5 text-white rounded-bl-none border border-white/10 backdrop-blur-md'
+                  : 'bg-[var(--surface-color)] text-[var(--text-primary)] rounded-bl-none border border-[var(--border-color)] shadow-sm'
                 }`}>
                 {msg.text}
                 <div className={`text-[8px] mt-2 flex items-center gap-1 ${msg.sender === 'me' ? 'justify-end opacity-70' : 'justify-start opacity-40'}`}>
@@ -167,7 +167,7 @@ const ChatDetail = () => {
           ))}
           {isTyping && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
-              <div className="bg-white/5 p-5 rounded-[28px] rounded-bl-none border border-white/10">
+              <div className="bg-[var(--surface-color)] p-5 rounded-[28px] rounded-bl-none border border-[var(--border-color)] shadow-sm">
                 <div className="flex gap-1.5">
                   <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-1.5 h-1.5 bg-primary rounded-full"></motion.div>
                   <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }} className="w-1.5 h-1.5 bg-primary rounded-full"></motion.div>
@@ -180,12 +180,12 @@ const ChatDetail = () => {
       </div>
 
       {/* Input Area - Compact & Fixed */}
-      <div className="px-6 py-4 bg-slate-950/80 backdrop-blur-2xl border-t border-white/5 shrink-0">
+      <div className="px-6 py-4 glass border-t border-white/5 shrink-0">
         <form onSubmit={handleSend} className="flex items-center gap-3 max-w-lg mx-auto">
           <motion.button
             whileTap={{ scale: 0.9 }}
             type="button"
-            className="w-12 h-12 bg-white/5 text-white/40 rounded-2xl flex items-center justify-center border border-white/10 hover:text-primary transition-colors shrink-0"
+            className="w-12 h-12 bg-white/10 dark:bg-white/5 text-[var(--text-secondary)] rounded-2xl flex items-center justify-center border border-[var(--border-color)] hover:text-primary transition-all shrink-0"
           >
             <ImageIcon size={22} />
           </motion.button>
@@ -195,14 +195,14 @@ const ChatDetail = () => {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder={t('chat.typeMessage') || 'اكتب رسالتك هنا...'}
-              className="w-full h-14 bg-white/5 border border-white/10 rounded-[24px] ps-5 pe-12 outline-none focus:border-primary/50 font-bold text-sm text-white transition-all shadow-inner"
+              className="w-full h-14 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[24px] ps-5 pe-12 outline-none focus:border-primary/50 font-bold text-sm text-[var(--text-primary)] transition-all shadow-inner"
             />
-            <button type="button" className="absolute end-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-primary transition-colors"><Smile size={20} /></button>
+            <button type="button" className="absolute end-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors"><Smile size={20} /></button>
           </div>
           <motion.button
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="w-14 h-14 bg-primary text-white rounded-[22px] flex items-center justify-center shadow-2xl shadow-primary/30 hover:bg-primary/90 transition-all shrink-0"
+            className="w-14 h-14 bg-gradient-to-r from-primary to-indigo-600 text-white rounded-[22px] flex items-center justify-center shadow-2xl shadow-primary/30 hover:opacity-90 transition-all shrink-0"
           >
             <Send size={22} className={lang === 'ar' ? 'rotate-180' : ''} />
           </motion.button>

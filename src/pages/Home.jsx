@@ -12,117 +12,156 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="page-container with-nav-padding pt-8 space-y-8"
-    >
-      {/* Welcome & User Header */}
-      <div className="flex justify-between items-center">
-        <div className="space-y-0.5">
-          <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">
-            {t('home.welcomeBack')}
-          </p>
-          <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
-            {user.name}
-          </h2>
-        </div>
-        <motion.button whileTap={{ scale: 0.9 }} onClick={() => navigate('/notifications')} className="relative w-12 h-12 bg-[var(--surface-color)] rounded-2xl flex items-center justify-center border border-[var(--border-color)] text-slate-400">
-          <Bell size={24} />
-          {JSON.parse(localStorage.getItem('demo_notifications') || '[]').length > 0 && (
-            <span className="absolute top-3 start-3 w-4 h-4 bg-red-500 rounded-full border-2 border-[var(--bg-color)] flex items-center justify-center text-[8px] text-white font-black">
-               {JSON.parse(localStorage.getItem('demo_notifications') || '[]').length}
-            </span>
-          )}
-        </motion.button>
-      </div>
-
-      {/* Simplified Search Bar */}
-      <div className="relative">
-        <Search size={20} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder={t('search')}
-          className="w-full h-14 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-2xl ps-12 pe-4 text-sm font-bold outline-none focus:border-primary/50 transition-all shadow-sm"
-        />
-      </div>
-
-      {/* Create Request Button - Simple */}
-      <motion.button
-        whileTap={{ scale: 0.98 }}
-        onClick={() => navigate('/request/new')}
-        className="w-full h-14 bg-primary text-white rounded-2xl font-black text-sm shadow-xl shadow-primary/20 flex items-center justify-center gap-3"
+    <div className="page-container with-nav-padding pt-6 space-y-10 overflow-x-hidden">
+      {/* Advanced Search & Create Request Section */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="space-y-4"
       >
-        <Edit3 size={18} />
-        <span>{t('home.newRequest')}</span>
-      </motion.button>
-
-      {/* Simple Categories Section */}
-      <section>
-        <div className="flex justify-between items-center mb-6 px-1">
-          <h4 className="text-xl font-black text-[var(--text-primary)] tracking-tight">{t('crafts.title')}</h4>
-          <span onClick={() => navigate('/crafts')} className="text-primary font-black text-xs cursor-pointer">{t('viewAll')}</span>
+        <div className="relative group">
+          <Search size={20} className="absolute start-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder={t('search')}
+            className="w-full h-16 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-[24px] ps-14 pe-4 text-sm font-bold outline-none focus:border-primary/30 transition-all shadow-xl shadow-slate-100/50 dark:shadow-none"
+          />
         </div>
-        <div className="grid grid-cols-4 gap-4">
-          {crafts.slice(0, 8).map((craft) => (
+
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => navigate('/request/new')}
+          className="w-full h-16 bg-gradient-to-r from-primary to-indigo-600 text-white rounded-[24px] font-black text-base shadow-2xl shadow-primary/30 flex items-center justify-center gap-3 relative overflow-hidden group"
+        >
+          <motion.div 
+            animate={{ x: [0, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <Edit3 size={20} />
+          </motion.div>
+          <span>{t('home.newRequest')}</span>
+          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+        </motion.button>
+      </motion.div>
+
+      {/* Categories Horizontal Scroll */}
+      <motion.section
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        <div className="flex justify-between items-end mb-6 px-1">
+          <div>
+            <h4 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">{t('crafts.title')}</h4>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{t('home.browseByCategory') || 'EXPLORE CATEGORIES'}</p>
+          </div>
+          <button 
+            onClick={() => navigate('/crafts')} 
+            className="bg-primary/10 text-primary px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-wider hover:bg-primary hover:text-white transition-all"
+          >
+            {t('viewAll')}
+          </button>
+        </div>
+        
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-6 px-6">
+          {crafts.slice(0, 8).map((craft, i) => (
             <motion.div
               key={craft.id}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1 * i }}
               whileTap={{ scale: 0.9 }}
               onClick={() => navigate(`/craftsmen?craft=${craft.id}`)}
-              className="flex flex-col items-center gap-2 cursor-pointer group"
+              className="flex-shrink-0 w-24 flex flex-col items-center gap-3 cursor-pointer group"
             >
-              <div className="w-full aspect-square bg-[var(--surface-color)] border border-[var(--border-color)] rounded-2xl flex items-center justify-center p-3 group-hover:border-primary/30 transition-all">
-                <img src={craft.image} alt={craft.nameEn} className="w-full h-full object-contain" />
+              <div className="w-20 h-20 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[28px] flex items-center justify-center p-0 overflow-hidden group-hover:border-primary/50 transition-all shadow-lg shadow-slate-100/50 dark:shadow-none">
+                <img src={craft.image} alt={craft.nameEn} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
-              <p className="text-[10px] font-black text-[var(--text-primary)] text-center leading-tight truncate w-full">
+              <p className="text-[10px] font-black text-[var(--text-primary)] text-center leading-tight truncate w-full px-1">
                 {lang === 'ar' ? craft.nameAr : craft.nameEn}
               </p>
             </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
-      {/* Simplified Top Craftsmen */}
-      <section className="pb-10">
-        <div className="flex justify-between items-center mb-6 px-1">
-          <h4 className="text-xl font-black text-[var(--text-primary)] tracking-tight">{t('topRated')}</h4>
-          <span onClick={() => navigate('/craftsmen')} className="text-primary font-black text-xs cursor-pointer">{t('viewAll')}</span>
+      {/* Top Rated Craftsmen List */}
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="pb-20"
+      >
+        <div className="flex justify-between items-end mb-6 px-1">
+          <div>
+            <h4 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">{t('topRated')}</h4>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{t('home.verifiedExperts') || 'VERIFIED EXPERTS'}</p>
+          </div>
+          <button 
+            onClick={() => navigate('/craftsmen')} 
+            className="text-primary font-black text-xs hover:underline"
+          >
+            {t('viewAll')}
+          </button>
         </div>
-        <div className="space-y-4">
-          {craftsmen.slice(0, 5).map((m) => (
+        
+        <div className="space-y-5">
+          {craftsmen.slice(0, 5).map((m, i) => (
             <motion.div
               key={m.id}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 * i + 0.4 }}
+              whileHover={{ y: -4 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate(`/craftsman/${m.id}`)}
-              className="flex items-center gap-4 p-3 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-3xl group cursor-pointer hover:border-primary/30 transition-all"
+              className="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] group cursor-pointer shadow-xl shadow-slate-200/40 dark:shadow-none transition-all relative overflow-hidden"
             >
-              <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 border border-[var(--border-color)]">
-                 <img src={m.image} alt={m.name} className="w-full h-full object-cover" />
+              {/* Glass Background Highlight */}
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 group-hover:bg-primary/10 transition-colors" />
+              
+              <div className="w-20 h-20 rounded-[24px] overflow-hidden shrink-0 border-2 border-white dark:border-slate-800 shadow-lg relative z-10">
+                 <img src={m.image} alt={m.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex justify-between items-start mb-0.5">
-                    <h5 className="font-black text-sm text-[var(--text-primary)] truncate">{m.name}</h5>
-                    <div className="flex items-center gap-1 text-amber-500 text-[10px] font-black">
+              
+              <div className="flex-1 min-w-0 relative z-10">
+                <div className="flex justify-between items-start mb-1">
+                    <h5 className="font-black text-base text-[var(--text-primary)] truncate">{m.name}</h5>
+                    <div className="flex items-center gap-1.5 px-2 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-500 rounded-lg text-[10px] font-black shadow-sm">
                         <Star size={10} fill="currentColor" /> {m.rating}
                     </div>
                 </div>
-                <p className="text-primary font-black text-[9px] uppercase tracking-wider mb-1">
-                  {crafts.find(c => c.id === m.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
-                </p>
-                <div className="flex items-center gap-1 text-[9px] text-[var(--text-secondary)] font-bold opacity-60">
-                  <MapPin size={10} /> {m.location}
+                
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-2 py-0.5 bg-primary/10 text-primary font-black text-[9px] uppercase tracking-wider rounded-md">
+                    {crafts.find(c => c.id === m.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
+                  </span>
+                  {m.verified && (
+                    <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                      <Zap size={8} fill="currentColor" />
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold">
+                  <MapPin size={12} className="text-slate-300" /> {m.location}
                 </div>
               </div>
-              <div className="w-10 h-10 bg-[var(--bg-color)] rounded-xl flex items-center justify-center text-slate-300 group-hover:text-primary transition-colors">
-                <ArrowUpRight size={18} />
-              </div>
+
+              <motion.div 
+                whileHover={{ rotate: 45 }}
+                className="w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white transition-all shadow-inner relative z-10"
+              >
+                <ArrowUpRight size={22} />
+              </motion.div>
             </motion.div>
           ))}
         </div>
-      </section>
-    </motion.div>
+      </motion.section>
+    </div>
   );
 };
 

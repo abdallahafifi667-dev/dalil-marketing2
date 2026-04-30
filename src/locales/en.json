@@ -1,4 +1,12 @@
 {
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "craftsmen": "Craftsmen",
+    "chat": "Chat",
+    "account": "Account",
+    "notifications": "Notifications"
+  },
   "welcome": "Welcome",
   "login": "Login",
   "register": "Register",

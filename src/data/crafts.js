@@ -1,8 +1,8 @@
 export const crafts = [
-  { id: 'c1', nameAr: 'سباكة', nameEn: 'Plumbing', icon: '🚰', image: '/photo_2026-04-25_16-03-36.jpg' },
-  { id: 'c2', nameAr: 'نجارة', nameEn: 'Carpentry', icon: '🪚', image: '/photo_2026-04-25_16-03-36.jpg' },
-  { id: 'c3', nameAr: 'كهرباء', nameEn: 'Electrical', icon: '⚡', image: '/photo_2026-04-25_16-03-36.jpg' },
-  { id: 'c4', nameAr: 'نقاشة', nameEn: 'Painting', icon: '🎨', image: '/photo_2026-04-25_16-03-36.jpg' },
+  { id: 'c1', nameAr: 'سباكة', nameEn: 'Plumbing', icon: '🚰', image: 'https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=400&h=400&fit=crop' },
+  { id: 'c2', nameAr: 'نجارة', nameEn: 'Carpentry', icon: '🪚', image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=400&h=400&fit=crop' },
+  { id: 'c3', nameAr: 'كهرباء', nameEn: 'Electrical', icon: '⚡', image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=400&h=400&fit=crop' },
+  { id: 'c4', nameAr: 'نقاشة', nameEn: 'Painting', icon: '🎨', image: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=400&h=400&fit=crop' },
   { id: 'c5', nameAr: 'تكييفات', nameEn: 'AC Repair', icon: '❄️', image: 'https://cdn3d.iconscout.com/3d/premium/thumb/ac-mechanic-repairing-air-conditioner-3d-illustration-download-in-svg-png-gif-file-formats--servicing-cleaning-cooling-ventilation-home-maintenance-services-pack-illustrations-5349475.png' },
   { id: 'c6', nameAr: 'صيانة أجهزة', nameEn: 'Appliance Repair', icon: '🔌', image: 'https://cdn3d.iconscout.com/3d/premium/thumb/technician-repairing-washing-machine-3d-illustration-download-in-svg-png-gif-file-formats--servicing-cleaning-laundry-hardware-home-maintenance-services-pack-illustrations-5349467.png' },
   { id: 'c7', nameAr: 'بناء', nameEn: 'Construction', icon: '🧱', image: 'https://cdn3d.iconscout.com/3d/premium/thumb/construction-worker-building-wall-3d-illustration-download-in-svg-png-gif-file-formats--repairing-home-maintenance-services-pack-illustrations-5349459.png' },

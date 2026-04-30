@@ -45,14 +45,7 @@ const CraftsmanProfile = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
 
           {/* Action Buttons on Banner */}
-          <div className="absolute top-8 inset-x-6 flex justify-between items-center z-20">
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => navigate(-1)}
-              className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-2xl flex items-center justify-center text-white border border-white/30 shadow-lg"
-            >
-              <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
-            </motion.button>
+          <div className="absolute top-8 inset-x-6 flex justify-end items-center z-20">
             <div className="flex gap-3">
               <motion.button 
                 whileTap={{ scale: 0.9 }} 

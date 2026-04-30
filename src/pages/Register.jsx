@@ -1,18 +1,42 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
+import { demoData, loginAs } from '../data';
 import { User, Mail, Lock, Briefcase, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Register = ({ onRegister }) => {
   const { t, lang } = useLanguage();
   const [role, setRole] = useState('client');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
-    localStorage.setItem('token', 'demo-token-new');
-    onRegister();
+    
+    // Create new user object
+    const newUser = {
+      id: 'u_' + Date.now(),
+      name,
+      email,
+      password,
+      role,
+      balance: 0,
+      joinedDate: new Date().toISOString().split('T')[0],
+      image: role === 'client' 
+        ? 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop'
+        : 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=400&h=400&fit=crop'
+    };
+
+    // Save to localStorage
+    const existingUsers = JSON.parse(localStorage.getItem('registered_users') || '[]');
+    existingUsers.push(newUser);
+    localStorage.setItem('registered_users', JSON.stringify(existingUsers));
+
+    // Use the login helper which handles persistence and reload
+    loginAs(newUser.id);
   };
 
   return (
@@ -64,6 +88,8 @@ const Register = ({ onRegister }) => {
                 <input
                     type="text"
                     placeholder={t('auth.fullName')}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     className="w-full h-13 bg-white/5 border border-white/10 focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-white shadow-inner"
                     required
                 />
@@ -74,6 +100,8 @@ const Register = ({ onRegister }) => {
                 <input
                     type="email"
                     placeholder={t('auth.email')}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full h-13 bg-white/5 border border-white/10 focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-white shadow-inner"
                     required
                 />
@@ -84,6 +112,8 @@ const Register = ({ onRegister }) => {
                 <input
                     type="password"
                     placeholder={t('auth.password')}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full h-13 bg-white/5 border border-white/10 focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-white shadow-inner"
                     required
                 />

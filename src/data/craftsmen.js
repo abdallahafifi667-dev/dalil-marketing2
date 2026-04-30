@@ -56,7 +56,14 @@ export const craftsmen = Array.from({ length: 120 }).map((_, index) => {
         '1567532939604-b6b5b0ad2f01', '1539571696357-5a69c17a67c6', '1438761681033-6461ffad8d80',
         '1554151228-14d9def656e4', '1504148455328-c376907d081c', '1621905251189-08b45d6a269e'
     ];
-    const profileImg = `https://images.unsplash.com/photo-${unsplashIds[index % unsplashIds.length]}?w=400&h=400&fit=crop&q=80`;
+    let profileImg = `https://images.unsplash.com/photo-${unsplashIds[index % unsplashIds.length]}?w=400&h=400&fit=crop&q=80`;
+    
+    // Override with pro generated images for first few
+    if (craftId === 'c1') profileImg = '/images/plumber.png';
+    else if (craftId === 'c2') profileImg = '/images/electrician.png';
+    else if (craftId === 'c3') profileImg = '/images/carpenter.png';
+    else if (craftId === 'c4') profileImg = '/images/painter.png';
+    else if (craftId === 'c5') profileImg = '/images/ac_tech.png';
 
     return {
       id,

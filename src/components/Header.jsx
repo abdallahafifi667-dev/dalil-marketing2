@@ -61,7 +61,7 @@ const Header = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate(-1)}
-                className="w-11 h-11 rounded-[18px] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[var(--text-primary)] shadow-sm hover:border-primary transition-all"
+                className="w-11 h-11 rounded-[18px] bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[var(--text-primary)] shadow-sm hover:border-primary/50 transition-all"
               >
                 <ChevronLeft size={22} className={lang === 'ar' ? 'rotate-180' : ''} />
               </motion.button>

@@ -99,13 +99,13 @@ const OrderDetails = () => {
 
           <div className="flex gap-4 mt-6 pt-6 border-t border-dashed border-[var(--border-color)] relative z-10">
             <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('request.date')}</span>
+                <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('request.date')}</span>
                 <div className="flex items-center gap-1.5 font-black text-sm text-[var(--text-primary)]">
                     <Clock size={14} className="text-primary" /> {order.date}
                 </div>
             </div>
             <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
-                <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">{t('payment.total')}</span>
+                <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('payment.total')}</span>
                 <div className="flex items-center gap-1.5 font-black text-sm text-primary">
                     <CreditCard size={14} /> {order.totalPrice} <span className="text-[10px] font-bold">{t('account.currency')}</span>
                 </div>
@@ -123,15 +123,15 @@ const OrderDetails = () => {
                 {i !== steps.length - 1 && (
                   <div className={`absolute start-[15px] top-9 w-0.5 h-10 ${step.completed ? 'bg-primary' : 'bg-slate-200 dark:bg-slate-800'}`} />
                 )}
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 z-10 shadow-lg ${step.completed ? 'bg-primary text-white shadow-primary/20' : 'bg-[var(--bg-color)] text-slate-300 border border-[var(--border-color)]'}`}>
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 z-10 shadow-lg ${step.completed ? 'bg-primary text-white shadow-primary/20' : 'bg-[var(--bg-color)] text-[var(--text-secondary)] opacity-40 border border-[var(--border-color)]'}`}>
                   {step.completed ? <CheckCircle2 size={18} /> : <div className="w-2.5 h-2.5 bg-current rounded-full" />}
                 </div>
                 <div className="flex-1 -mt-1 space-y-0.5">
                   <div className="flex justify-between items-center">
-                    <b className={`text-base font-black ${step.completed ? 'text-[var(--text-primary)]' : 'text-slate-400'}`}>{step.label}</b>
+                    <b className={`text-base font-black ${step.completed ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)] opacity-60'}`}>{step.label}</b>
                     <span className="text-[10px] font-black text-[var(--text-secondary)] opacity-50">{step.time}</span>
                   </div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                  <p className="text-[10px] font-bold text-[var(--text-secondary)] opacity-40 uppercase tracking-widest">
                     {step.completed ? t('order.stageCompleted') : t('order.pendingStage')}
                   </p>
                 </div>

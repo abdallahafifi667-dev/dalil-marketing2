@@ -57,7 +57,7 @@ const Craftsmen = () => {
 
         <div className="flex gap-2 px-1">
           <div className="flex-1 relative">
-            <Search size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-40" />
             <input
               type="text"
               placeholder={t('search')}
@@ -68,7 +68,7 @@ const Craftsmen = () => {
           </div>
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className={`w-13 h-13 rounded-2xl flex items-center justify-center border transition-all shadow-sm ${showFilters ? 'bg-primary text-white border-primary' : 'bg-[var(--surface-color)] text-slate-400 border-[var(--border-color)]'}`}
+            className={`w-13 h-13 rounded-2xl flex items-center justify-center border transition-all shadow-sm ${showFilters ? 'bg-primary text-white border-primary' : 'bg-[var(--surface-color)] text-[var(--text-secondary)] opacity-50 border-[var(--border-color)]'}`}
           >
             <Filter size={20} />
           </button>
@@ -78,7 +78,7 @@ const Craftsmen = () => {
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="overflow-hidden px-1">
             <div className="bg-[var(--surface-color)] p-6 rounded-[36px] border border-[var(--border-color)] space-y-6 shadow-xl">
               <div className="space-y-4">
-                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('craftsmen.rating')}</h4>
+                <h4 className="text-[10px] font-black text-[var(--text-secondary)] opacity-50 uppercase tracking-widest">{t('craftsmen.rating')}</h4>
                 <div className="flex gap-2">
                   {[0, 4, 4.5].map((rating) => (
                     <button
@@ -94,7 +94,7 @@ const Craftsmen = () => {
 
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{t('craftsmen.priceLabel')}</h4>
+                  <h4 className="text-[10px] font-black text-[var(--text-secondary)] opacity-50 uppercase tracking-widest">{t('craftsmen.priceLabel')}</h4>
                   <span className="text-xs font-black text-primary">{maxPrice} {t('account.currency')}</span>
                 </div>
                 <input 
@@ -106,7 +106,7 @@ const Craftsmen = () => {
                   onChange={(e) => setMaxPrice(parseInt(e.target.value))}
                   className="w-full accent-primary h-1.5 bg-[var(--bg-color)] rounded-lg appearance-none cursor-pointer"
                 />
-                <div className="flex justify-between text-[8px] font-black text-slate-400 opacity-50 uppercase tracking-tighter">
+                <div className="flex justify-between text-[8px] font-black text-[var(--text-secondary)] opacity-40 uppercase tracking-tighter">
                   <span>100</span>
                   <span>1000</span>
                 </div>
@@ -139,7 +139,7 @@ const Craftsmen = () => {
                     <span className="text-primary font-black text-[10px] uppercase tracking-wider">
                       {crafts.find(c => c.id === m.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
                     </span>
-                    <span className="w-1 h-1 bg-slate-300 rounded-full opacity-40" />
+                    <span className="w-1 h-1 bg-[var(--border-color)] rounded-full" />
                     <div className="flex items-center gap-1.5 text-[10px] text-[var(--text-secondary)] font-bold opacity-70">
                       <MapPin size={12} className="text-primary" /> {m.location}
                     </div>
@@ -154,7 +154,7 @@ const Craftsmen = () => {
               
               <div className="flex justify-between items-center pt-5 border-t border-dashed border-[var(--border-color)]">
                 <div className="flex flex-col">
-                  <span className="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em] mb-1">{t('craftsmen.priceHr')}</span>
+                  <span className="text-[9px] text-[var(--text-secondary)] opacity-50 font-black uppercase tracking-[0.2em] mb-1">{t('craftsmen.priceHr')}</span>
                   <div className="flex items-baseline gap-1">
                     <span className="font-black text-xl text-[var(--text-primary)]">{m.pricePerHour}</span>
                     <span className="text-[10px] font-bold opacity-50 uppercase tracking-tighter">{t('account.currency')}</span>

@@ -43,7 +43,7 @@ const Register = ({ onRegister }) => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="auth-page h-[100dvh] flex flex-col justify-center px-8 py-4 relative overflow-hidden bg-slate-950 text-white"
+      className="auth-page h-[100dvh] flex flex-col justify-center px-8 py-4 relative overflow-hidden bg-[var(--bg-color)] text-[var(--text-primary)]"
     >
       {/* Background Decorative Blurs */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 blur-[130px] rounded-full -mr-40 -mt-40" />
@@ -53,28 +53,27 @@ const Register = ({ onRegister }) => {
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-20 h-20 bg-white/5 backdrop-blur-xl rounded-[32px] flex items-center justify-center shadow-2xl border border-white/10"
+          className="w-20 h-20 bg-[var(--surface-color)] backdrop-blur-xl rounded-[32px] flex items-center justify-center shadow-2xl border border-[var(--border-color)]"
         >
-          <img src="/favicon.png" alt="Logo" className="w-10 h-10 object-contain" />
+          <img src="/favicon.png" alt="Logo" className="w-10 h-10 object-contain dark:brightness-0 dark:invert" />
         </motion.div>
         <div className="space-y-1">
           <h1 className="text-3xl font-black tracking-tight">{t('register')}</h1>
-          <p className="text-white/40 font-bold text-xs uppercase tracking-widest">{t('auth.registerDesc')}</p>
+          <p className="text-[var(--text-secondary)] font-bold text-xs uppercase tracking-widest opacity-60">{t('auth.registerDesc')}</p>
         </div>
       </div>
 
       <div className="space-y-6 relative z-10 w-full max-w-xs mx-auto">
-        {/* Role Selector */}
-        <div className="flex bg-white/5 p-1 rounded-2xl border border-white/10">
+        <div className="flex bg-[var(--surface-color)] p-1 rounded-2xl border border-[var(--border-color)] shadow-inner">
           <button
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-black transition-all text-xs ${role === 'client' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-white/40 hover:text-white'}`}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-black transition-all text-xs ${role === 'client' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-[var(--text-secondary)] opacity-60 hover:opacity-100'}`}
             onClick={() => setRole('client')}
           >
             <User size={14} />
             <span>{t('auth.client')}</span>
           </button>
           <button
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-black transition-all text-xs ${role === 'craftsman' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-white/40 hover:text-white'}`}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-black transition-all text-xs ${role === 'craftsman' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-[var(--text-secondary)] opacity-60 hover:opacity-100'}`}
             onClick={() => setRole('craftsman')}
           >
             <Briefcase size={14} />
@@ -84,37 +83,37 @@ const Register = ({ onRegister }) => {
 
         <form onSubmit={handleRegister} className="space-y-3">
             <div className="relative group">
-                <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-primary transition-colors" />
+                <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
                 <input
                     type="text"
                     placeholder={t('auth.fullName')}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full h-13 bg-white/5 border border-white/10 focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-white shadow-inner"
+                    className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"
                     required
                 />
             </div>
 
             <div className="relative group">
-                <Mail size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-primary transition-colors" />
+                <Mail size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
                 <input
                     type="email"
                     placeholder={t('auth.email')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full h-13 bg-white/5 border border-white/10 focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-white shadow-inner"
+                    className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"
                     required
                 />
             </div>
 
             <div className="relative group">
-                <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-primary transition-colors" />
+                <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
                 <input
                     type="password"
                     placeholder={t('auth.password')}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full h-13 bg-white/5 border border-white/10 focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-white shadow-inner"
+                    className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"
                     required
                 />
             </div>
@@ -130,7 +129,7 @@ const Register = ({ onRegister }) => {
         </form>
 
         <div className="text-center pt-2">
-            <p className="text-white/40 text-xs font-bold">
+            <p className="text-[var(--text-secondary)] text-xs font-bold opacity-60">
               {t('auth.hasAccount')}
               <span onClick={() => navigate('/login')} className="text-primary font-black cursor-pointer hover:underline ms-2"> {t('login')}</span>
             </p>

@@ -30,7 +30,7 @@ const Login = ({ onLogin }) => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="auth-page h-[100dvh] flex flex-col justify-center px-8 py-6 relative overflow-hidden bg-slate-950 text-white"
+      className="auth-page h-[100dvh] flex flex-col justify-center px-8 py-6 relative overflow-hidden bg-[var(--bg-color)] text-[var(--text-primary)]"
     >
       {/* Background Decorative Blurs */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 blur-[130px] rounded-full -mr-40 -mt-40" />
@@ -40,14 +40,14 @@ const Login = ({ onLogin }) => {
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-24 h-24 bg-white/5 backdrop-blur-xl rounded-[40px] flex items-center justify-center shadow-2xl border border-white/10"
+          className="w-24 h-24 bg-[var(--surface-color)] backdrop-blur-xl rounded-[40px] flex items-center justify-center shadow-2xl border border-[var(--border-color)]"
         >
-          <img src="/favicon.png" alt="Logo" className="w-12 h-12 object-contain" />
+          <img src="/favicon.png" alt="Logo" className="w-12 h-12 object-contain dark:brightness-0 dark:invert" />
         </motion.div>
         
         <div className="space-y-2">
           <h1 className="text-3xl font-black tracking-tight">{t('login')}</h1>
-          <p className="text-white/40 font-bold text-xs px-10 leading-relaxed uppercase tracking-widest">
+          <p className="text-[var(--text-secondary)] font-bold text-xs px-10 leading-relaxed uppercase tracking-widest opacity-60">
              {t('auth.loginDesc')}
           </p>
         </div>
@@ -57,13 +57,13 @@ const Login = ({ onLogin }) => {
         <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-1.5">
                 <div className="relative group">
-                  <Mail size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-primary transition-colors" />
+                  <Mail size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
                   <input
                     type="email"
                     placeholder={t('auth.email')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full h-14 bg-white/5 border border-white/10 focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all text-sm font-bold text-white shadow-inner"
+                    className="w-full h-14 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all text-sm font-bold text-[var(--text-primary)] shadow-inner"
                     required
                   />
                 </div>
@@ -71,13 +71,13 @@ const Login = ({ onLogin }) => {
 
             <div className="space-y-1.5">
                 <div className="relative group">
-                  <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-primary transition-colors" />
+                  <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
                   <input
                     type="password"
                     placeholder={t('auth.password')}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full h-14 bg-white/5 border border-white/10 focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all text-sm font-bold text-white shadow-inner"
+                    className="w-full h-14 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all text-sm font-bold text-[var(--text-primary)] shadow-inner"
                     required
                   />
                 </div>
@@ -105,7 +105,7 @@ const Login = ({ onLogin }) => {
         </form>
 
         <div className="flex flex-col items-center gap-4 pt-2">
-            <p className="text-white/40 text-xs font-bold">
+            <p className="text-[var(--text-secondary)] text-xs font-bold opacity-60">
                 {t('auth.noAccount')}
                 <span onClick={() => navigate('/register')} className="text-primary font-black cursor-pointer hover:underline ms-2"> {t('register')}</span>
             </p>
@@ -115,7 +115,7 @@ const Login = ({ onLogin }) => {
                     setEmail('client.male@example.com');
                     setPassword('123');
                 }}
-                className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em] hover:text-primary transition-colors mt-2"
+                className="text-[9px] font-black text-[var(--text-secondary)] opacity-20 uppercase tracking-[0.3em] hover:text-primary transition-colors mt-2"
             >
                 {t('auth.demoLogin')}
             </button>

@@ -155,7 +155,7 @@ const Account = ({ onLogout }) => {
                 {t('account.customize')} {item.label}
               </p>
             </div>
-            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--bg-color)] text-slate-300 group-hover:text-primary transition-all border border-[var(--border-color)] group-hover:scale-110 relative z-10">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--bg-color)] text-[var(--text-secondary)] opacity-60 group-hover:opacity-100 group-hover:text-primary transition-all border border-[var(--border-color)] group-hover:scale-110 relative z-10">
               <ChevronRight size={18} className={`${lang === 'ar' ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`} />
             </div>
           </motion.div>

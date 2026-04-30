@@ -49,7 +49,7 @@ const CraftsmanDashboard = () => {
             </div>
           </div>
         </div>
-        <motion.button whileTap={{ scale: 0.9 }} className="w-12 h-12 bg-[var(--surface-color)] rounded-2xl flex items-center justify-center border border-[var(--border-color)] text-slate-400 relative">
+        <motion.button whileTap={{ scale: 0.9 }} className="w-12 h-12 bg-[var(--surface-color)] rounded-2xl flex items-center justify-center border border-[var(--border-color)] text-[var(--text-secondary)] relative">
           <Bell size={22} />
           <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-[var(--bg-color)]" />
         </motion.button>
@@ -64,7 +64,7 @@ const CraftsmanDashboard = () => {
             </div>
             <div className="text-center">
               <span className="block text-lg font-black text-[var(--text-primary)]">{stat.value}</span>
-              <span className="block text-[8px] font-black text-slate-400 uppercase tracking-tighter">
+              <span className="block text-[8px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-tighter">
                 {lang === 'ar' ? stat.label : stat.labelEn}
               </span>
             </div>
@@ -91,9 +91,9 @@ const CraftsmanDashboard = () => {
                   <h4 className="font-black text-base text-[var(--text-primary)] group-hover:text-primary transition-colors">
                     {lang === 'ar' ? order.title : order.titleEn}
                   </h4>
-                  <div className="flex items-center gap-2 text-[10px] text-slate-400 font-bold">
+                  <div className="flex items-center gap-2 text-[10px] text-[var(--text-secondary)] opacity-60 font-bold">
                     <Clock size={12} /> {order.time}
-                    <span className="w-1 h-1 bg-slate-300 rounded-full" />
+                    <span className="w-1 h-1 bg-[var(--border-color)] rounded-full" />
                     <span>{order.distance}</span>
                   </div>
                 </div>
@@ -106,7 +106,7 @@ const CraftsmanDashboard = () => {
                 <button className="flex-1 h-12 bg-primary text-white rounded-2xl font-black text-xs shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
                   تقديم عرض الآن
                 </button>
-                <button className="w-12 h-12 bg-[var(--bg-color)] text-slate-400 rounded-2xl flex items-center justify-center border border-[var(--border-color)] hover:text-primary transition-colors">
+                 <button className="w-12 h-12 bg-[var(--bg-color)] text-[var(--text-secondary)] opacity-60 rounded-2xl flex items-center justify-center border border-[var(--border-color)] hover:opacity-100 hover:text-primary transition-colors">
                   <MessageSquare size={18} />
                 </button>
               </div>
@@ -148,12 +148,12 @@ const CraftsmanDashboard = () => {
         ].map((item, i) => (
           <button key={i} className="w-full h-16 bg-[var(--surface-color)] rounded-3xl border border-[var(--border-color)] px-6 flex justify-between items-center group hover:border-primary/30 transition-all">
             <div className="flex items-center gap-4">
-               <div className="w-10 h-10 bg-[var(--bg-color)] text-slate-400 group-hover:text-primary rounded-xl flex items-center justify-center transition-colors">
+               <div className="w-10 h-10 bg-[var(--bg-color)] text-[var(--text-secondary)] opacity-60 group-hover:opacity-100 group-hover:text-primary rounded-xl flex items-center justify-center transition-colors">
                  {item.icon}
                </div>
                <span className="font-black text-sm text-[var(--text-primary)]">{item.label}</span>
             </div>
-            <ChevronRight size={18} className="text-slate-300 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+            <ChevronRight size={18} className="text-[var(--text-secondary)] opacity-40 group-hover:opacity-100 group-hover:text-primary group-hover:translate-x-1 transition-all" />
           </button>
         ))}
       </div>

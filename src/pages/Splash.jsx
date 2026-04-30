@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Splash = () => {
   return (
-    <div className="fixed inset-0 bg-slate-950 flex flex-col items-center justify-center z-[9999] overflow-hidden">
+    <div className="fixed inset-0 bg-[var(--bg-color)] flex flex-col items-center justify-center z-[9999] overflow-hidden">
       {/* Subtle Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/20 blur-[120px] rounded-full" />
 
@@ -19,14 +19,14 @@ const Splash = () => {
                 transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 bg-gradient-to-tr from-primary to-transparent opacity-10 blur-2xl rounded-full"
             />
-            <div className="w-40 h-40 bg-white/5 backdrop-blur-3xl rounded-[56px] flex items-center justify-center shadow-2xl border border-white/10 relative z-10 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                <img src="/favicon.png" alt="Logo" className="w-[60%] h-[60%] object-contain drop-shadow-2xl" />
+            <div className="w-40 h-40 bg-[var(--surface-color)] backdrop-blur-3xl rounded-[56px] flex items-center justify-center shadow-2xl border border-[var(--border-color)] relative z-10 overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent dark:from-white/5" />
+                <img src="/favicon.png" alt="Logo" className="w-[60%] h-[60%] object-contain drop-shadow-2xl dark:brightness-0 dark:invert" />
             </div>
         </div>
       </motion.div>
 
-      <div className="absolute bottom-20 w-40 h-1 bg-white/5 rounded-full overflow-hidden">
+      <div className="absolute bottom-20 w-40 h-1 bg-primary/10 rounded-full overflow-hidden">
         <motion.div 
           initial={{ x: "-100%" }}
           animate={{ x: "100%" }}

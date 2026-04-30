@@ -94,7 +94,7 @@ const ChatDetail = () => {
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={() => navigate(-1)}
-          className="w-12 h-12 bg-white/10 dark:bg-white/5 rounded-2xl flex items-center justify-center text-[var(--text-primary)] border border-white/10 shadow-sm"
+          className="w-12 h-12 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center text-[var(--text-primary)] border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary/50 transition-all"
         >
           <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
         </motion.button>
@@ -115,7 +115,7 @@ const ChatDetail = () => {
             <motion.button 
               whileTap={{ scale: 0.9 }} 
               onClick={() => setShowMenu(!showMenu)}
-              className={`w-11 h-11 bg-white/10 dark:bg-white/5 rounded-xl flex items-center justify-center border border-white/10 transition-colors ${showMenu ? 'text-primary' : 'text-[var(--text-secondary)]'}`}
+              className={`w-11 h-11 rounded-xl flex items-center justify-center border transition-all ${showMenu ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' : 'bg-slate-50 dark:bg-slate-900 text-[var(--text-secondary)] border-slate-200 dark:border-slate-800 hover:border-primary/50'}`}
             >
               <MoreVertical size={18} />
             </motion.button>

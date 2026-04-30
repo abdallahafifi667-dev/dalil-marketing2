@@ -20,13 +20,13 @@ const Home = () => {
         className="space-y-4"
       >
         <div className="relative group">
-          <Search size={20} className="absolute start-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" />
+          <Search size={20} className="absolute start-5 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-40 group-focus-within:text-primary group-focus-within:opacity-100 transition-all" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder={t('search')}
-            className="w-full h-16 bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-[24px] ps-14 pe-4 text-sm font-bold outline-none focus:border-primary/30 transition-all shadow-xl shadow-slate-100/50 dark:shadow-none"
+            className="w-full h-16 bg-[var(--surface-color)] border-2 border-[var(--border-color)] rounded-[24px] ps-14 pe-4 text-sm font-bold outline-none focus:border-primary/30 transition-all shadow-xl shadow-slate-100/50 dark:shadow-none text-[var(--text-primary)]"
           />
         </div>
 
@@ -56,7 +56,7 @@ const Home = () => {
         <div className="flex justify-between items-end mb-6 px-1">
           <div>
             <h4 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">{t('crafts.title')}</h4>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{t('home.browseByCategory') || 'EXPLORE CATEGORIES'}</p>
+            <p className="text-[10px] font-bold text-[var(--text-secondary)] opacity-50 uppercase tracking-widest">{t('home.browseByCategory') || 'EXPLORE CATEGORIES'}</p>
           </div>
           <button 
             onClick={() => navigate('/crafts')} 
@@ -98,7 +98,7 @@ const Home = () => {
         <div className="flex justify-between items-end mb-6 px-1">
           <div>
             <h4 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">{t('topRated')}</h4>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{t('home.verifiedExperts') || 'VERIFIED EXPERTS'}</p>
+            <p className="text-[10px] font-bold text-[var(--text-secondary)] opacity-50 uppercase tracking-widest">{t('home.verifiedExperts') || 'VERIFIED EXPERTS'}</p>
           </div>
           <button 
             onClick={() => navigate('/craftsmen')} 
@@ -118,12 +118,12 @@ const Home = () => {
               whileHover={{ y: -4 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate(`/craftsman/${m.id}`)}
-              className="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] group cursor-pointer shadow-xl shadow-slate-200/40 dark:shadow-none transition-all relative overflow-hidden"
+              className="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[32px] group cursor-pointer shadow-lg shadow-slate-100/30 dark:shadow-none transition-all relative overflow-hidden"
             >
-              {/* Glass Background Highlight */}
-              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-3xl -mr-10 -mt-10 group-hover:bg-primary/10 transition-colors" />
+              {/* Glass Background Highlight - Dark Mode Only */}
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl -mr-10 -mt-10 group-hover:bg-primary/10 transition-colors hidden dark:block" />
               
-              <div className="w-20 h-20 rounded-[24px] overflow-hidden shrink-0 border-2 border-white dark:border-slate-800 shadow-lg relative z-10">
+              <div className="w-20 h-20 rounded-[24px] overflow-hidden shrink-0 border-2 border-slate-100 dark:border-slate-800 shadow-lg relative z-10">
                  <img src={m.image} alt={m.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
               </div>
               
@@ -146,14 +146,14 @@ const Home = () => {
                   )}
                 </div>
 
-                <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold">
-                  <MapPin size={12} className="text-slate-300" /> {m.location}
+                <div className="flex items-center gap-1.5 text-[10px] text-[var(--text-secondary)] opacity-60 font-bold">
+                  <MapPin size={12} className="text-primary opacity-60" /> {m.location}
                 </div>
               </div>
 
               <motion.div 
                 whileHover={{ rotate: 45 }}
-                className="w-12 h-12 bg-slate-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white transition-all shadow-inner relative z-10"
+                className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center text-[var(--text-secondary)] opacity-40 group-hover:bg-primary group-hover:text-white group-hover:opacity-100 transition-all shadow-sm border border-slate-100 dark:border-slate-700 relative z-10"
               >
                 <ArrowUpRight size={22} />
               </motion.div>

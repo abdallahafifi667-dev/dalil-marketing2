@@ -33,8 +33,9 @@ const Header = () => {
   const notificationCount = JSON.parse(localStorage.getItem('demo_notifications') || '[]').length;
 
   return (
-    <header className="glass sticky top-0 w-full h-20 flex justify-between items-center px-6 z-[1000] border-b border-white/10 shadow-sm">
-      <div className="flex items-center gap-4">
+    <header className="glass sticky top-0 w-full h-20 flex justify-between items-center px-8 z-[1000] border-b border-white/10 shadow-sm">
+      {/* Left: Logo/Back */}
+      <div className="flex-1 flex justify-start items-center gap-4">
         <AnimatePresence mode="wait">
           {isMainPage ? (
             <motion.div
@@ -61,7 +62,7 @@ const Header = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate(-1)}
-                className="w-11 h-11 rounded-[18px] bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[var(--text-primary)] shadow-sm hover:border-primary/50 transition-all"
+                className="w-11 h-11 rounded-[18px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[var(--text-primary)] shadow-md hover:border-primary/50 transition-all"
               >
                 <ChevronLeft size={22} className={lang === 'ar' ? 'rotate-180' : ''} />
               </motion.button>
@@ -71,16 +72,41 @@ const Header = () => {
         </AnimatePresence>
       </div>
 
-      <div className="flex items-center gap-3">
+      {/* Middle: Desktop Navigation */}
+      <nav className="hidden lg:flex items-center gap-12">
+        {[
+          { path: '/', label: t('nav.home') },
+          { path: '/crafts', label: t('crafts.title') },
+          { path: '/chat', label: t('chat.title') },
+          { path: '/account', label: t('account.title') },
+        ].map((item) => (
+          <button
+            key={item.path}
+            onClick={() => navigate(item.path)}
+            className={`relative py-2 text-sm font-black transition-all ${location.pathname === item.path ? 'text-primary' : 'text-slate-500 hover:text-primary'}`}
+          >
+            {item.label}
+            {location.pathname === item.path && (
+              <motion.div 
+                layoutId="nav-underline"
+                className="absolute -bottom-1 left-0 right-0 h-1 bg-primary rounded-full shadow-sm shadow-primary/30"
+              />
+            )}
+          </button>
+        ))}
+      </nav>
+
+      {/* Right: Actions */}
+      <div className="flex-1 flex justify-end items-center gap-3">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/notifications')}
-          className="relative w-11 h-11 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[var(--text-primary)] flex items-center justify-center shadow-sm hover:border-primary/50 transition-all"
+          className="relative w-11 h-11 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[var(--text-primary)] flex items-center justify-center shadow-md hover:border-primary/50 transition-all"
         >
           <Bell size={20} className="text-slate-600 dark:text-slate-300" />
           {notificationCount > 0 && (
-            <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-slate-900" />
+            <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-slate-900 shadow-sm" />
           )}
         </motion.button>
 
@@ -88,7 +114,7 @@ const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={toggleLang}
-          className="px-3 h-11 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-primary font-black text-[10px] tracking-widest shadow-sm hover:border-primary/50 transition-all"
+          className="px-3 h-11 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-primary font-black text-[10px] tracking-widest shadow-md hover:border-primary/50 transition-all"
         >
           {lang === 'ar' ? 'EN' : 'AR'}
         </motion.button>
@@ -97,7 +123,7 @@ const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={toggleTheme}
-          className="w-11 h-11 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[var(--text-primary)] flex items-center justify-center shadow-sm hover:border-primary/50 transition-all"
+          className="w-11 h-11 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[var(--text-primary)] flex items-center justify-center shadow-md hover:border-primary/50 transition-all"
         >
           {theme === 'light' ? <Moon size={20} className="text-slate-500" /> : <Sun size={20} className="text-amber-400" />}
         </motion.button>

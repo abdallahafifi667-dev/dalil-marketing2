@@ -1,16 +1,37 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import { demoData } from '../data';
 import { useLanguage } from '../context/LanguageContext';
-import { ChevronLeft, MapPin, Clock, CreditCard, User, CheckCircle2, MessageCircle } from 'lucide-react';
+import { ChevronLeft, MapPin, Clock, CreditCard, User, CheckCircle2, MessageCircle, Star } from 'lucide-react';
 
 const OrderDetails = () => {
   const { id } = useParams();
   const { lang, t } = useLanguage();
   const navigate = useNavigate();
-  const order = demoData.orders.find(o => o.id === id);
+  const order = demoData.orders.find(o => o.id === id) || 
+                JSON.parse(localStorage.getItem('demo_orders') || '[]').find(o => o.id === id);
   const craftsman = demoData.craftsmen.find(m => m.id === order?.craftsmanId);
+
+  const [proposals, setProposals] = useState([]);
+
+  useEffect(() => {
+    const fetchProposals = () => {
+      const savedProposals = JSON.parse(localStorage.getItem('demo_proposals') || '[]');
+      const filtered = savedProposals.filter(p => p.orderId === id);
+      
+      // Map to full craftsman data
+      const enriched = filtered.map(p => ({
+        ...p,
+        craftsman: demoData.craftsmen.find(m => m.id === p.craftsmanId)
+      }));
+      setProposals(enriched);
+    };
+
+    fetchProposals();
+    const interval = setInterval(fetchProposals, 3000); // Check for new proposals every 3 seconds
+    return () => clearInterval(interval);
+  }, [id]);
 
   if (!order) return <div className="p-10 text-center font-black">{t('order.notFound')}</div>;
 
@@ -33,13 +54,6 @@ const OrderDetails = () => {
         className="flex flex-col space-y-8 flex-1 min-h-0 relative z-10"
       >
         <div className="flex items-center gap-4">
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => navigate(-1)}
-            className="w-12 h-12 bg-[var(--surface-color)] rounded-2xl flex items-center justify-center text-primary border border-[var(--border-color)] shadow-sm"
-          >
-            <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
-          </motion.button>
           <div className="space-y-0.5">
             <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
                {t('order.details')}
@@ -110,6 +124,74 @@ const OrderDetails = () => {
                     <CreditCard size={14} /> {order.totalPrice} <span className="text-[10px] font-bold">{t('account.currency')}</span>
                 </div>
             </div>
+          </div>
+        </div>
+
+        {/* Proposals Section - "Life" in the app */}
+        <div className="space-y-6">
+          <div className="flex justify-between items-end px-2">
+            <div>
+              <h3 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">{lang === 'ar' ? 'العروض المقدمة' : 'Craftsman Proposals'}</h3>
+              <p className="text-[10px] font-black text-primary uppercase tracking-widest opacity-60">{lang === 'ar' ? 'حرفيين مهتمين بطلبك' : 'Experts interested in your job'}</p>
+            </div>
+            <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-black">
+              {proposals.length} {lang === 'ar' ? 'عروض' : 'Offers'}
+            </span>
+          </div>
+
+          <div className="space-y-4">
+            <AnimatePresence mode="popLayout">
+              {proposals.map((prop, i) => (
+                <motion.div
+                  key={prop.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="bg-[var(--surface-color)] p-5 rounded-[40px] border border-[var(--border-color)] shadow-sm flex items-center gap-4 group relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  
+                  <div className="w-16 h-16 rounded-[24px] overflow-hidden border-2 border-[var(--bg-color)] shadow-md relative z-10 shrink-0">
+                    <img src={prop.craftsman?.image} alt={prop.craftsman?.name} className="w-full h-full object-cover" />
+                  </div>
+
+                  <div className="flex-1 min-w-0 relative z-10">
+                    <div className="flex justify-between items-start mb-1">
+                      <h5 className="font-black text-base text-[var(--text-primary)] truncate">{prop.craftsman?.name}</h5>
+                      <div className="flex items-center gap-1 text-amber-500 font-black text-[10px]">
+                        <Star size={12} fill="currentColor" /> {prop.craftsman?.rating}
+                      </div>
+                    </div>
+                    <p className="text-[10px] text-[var(--text-secondary)] font-bold mb-2 line-clamp-1 opacity-70">
+                      "{prop.message}"
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <span className="text-primary font-black text-sm">
+                        {prop.price} {t('account.currency')}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 relative z-10">
+                    <motion.button
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => navigate(`/chat/chat_${prop.craftsmanId}`)}
+                      className="w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center border border-primary/20 hover:bg-primary hover:text-white transition-all"
+                    >
+                      <MessageCircle size={20} />
+                    </motion.button>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            
+            {proposals.length === 0 && (
+              <div className="py-8 text-center bg-slate-50 dark:bg-slate-900/50 rounded-[40px] border border-dashed border-slate-200 dark:border-slate-800">
+                <p className="text-xs font-bold text-[var(--text-secondary)] opacity-40 italic">
+                  {lang === 'ar' ? 'بانتظار وصول عروض من الحرفيين...' : 'Waiting for craftsmen to apply...'}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

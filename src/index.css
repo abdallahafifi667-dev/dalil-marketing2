@@ -11,12 +11,12 @@
 
 @layer base {
   :root {
-    --bg-color: #f8fafc;
+    --bg-color: #f1f5f9;
     --surface-color: #ffffff;
-    --text-primary: #0f172a;
-    --text-secondary: #64748b;
-    --border-color: #f1f5f9;
-    --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+    --text-primary: #020617;
+    --text-secondary: #475569;
+    --border-color: #e2e8f0;
+    --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
   }
 
   .dark {
@@ -51,27 +51,20 @@
   }
 
   /* Large screens - Desktop View Mockup */
+  /* Remove the forced mobile frame and make it responsive */
   @media (min-width: 1024px) {
     .app-frame {
-      max-width: 440px;
-      margin: 3vh auto;
-      height: 94vh;
-      border-radius: 48px;
-      box-shadow: 0 0 100px -20px rgba(99, 102, 241, 0.2);
-      border: 8px solid #1e293b;
-      position: relative;
+      max-width: 100%;
+      margin: 0;
+      height: 100vh;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
     }
     
-    body {
-        position: relative;
-    }
-
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-      z-index: -1;
+    .page-container {
+      max-width: 1200px;
+      margin: 0 auto;
     }
   }
 

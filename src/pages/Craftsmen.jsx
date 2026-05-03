@@ -115,44 +115,46 @@ const Craftsmen = () => {
           </motion.div>
         )}
 
-        <div className="grid grid-cols-1 gap-5 px-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 px-1">
           {filteredList.map((m) => (
             <motion.div
               key={m.id}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate(`/craftsman/${m.id}`)}
-              className="bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[36px] p-6 flex flex-col gap-5 hover:border-primary/30 transition-all cursor-pointer group shadow-sm hover:shadow-xl relative"
+              className="bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[36px] p-6 flex flex-col justify-between gap-5 hover:border-primary/30 transition-all cursor-pointer group shadow-sm hover:shadow-xl relative"
             >
-              <div className="flex gap-5">
-                <div className="w-22 h-22 rounded-3xl overflow-hidden shrink-0 border-2 border-[var(--bg-color)] shadow-md">
-                  <img src={m.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={m.name} />
-                </div>
-                <div className="flex-1 min-w-0 space-y-2 py-1">
-                  <div className="flex justify-between items-start">
-                    <h4 className="font-black text-lg text-[var(--text-primary)] truncate group-hover:text-primary transition-colors leading-tight">{m.name}</h4>
-                    <div className="flex items-center gap-1.5 text-[10px] font-black text-amber-500 bg-amber-500/5 px-2.5 py-1 rounded-xl border border-amber-500/10 shrink-0">
-                      <Star size={12} fill="currentColor" /> {m.rating}
+              <div className="space-y-5">
+                <div className="flex gap-5">
+                  <div className="w-22 h-22 rounded-3xl overflow-hidden shrink-0 border-2 border-[var(--bg-color)] shadow-md">
+                    <img src={m.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={m.name} />
+                  </div>
+                  <div className="flex-1 min-w-0 space-y-2 py-1">
+                    <div className="flex justify-between items-start">
+                      <h4 className="font-black text-lg text-[var(--text-primary)] truncate group-hover:text-primary transition-colors leading-tight">{m.name}</h4>
+                      <div className="flex items-center gap-1.5 text-[10px] font-black text-amber-500 bg-amber-500/5 px-2.5 py-1 rounded-xl border border-amber-500/10 shrink-0">
+                        <Star size={12} fill="currentColor" /> {m.rating}
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="text-primary font-black text-[10px] uppercase tracking-wider">
+                        {crafts.find(c => c.id === m.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
+                      </span>
+                      <span className="w-1 h-1 bg-[var(--border-color)] rounded-full" />
+                      <div className="flex items-center gap-1.5 text-[10px] text-[var(--text-secondary)] font-bold opacity-70">
+                        <MapPin size={12} className="text-primary" /> {m.location}
+                      </div>
                     </div>
                   </div>
-                  
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <span className="text-primary font-black text-[10px] uppercase tracking-wider">
-                      {crafts.find(c => c.id === m.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
-                    </span>
-                    <span className="w-1 h-1 bg-[var(--border-color)] rounded-full" />
-                    <div className="flex items-center gap-1.5 text-[10px] text-[var(--text-secondary)] font-bold opacity-70">
-                      <MapPin size={12} className="text-primary" /> {m.location}
-                    </div>
-                  </div>
                 </div>
-              </div>
 
-              {/* Bio Snippet */}
-              <p className="text-xs text-[var(--text-secondary)] font-bold opacity-60 line-clamp-2 leading-relaxed px-1">
-                {m.bio || t('craftsmen.bioFallback')}
-              </p>
+                {/* Bio Snippet */}
+                <p className="text-xs text-[var(--text-secondary)] font-bold opacity-60 line-clamp-2 leading-relaxed px-1">
+                  {m.bio || t('craftsmen.bioFallback')}
+                </p>
+              </div>
               
-              <div className="flex justify-between items-center pt-5 border-t border-dashed border-[var(--border-color)]">
+              <div className="flex justify-between items-center pt-5 border-t border-dashed border-[var(--border-color)] mt-auto">
                 <div className="flex flex-col">
                   <span className="text-[9px] text-[var(--text-secondary)] opacity-50 font-black uppercase tracking-[0.2em] mb-1">{t('craftsmen.priceHr')}</span>
                   <div className="flex items-baseline gap-1">

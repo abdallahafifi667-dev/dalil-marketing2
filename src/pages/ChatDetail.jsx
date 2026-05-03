@@ -91,14 +91,6 @@ const ChatDetail = () => {
 
       {/* Fixed Header with Partner Info */}
       <div className="h-24 glass border-b border-white/5 z-[1001] flex items-center px-6 gap-4 shrink-0 relative">
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          onClick={() => navigate(-1)}
-          className="w-12 h-12 bg-slate-50 dark:bg-slate-900 rounded-2xl flex items-center justify-center text-[var(--text-primary)] border border-slate-200 dark:border-slate-800 shadow-sm hover:border-primary/50 transition-all"
-        >
-          <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
-        </motion.button>
-        
         <div className="flex items-center gap-3 flex-1">
           <div className="relative">
             <img src={partner?.image} className="w-11 h-11 rounded-xl object-cover border border-[var(--border-color)]" alt={partner?.name} />
@@ -106,7 +98,18 @@ const ChatDetail = () => {
           </div>
           <div className="min-w-0">
             <h4 className="font-black text-[var(--text-primary)] text-base truncate">{partner?.name}</h4>
-            <p className="text-[10px] text-green-500 font-bold uppercase tracking-widest">{t('chat.online') || 'متصل الآن'}</p>
+            <p className="text-[10px] text-green-500 font-bold uppercase tracking-widest flex items-center gap-1.5">
+              {partner?.online ? (
+                <>
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                  {t('chat.online') || 'متصل الآن'}
+                </>
+              ) : (
+                <span className="text-slate-400 opacity-60">
+                  {lang === 'ar' ? 'نشط منذ 10 دقائق' : 'Active 10m ago'}
+                </span>
+              )}
+            </p>
           </div>
         </div>
 
@@ -154,14 +157,14 @@ const ChatDetail = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`max-w-[85%] p-4 rounded-[28px] text-sm font-bold shadow-sm relative ${msg.sender === 'me'
-                  ? 'bg-primary text-white rounded-br-none shadow-primary/20'
-                  : 'bg-[var(--surface-color)] text-[var(--text-primary)] rounded-bl-none border border-[var(--border-color)] shadow-sm'
+              <div className={`max-w-[75%] px-5 py-3 rounded-[32px] shadow-sm relative group ${msg.sender === 'me' 
+                  ? 'bg-primary text-white rounded-tr-none' 
+                  : 'bg-[var(--surface-color)] text-[var(--text-primary)] border border-[var(--border-color)] rounded-tl-none'
                 }`}>
-                {msg.text}
-                <div className={`text-[8px] mt-2 flex items-center gap-1 ${msg.sender === 'me' ? 'justify-end opacity-70' : 'justify-start opacity-40'}`}>
+                <p className="text-sm font-bold leading-relaxed">{msg.text}</p>
+                <span className={`text-[8px] font-black uppercase tracking-widest mt-1.5 block opacity-40 ${msg.sender === 'me' ? 'text-white' : 'text-slate-400'}`}>
                   {msg.time}
-                </div>
+                </span>
               </div>
             </motion.div>
           ))}

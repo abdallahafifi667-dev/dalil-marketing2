@@ -40,9 +40,9 @@ const Login = ({ onLogin }) => {
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-24 h-24 bg-[var(--surface-color)] backdrop-blur-xl rounded-[40px] flex items-center justify-center shadow-2xl border border-[var(--border-color)]"
+          className="w-24 h-24 bg-white dark:bg-slate-900 rounded-[40px] flex items-center justify-center shadow-2xl border border-slate-100 dark:border-white/5"
         >
-          <img src="/favicon.png" alt="Logo" className="w-12 h-12 object-contain dark:brightness-0 dark:invert" />
+          <img src="/favicon.png" alt="Logo" className="w-12 h-12 object-contain" />
         </motion.div>
         
         <div className="space-y-2">

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { demoData } from '../data';
@@ -58,31 +58,69 @@ const CreateRequest = () => {
         });
     };
 
+    const [isBroadcasting, setIsBroadcasting] = useState(false);
+
     const handleSubmit = () => {
         if (!formData.craft || !formData.title || !formData.description) {
             alert(t('request.fillRequired'));
             return;
         }
         
-        const orderId = `ord_${Math.random().toString(36).substr(2, 9)}`;
-        const newOrder = {
-            id: orderId,
-            ...formData,
-            status: 'pending',
-            createdAt: new Date().toISOString(),
-            craftsmanId: craftsmanId
-        };
+        setIsBroadcasting(true);
         
-        // Save to local storage
-        const orders = JSON.parse(localStorage.getItem('demo_orders') || '[]');
-        orders.unshift(newOrder);
-        localStorage.setItem('demo_orders', JSON.stringify(orders));
-        
-        navigate('/payment');
+        // Simulate broadcasting delay for "Life" effect
+        setTimeout(() => {
+            const orderId = `ord_${Math.random().toString(36).substr(2, 9)}`;
+            const newOrder = {
+                id: orderId,
+                ...formData,
+                clientId: 'u1', // Associate with demo user
+                status: 'pending',
+                date: lang === 'ar' ? 'اليوم' : 'Today',
+                createdAt: new Date().toISOString(),
+                craftsmanId: craftsmanId,
+                totalPrice: formData.budget || '0'
+            };
+            
+            // Save to local storage
+            const orders = JSON.parse(localStorage.getItem('demo_orders') || '[]');
+            orders.unshift(newOrder);
+            localStorage.setItem('demo_orders', JSON.stringify(orders));
+
+            // Start simulation of experts applying
+            import('../utils/simulation').then(({ startOrderSimulation }) => {
+                startOrderSimulation(orderId, formData.craft);
+            });
+            
+            navigate('/payment');
+        }, 2500);
     };
 
     return (
         <div className="page-container with-nav-padding pt-6 relative overflow-hidden">
+            <AnimatePresence>
+                {isBroadcasting && (
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[2000] bg-slate-900/90 backdrop-blur-xl flex flex-col items-center justify-center text-center px-10"
+                    >
+                        <div className="relative mb-10">
+                            <motion.div 
+                                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
+                                transition={{ repeat: Infinity, duration: 2 }}
+                                className="absolute inset-0 bg-primary/30 rounded-full blur-2xl"
+                            />
+                            <div className="w-32 h-32 bg-primary rounded-[40px] flex items-center justify-center text-white relative z-10 shadow-2xl shadow-primary/40">
+                                <Zap size={48} fill="white" />
+                            </div>
+                        </div>
+                        <h3 className="text-2xl font-black text-white mb-2">{lang === 'ar' ? 'جاري النشر للحرفيين...' : 'Broadcasting to experts...'}</h3>
+                        <p className="text-slate-400 font-bold text-sm max-w-xs">{lang === 'ar' ? 'نقوم الآن بإرسال طلبك لأقرب الحرفيين المتاحين في منطقتك' : 'We are sending your request to the nearest available experts in your area'}</p>
+                    </motion.div>
+                )}
+            </AnimatePresence>
             {/* Decorative Background */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 blur-[130px] rounded-full -mr-40 -mt-40 -z-10" />
             

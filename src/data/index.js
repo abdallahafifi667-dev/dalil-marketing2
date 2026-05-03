@@ -30,6 +30,16 @@ const getMergedCraftsmen = () => {
       completedOrders: 0,
       services: [
         { id: 1, title: 'خدمة أولية', titleEn: 'Initial Service', price: 150, type: 'hour' }
+      ],
+      portfolio: [
+        "/WhatsApp Image 2026-05-03 at 12.48.44 AM (1).jpeg",
+        "/WhatsApp Image 2026-05-03 at 12.48.44 AM (2).jpeg",
+        "/WhatsApp Image 2026-05-03 at 12.48.44 AM (3).jpeg",
+        "/WhatsApp Image 2026-05-03 at 12.48.44 AM.jpeg",
+        "/WhatsApp Image 2026-05-03 at 12.48.45 AM (1).jpeg",
+        "/WhatsApp Image 2026-05-03 at 12.48.45 AM (2).jpeg",
+        "/WhatsApp Image 2026-05-03 at 12.48.45 AM.jpeg",
+        "/WhatsApp Image 2026-05-03 at 12.48.46 AM.jpeg"
       ]
     }));
   return [...craftsmen, ...registeredCraftsmen];

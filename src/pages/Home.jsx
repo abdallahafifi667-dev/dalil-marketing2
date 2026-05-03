@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <div className="page-container with-nav-padding pt-6 space-y-10 overflow-x-hidden">
       {/* Advanced Search & Create Request Section */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="space-y-4"
@@ -36,7 +36,7 @@ const Home = () => {
           onClick={() => navigate('/request/new')}
           className="w-full h-16 bg-gradient-to-r from-primary to-indigo-600 text-white rounded-[24px] font-black text-base shadow-2xl shadow-primary/30 flex items-center justify-center gap-3 relative overflow-hidden group"
         >
-          <motion.div 
+          <motion.div
             animate={{ x: [0, 5, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
@@ -58,15 +58,15 @@ const Home = () => {
             <h4 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">{t('crafts.title')}</h4>
             <p className="text-[10px] font-bold text-[var(--text-secondary)] opacity-50 uppercase tracking-widest">{t('home.browseByCategory') || 'EXPLORE CATEGORIES'}</p>
           </div>
-          <button 
-            onClick={() => navigate('/crafts')} 
+          <button
+            onClick={() => navigate('/crafts')}
             className="bg-primary/10 text-primary px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-wider hover:bg-primary hover:text-white transition-all"
           >
             {t('viewAll')}
           </button>
         </div>
-        
-        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-6 px-6">
+
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide -mx-6 px-6 lg:mx-0 lg:px-0 lg:grid lg:grid-cols-4 xl:grid-cols-8 lg:gap-6">
           {crafts.slice(0, 8).map((craft, i) => (
             <motion.div
               key={craft.id}
@@ -75,12 +75,12 @@ const Home = () => {
               transition={{ delay: 0.1 * i }}
               whileTap={{ scale: 0.9 }}
               onClick={() => navigate(`/craftsmen?craft=${craft.id}`)}
-              className="flex-shrink-0 w-24 flex flex-col items-center gap-3 cursor-pointer group"
+              className="flex-shrink-0 w-24 lg:w-full flex flex-col items-center gap-3 cursor-pointer group"
             >
-              <div className="w-20 h-20 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[28px] flex items-center justify-center p-0 overflow-hidden group-hover:border-primary/50 transition-all shadow-lg shadow-slate-100/50 dark:shadow-none">
+              <div className="w-20 h-20 lg:w-full aspect-square bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[28px] lg:rounded-[36px] flex items-center justify-center p-0 overflow-hidden group-hover:border-primary/50 transition-all shadow-lg shadow-slate-100/50 dark:shadow-none">
                 <img src={craft.image} alt={craft.nameEn} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
-              <p className="text-[10px] font-black text-[var(--text-primary)] text-center leading-tight truncate w-full px-1">
+              <p className="text-[10px] lg:text-xs font-black text-[var(--text-primary)] text-center leading-tight truncate w-full px-1">
                 {lang === 'ar' ? craft.nameAr : craft.nameEn}
               </p>
             </motion.div>
@@ -89,7 +89,7 @@ const Home = () => {
       </motion.section>
 
       {/* Top Rated Craftsmen List */}
-      <motion.section 
+      <motion.section
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
@@ -100,63 +100,51 @@ const Home = () => {
             <h4 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">{t('topRated')}</h4>
             <p className="text-[10px] font-bold text-[var(--text-secondary)] opacity-50 uppercase tracking-widest">{t('home.verifiedExperts') || 'VERIFIED EXPERTS'}</p>
           </div>
-          <button 
-            onClick={() => navigate('/craftsmen')} 
+          <button
+            onClick={() => navigate('/craftsmen')}
             className="text-primary font-black text-xs hover:underline"
           >
             {t('viewAll')}
           </button>
         </div>
-        
-        <div className="space-y-5">
-          {craftsmen.slice(0, 5).map((m, i) => (
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {craftsmen.slice(0, 6).map((m, i) => (
             <motion.div
               key={m.id}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * i + 0.4 }}
-              whileHover={{ y: -4 }}
+              whileHover={{ y: -8 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate(`/craftsman/${m.id}`)}
-              className="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[32px] group cursor-pointer shadow-lg shadow-slate-100/30 dark:shadow-none transition-all relative overflow-hidden"
+              className="flex items-center gap-4 p-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[40px] group cursor-pointer shadow-xl shadow-slate-200/20 dark:shadow-none transition-all relative overflow-hidden"
             >
               {/* Glass Background Highlight - Dark Mode Only */}
-              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl -mr-10 -mt-10 group-hover:bg-primary/10 transition-colors hidden dark:block" />
-              
-              <div className="w-20 h-20 rounded-[24px] overflow-hidden shrink-0 border-2 border-slate-100 dark:border-slate-800 shadow-lg relative z-10">
-                 <img src={m.image} alt={m.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl -mr-12 -mt-12 group-hover:bg-primary/10 transition-colors hidden dark:block" />
+
+              <div className="w-24 h-24 rounded-[32px] overflow-hidden shrink-0 border-2 border-slate-100 dark:border-slate-800 shadow-xl relative z-10">
+                <img src={m.image} alt={m.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
               </div>
-              
+
               <div className="flex-1 min-w-0 relative z-10">
                 <div className="flex justify-between items-start mb-1">
-                    <h5 className="font-black text-base text-[var(--text-primary)] truncate">{m.name}</h5>
-                    <div className="flex items-center gap-1.5 px-2 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-500 rounded-lg text-[10px] font-black shadow-sm">
-                        <Star size={10} fill="currentColor" /> {m.rating}
-                    </div>
+                  <h5 className="font-black text-lg text-[var(--text-primary)] truncate">{m.name}</h5>
                 </div>
-                
+
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="px-2 py-0.5 bg-primary/10 text-primary font-black text-[9px] uppercase tracking-wider rounded-md">
+                  <span className="px-3 py-1 bg-primary/10 text-primary font-black text-[10px] uppercase tracking-wider rounded-lg">
                     {crafts.find(c => c.id === m.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
                   </span>
-                  {m.verified && (
-                    <div className="w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center text-white">
-                      <Zap size={8} fill="currentColor" />
-                    </div>
-                  )}
+                  <div className="flex items-center gap-1.5 px-2 py-1 bg-amber-50 dark:bg-amber-900/20 text-amber-500 rounded-lg text-[10px] font-black">
+                    <Star size={12} fill="currentColor" /> {m.rating}
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 text-[10px] text-[var(--text-secondary)] opacity-60 font-bold">
-                  <MapPin size={12} className="text-primary opacity-60" /> {m.location}
+                <div className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)] opacity-60 font-bold">
+                  <MapPin size={14} className="text-primary opacity-60" /> {m.location}
                 </div>
               </div>
-
-              <motion.div 
-                whileHover={{ rotate: 45 }}
-                className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center text-[var(--text-secondary)] opacity-40 group-hover:bg-primary group-hover:text-white group-hover:opacity-100 transition-all shadow-sm border border-slate-100 dark:border-slate-700 relative z-10"
-              >
-                <ArrowUpRight size={22} />
-              </motion.div>
             </motion.div>
           ))}
         </div>

@@ -60,11 +60,11 @@ const SettingsPage = () => {
       case 'notifications': return { title: t('account.notifications'), icon: <Bell /> };
       case 'security': return { title: t('account.security'), icon: <Shield /> };
       case 'help': return { title: t('account.help'), icon: <HelpCircle /> };
-      default: return { title: t('account.settings'), icon: null };
+      default: return { title: t('account.settings'), icon: null, isIndex: true };
     }
   };
 
-  const { title } = getPageInfo();
+  const { title, isIndex } = getPageInfo();
 
   const Toggle = ({ active, onToggle, label }) => (
     <div className="flex justify-between items-center py-4 border-b border-[var(--border-color)] last:border-0">
@@ -91,13 +91,6 @@ const SettingsPage = () => {
       >
         <div className="flex justify-between items-center px-1">
           <div className="flex items-center gap-4">
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => navigate(-1)}
-              className="w-12 h-12 bg-[var(--surface-color)] rounded-2xl flex items-center justify-center text-primary border border-[var(--border-color)] shadow-sm"
-            >
-              <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
-            </motion.button>
             <div className="space-y-0.5">
               <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">{title}</h2>
               <p className="text-[10px] text-[var(--text-secondary)] font-black uppercase tracking-widest opacity-60">
@@ -113,6 +106,47 @@ const SettingsPage = () => {
         </div>
 
         <div className="bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[40px] p-8 shadow-sm relative overflow-hidden">
+          {isIndex && (
+            <div className="flex flex-col space-y-2">
+              {[
+                { id: 'profile', label: t('account.editProfile'), icon: <Camera size={20} />, color: 'text-primary', bg: 'bg-primary/10' },
+                { id: 'notifications', label: t('account.notifications'), icon: <Bell size={20} />, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+                { id: 'security', label: t('account.security'), icon: <Shield size={20} />, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+                { id: 'help', label: t('account.help'), icon: <HelpCircle size={20} />, labelDesc: t('account.helpDesc') || 'احصل على المساعدة', color: 'text-blue-500', bg: 'bg-blue-500/10' },
+              ].map((item) => (
+                <motion.div
+                  key={item.id}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => navigate(`/settings/${item.id}`)}
+                  className="flex items-center gap-5 p-5 rounded-[32px] bg-[var(--bg-color)] border border-[var(--border-color)] hover:border-primary/20 transition-all cursor-pointer group"
+                >
+                  <div className={`w-12 h-12 ${item.bg} ${item.color} rounded-2xl flex items-center justify-center shrink-0`}>
+                    {item.icon}
+                  </div>
+                  <div className="flex-1">
+                    <span className="font-black text-base text-[var(--text-primary)]">{item.label}</span>
+                    <p className="text-[10px] text-[var(--text-secondary)] font-bold opacity-40 uppercase tracking-widest">{item.labelDesc || t('account.customize')}</p>
+                  </div>
+                  <ChevronLeft size={18} className={`text-slate-300 ${lang === 'en' ? 'rotate-180' : ''}`} />
+                </motion.div>
+              ))}
+              
+              <div className="pt-8">
+                <button
+                  onClick={() => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userId');
+                    localStorage.removeItem('userRole');
+                    window.location.href = '/login';
+                  }}
+                  className="w-full h-14 rounded-2xl border-2 border-red-500/20 text-red-500 font-black text-sm hover:bg-red-500 hover:text-white transition-all"
+                >
+                  {t('logout')}
+                </button>
+              </div>
+            </div>
+          )}
+
           {id === 'profile' && (
             <div className="flex flex-col items-center gap-8">
               <div className="relative">

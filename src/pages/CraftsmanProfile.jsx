@@ -118,6 +118,22 @@ const CraftsmanProfile = () => {
               <span className="text-[var(--text-secondary)] font-bold text-sm flex items-center gap-1.5 opacity-70">
                 <MapPin size={16} className="text-primary" /> {craftsman.location}
               </span>
+              <span className="w-1.5 h-1.5 bg-slate-300 rounded-full opacity-50" />
+              <div className="flex items-center gap-2">
+                {craftsman.online ? (
+                  <>
+                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    <span className="text-[10px] font-black text-green-500 uppercase tracking-widest">{t('chat.online') || 'متصل الآن'}</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="w-2 h-2 bg-slate-300 rounded-full" />
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest opacity-60">
+                      {lang === 'ar' ? 'نشط منذ 15 دقيقة' : 'Active 15m ago'}
+                    </span>
+                  </>
+                )}
+              </div>
             </div>
           </div>
           <div className="bg-gradient-to-br from-amber-400 to-amber-600 text-white px-6 py-4 rounded-[32px] flex flex-col items-center justify-center font-black shadow-xl shadow-amber-500/20 border-4 border-[var(--bg-color)] shrink-0">
@@ -197,16 +213,15 @@ const CraftsmanProfile = () => {
           </div>
         )}
 
-        {/* Portfolio - Redesigned */}
         <div className="space-y-6">
           <h3 className="text-2xl font-black text-[var(--text-primary)] px-1">{t('craftsmen.portfolio')}</h3>
           <div className="w-full">
-            <div className="flex gap-5 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory px-1">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-1">
               {(craftsman.portfolio || [1, 2, 3, 4, 5, 6]).map((img, idx) => (
                 <motion.div
                   key={idx}
-                  whileHover={{ y: -8 }}
-                  className="w-56 h-56 shrink-0 rounded-[40px] overflow-hidden shadow-xl snap-start border-4 border-[var(--surface-color)] relative group"
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  className="aspect-square rounded-[32px] overflow-hidden shadow-xl border-4 border-[var(--surface-color)] relative group"
                 >
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors z-10" />
                   <img
@@ -256,7 +271,7 @@ const CraftsmanProfile = () => {
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/20 dark:border-white/5 p-4 rounded-[40px] shadow-2xl flex gap-4 ring-1 ring-black/5"
+          className="max-w-[600px] mx-auto bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-white/20 dark:border-white/5 p-4 rounded-[40px] shadow-2xl flex gap-4 ring-1 ring-black/5"
         >
           <motion.button
             whileTap={{ scale: 0.95 }}

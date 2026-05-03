@@ -8,9 +8,12 @@ export const crafts = [
   { id: 'c7', nameAr: 'بناء', nameEn: 'Construction', icon: '🧱', image: 'https://images.unsplash.com/photo-1504307651254-35680f3366d4?w=400&h=400&fit=crop' },
   { id: 'c8', nameAr: 'نجارة موبيليا', nameEn: 'Furniture Repair', icon: '🪑', image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=400&h=400&fit=crop' },
   { id: 'c9', nameAr: 'تنسيق حدائق', nameEn: 'Gardening', icon: '🌳', image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=400&h=400&fit=crop' },
-  { id: 'c10', nameAr: 'كاميرات مراقبة', nameEn: 'CCTV Systems', icon: '📹', image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=400&h=400&fit=crop' },
-  { id: 'c11', nameAr: 'ألوميتال', nameEn: 'Alumetal', icon: '🪟', image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=400&fit=crop' },
-  { id: 'c12', nameAr: 'باركيه', nameEn: 'Flooring', icon: '🪵', image: 'https://images.unsplash.com/photo-1581850518616-bcb8194ad1a3?w=400&h=400&fit=crop' },
-  { id: 'c13', nameAr: 'ديكور', nameEn: 'Interior Design', icon: '🏡', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400&h=400&fit=crop' },
-  { id: 'c14', nameAr: 'عزل أسطح', nameEn: 'Waterproofing', icon: '🏠', image: 'https://images.unsplash.com/photo-1632759145351-1d592919f522?w=400&h=400&fit=crop' },
+  { id: 'c10', nameAr: 'دش وصيانة', nameEn: 'Satellite', icon: '📡', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=400&fit=crop' },
+  { id: 'c11', nameAr: 'ستائر وبروجيكتور', nameEn: 'Curtains', icon: '🖼️', image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=400&h=400&fit=crop' },
+  { id: 'c12', nameAr: 'زجاج ومرايا', nameEn: 'Glass & Mirrors', icon: '🪟', image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=400&fit=crop' },
+  { id: 'c13', nameAr: 'رخام وجرانيت', nameEn: 'Marble', icon: '🗿', image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=400&h=400&fit=crop' },
+  { id: 'c14', nameAr: 'مكافحة حشرات', nameEn: 'Pest Control', icon: '🦟', image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6954?w=400&h=400&fit=crop' },
+  { id: 'c15', nameAr: 'حدادة وكريتال', nameEn: 'Welding', icon: '👨‍🏭', image: 'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=400&fit=crop' },
+  { id: 'c16', nameAr: 'تنظيف منازل', nameEn: 'Cleaning', icon: '🧹', image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=400&fit=crop' },
 ];
+

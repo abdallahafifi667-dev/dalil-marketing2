@@ -22,7 +22,7 @@ const BottomNav = () => {
   ];
 
   return (
-    <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[400px] h-20 glass rounded-[32px] px-8 flex justify-between items-center z-[1000] shadow-[0_20px_50px_rgba(0,0,0,0.2)] border-white/20 dark:border-white/10">
+    <nav className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[400px] h-20 glass rounded-[32px] px-8 flex justify-between items-center z-[1000] shadow-[0_20px_50px_rgba(0,0,0,0.2)] border-white/20 dark:border-white/10">
       {navItems.map((item) => (
         <NavLink
           key={item.path}

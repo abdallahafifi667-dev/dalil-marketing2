@@ -8,7 +8,35 @@ import { useNavigate } from 'react-router-dom';
 const Chat = () => {
   const { t, lang } = useLanguage();
   const navigate = useNavigate();
-  const { chats, user, craftsmen, users } = demoData;
+  const { user, craftsmen, users } = demoData;
+
+  const [activeChats, setActiveChats] = React.useState(() => {
+    const saved = JSON.parse(localStorage.getItem('demo_chats') || '[]');
+    // Merge with demoData.chats if not already present
+    const combined = [...saved];
+    demoData.chats.forEach(c => {
+      if (!combined.find(savedChat => savedChat.id === c.id)) {
+        combined.push(c);
+      }
+    });
+    return combined;
+  });
+
+  React.useEffect(() => {
+    const checkChats = () => {
+      const saved = JSON.parse(localStorage.getItem('demo_chats') || '[]');
+      const combined = [...saved];
+      demoData.chats.forEach(c => {
+        if (!combined.find(savedChat => savedChat.id === c.id)) {
+          combined.push(c);
+        }
+      });
+      setActiveChats(combined);
+    };
+
+    const interval = setInterval(checkChats, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const getPartner = (chat) => {
     const pId = chat.participants.find(id => id !== user.id);
@@ -47,7 +75,7 @@ const Chat = () => {
       </div>
 
       <div className="flex flex-col space-y-4 pb-24">
-        {chats.map((chat) => {
+        {activeChats.map((chat) => {
           const partner = getPartner(chat);
           return (
             <motion.div

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 import { demoData, loginAs } from '../data';
-import { User, Mail, Lock, Briefcase, ArrowRight } from 'lucide-react';
+import { User, Mail, Lock, Briefcase, ArrowRight, Sun, Moon, Globe } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Register = ({ onRegister }) => {
-  const { t, lang } = useLanguage();
+  const { t, lang, toggleLang } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [role, setRole] = useState('client');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -49,13 +51,30 @@ const Register = ({ onRegister }) => {
       <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 blur-[130px] rounded-full -mr-40 -mt-40" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/5 blur-[100px] rounded-full -ml-32 -mb-32" />
 
+      {/* Header Controls */}
+      <div className="absolute top-6 inset-x-6 flex justify-between items-center z-50">
+        <button
+          onClick={() => toggleLang()}
+          className="h-10 px-3 rounded-xl bg-[var(--surface-color)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-primary)] shadow-sm hover:bg-primary/5 transition-colors gap-1"
+        >
+          <Globe size={18} />
+          <span className="text-[10px] font-black uppercase">{lang === 'ar' ? 'EN' : 'عربي'}</span>
+        </button>
+        <button
+          onClick={toggleTheme}
+          className="w-10 h-10 rounded-xl bg-[var(--surface-color)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-primary)] shadow-sm hover:bg-primary/5 transition-colors"
+        >
+          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+      </div>
+
       <div className="flex flex-col items-center text-center space-y-4 relative z-10 mb-6">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-20 h-20 bg-[var(--surface-color)] backdrop-blur-xl rounded-[32px] flex items-center justify-center shadow-2xl border border-[var(--border-color)]"
+          className="w-24 h-24 bg-[var(--surface-color)] rounded-[40px] flex items-center justify-center shadow-2xl border border-slate-100 dark:border-white/5"
         >
-          <img src="/favicon.png" alt="Logo" className="w-10 h-10 object-contain dark:brightness-0 dark:invert" />
+          <img src="/favicon.png" alt="Logo" className="w-12 h-12 object-contain" />
         </motion.div>
         <div className="space-y-1">
           <h1 className="text-3xl font-black tracking-tight">{t('register')}</h1>
@@ -97,8 +116,8 @@ const Register = ({ onRegister }) => {
           <div className="relative group">
             <Mail size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
             <input
-              type="email"
-              placeholder={t('auth.email')}
+              type="text"
+              placeholder={lang === 'ar' ? 'البريد الإلكتروني أو رقم الهاتف' : 'Email or Phone Number'}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"

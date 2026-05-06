@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { demoData } from '../data';
-import { ChevronLeft, MapPin, DollarSign, Calendar, FileText, Plus, Trash2, Zap, Clock, User } from 'lucide-react';
+import { ChevronLeft, MapPin, DollarSign, Calendar, FileText, Plus, Trash2, Zap, Clock, User, AlertTriangle } from 'lucide-react';
 
 const CreateRequest = () => {
     const { lang, t } = useLanguage();
@@ -22,7 +22,6 @@ const CreateRequest = () => {
         craft: prefilledCraft,
         title: '',
         description: '',
-        budget: '',
         date: '',
         timeHours: '12',
         timeMinutes: '00',
@@ -79,7 +78,7 @@ const CreateRequest = () => {
                 date: lang === 'ar' ? 'اليوم' : 'Today',
                 createdAt: new Date().toISOString(),
                 craftsmanId: craftsmanId,
-                totalPrice: formData.budget || '0'
+                totalPrice: '0'
             };
             
             // Save to local storage
@@ -92,7 +91,7 @@ const CreateRequest = () => {
                 startOrderSimulation(orderId, formData.craft);
             });
             
-            navigate('/payment');
+            navigate(`/order/${orderId}`);
         }, 2500);
     };
 
@@ -259,7 +258,7 @@ const CreateRequest = () => {
                                     inputMode="numeric"
                                     className="w-full h-14 bg-[var(--bg-color)] border-2 border-transparent focus:border-primary/20 rounded-2xl px-4 outline-none font-black text-xl text-center shadow-sm transition-all text-[var(--text-primary)]"
                                 />
-                                <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 bg-white dark:bg-slate-900 text-[8px] font-black text-slate-400 uppercase rounded-full border border-slate-100 dark:border-slate-800">HR</span>
+                                <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 bg-[var(--surface-color)] text-[8px] font-black text-slate-400 uppercase rounded-full border border-[var(--border-color)]">HR</span>
                             </div>
                             <span className="font-black text-2xl text-slate-300">:</span>
                             <div className="flex-1 relative group">
@@ -273,7 +272,7 @@ const CreateRequest = () => {
                                     inputMode="numeric"
                                     className="w-full h-14 bg-[var(--bg-color)] border-2 border-transparent focus:border-primary/20 rounded-2xl px-4 outline-none font-black text-xl text-center shadow-sm transition-all text-[var(--text-primary)]"
                                 />
-                                <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 bg-white dark:bg-slate-900 text-[8px] font-black text-slate-400 uppercase rounded-full border border-slate-100 dark:border-slate-800">MIN</span>
+                                <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 bg-[var(--surface-color)] text-[8px] font-black text-slate-400 uppercase rounded-full border border-[var(--border-color)]">MIN</span>
                             </div>
                             <div className="flex h-14 bg-[var(--bg-color)] rounded-2xl p-1 border border-[var(--border-color)]">
                                 <button type="button" className="flex-1 px-4 rounded-xl font-black text-[10px] bg-primary text-white shadow-sm">AM</button>
@@ -282,8 +281,8 @@ const CreateRequest = () => {
                         </div>
                     </div>
 
-                    {/* Location & Budget Row */}
-                    <div className="grid grid-cols-2 gap-4">
+                    {/* Location Row */}
+                    <div className="w-full">
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-widest px-2 flex items-center gap-1.5 opacity-60">
                                 <MapPin size={12} /> {t('request.location')}
@@ -297,21 +296,17 @@ const CreateRequest = () => {
                                 className="w-full h-14 bg-[var(--bg-color)] border-2 border-transparent focus:border-primary/20 rounded-2xl px-5 outline-none font-bold text-sm shadow-sm transition-all text-[var(--text-primary)]"
                             />
                         </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-widest px-2 flex items-center gap-1.5 opacity-60">
-                                <DollarSign size={12} /> {t('request.budget')}
-                            </label>
-                            <input
-                                type="number"
-                                name="budget"
-                                value={formData.budget}
-                                onChange={handleInputChange}
-                                inputMode="numeric"
-                                placeholder="0"
-                                className="w-full h-14 bg-[var(--bg-color)] border-2 border-transparent focus:border-primary/20 rounded-2xl px-5 outline-none font-black text-xl shadow-sm transition-all text-[var(--text-primary)]"
-                            />
-                        </div>
                     </div>
+                </div>
+
+                {/* Pricing Disclaimer */}
+                <div className="px-4 py-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-start gap-3">
+                    <AlertTriangle size={18} className="text-amber-500 shrink-0 mt-0.5" />
+                    <p className="text-[10px] font-bold text-amber-600 leading-relaxed">
+                        {lang === 'ar' 
+                          ? 'تنبيه: الأسعار النهائية يتم تحديدها من قبل الحرفي بعد معاينة مكان العمل فعلياً لضمان دقة التقييم.' 
+                          : 'Note: Final pricing is determined by the expert after physical inspection of the job site to ensure accurate assessment.'}
+                    </p>
                 </div>
 
                 {/* Submit Section */}
@@ -331,3 +326,4 @@ const CreateRequest = () => {
 };
 
 export default CreateRequest;
+

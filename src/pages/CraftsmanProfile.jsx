@@ -3,16 +3,16 @@ import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import { demoData } from '../data';
 import { useLanguage } from '../context/LanguageContext';
-import { 
-  Star, 
-  MapPin, 
-  ChevronLeft, 
-  MessageCircle, 
-  Phone, 
-  Heart, 
-  PlusCircle, 
-  MoreVertical, 
-  CheckCircle, 
+import {
+  Star,
+  MapPin,
+  ChevronLeft,
+  MessageCircle,
+  Phone,
+  Heart,
+  PlusCircle,
+  MoreVertical,
+  CheckCircle,
   ChevronRight,
   Shield,
   Zap,
@@ -24,8 +24,16 @@ const CraftsmanProfile = () => {
   const { lang, t } = useLanguage();
   const navigate = useNavigate();
   const craftsman = demoData.craftsmen.find(m => m.id === id);
-  const reviews = demoData.reviews.filter(r => r.craftsmanId === id);
-  
+  let reviews = demoData.reviews.filter(r => r.craftsmanId === id);
+  if (reviews.length === 0) {
+    // Generate some fake reviews for the mock craftsmen
+    reviews = [
+      { id: 'r1', clientName: 'أحمد محمود', rating: 5, comment: 'شغل ممتاز جداً ومواعيد مضبوطة، أنصح بالتعامل معه.', date: '2 days ago' },
+      { id: 'r2', clientName: 'سعيد عبد الله', rating: 4, comment: 'محترم وشغله نظيف، بس السعر كان غالي شوية.', date: '1 week ago' },
+      { id: 'r3', clientName: 'كريم مجدي', rating: 5, comment: 'أفضل حرفي تعاملت معاه، فاهم شغله كويس.', date: '2 weeks ago' }
+    ].slice(0, Math.floor(Math.random() * 3) + 1); // 1 to 3 reviews
+  }
+
   const [isFavorite, setIsFavorite] = React.useState(false);
   const [showMenu, setShowMenu] = React.useState(false);
 
@@ -47,25 +55,25 @@ const CraftsmanProfile = () => {
           {/* Action Buttons on Banner */}
           <div className="absolute top-8 inset-x-6 flex justify-end items-center z-20">
             <div className="flex gap-3">
-              <motion.button 
-                whileTap={{ scale: 0.9 }} 
+              <motion.button
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setIsFavorite(!isFavorite)}
                 className={`w-12 h-12 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/30 shadow-lg transition-all ${isFavorite ? 'bg-red-500 text-white border-red-400' : 'bg-white/20 text-white'}`}
               >
                 <Heart size={22} fill={isFavorite ? "currentColor" : "none"} />
               </motion.button>
-              
+
               <div className="relative">
-                <motion.button 
-                  whileTap={{ scale: 0.9 }} 
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => setShowMenu(!showMenu)}
                   className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-2xl flex items-center justify-center text-white border border-white/30 shadow-lg"
                 >
                   <MoreVertical size={22} />
                 </motion.button>
-                
+
                 {showMenu && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     className="absolute top-16 end-0 w-48 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-2xl shadow-2xl z-50 p-2 overflow-hidden"
@@ -146,15 +154,15 @@ const CraftsmanProfile = () => {
         </div>
 
         {/* Stats Grid - Premium Cards */}
-        <div className="grid grid-cols-3 gap-4 px-1">
+        <div className="grid grid-cols-3 gap-3 sm:gap-4 px-1">
           {[
             { label: t('craftsmen.jobsDone'), value: craftsman.completedOrders, color: 'text-indigo-600', bg: 'bg-indigo-500/10' },
-            { label: t('craftsmen.experience'), value: '12+', color: 'text-emerald-600', bg: 'bg-emerald-500/10' },
-            { label: t('craftsmen.priceLabel'), value: craftsman.pricePerHour, color: 'text-primary', bg: 'bg-primary/10' }
+            { label: lang === 'ar' ? 'أعمال مميزة' : 'Featured Jobs', value: Math.floor(craftsman.completedOrders / 4), color: 'text-emerald-600', bg: 'bg-emerald-500/10' },
+            { label: t('craftsmen.priceLabel'), value: t('order.priceOnInspection'), isPrice: true, color: 'text-primary', bg: 'bg-primary/10' }
           ].map((stat, i) => (
-            <div key={i} className={`${stat.bg} p-5 rounded-[36px] flex flex-col items-center justify-center border-2 border-white/50 dark:border-white/5 shadow-sm hover:shadow-md transition-all group`}>
-              <span className={`text-2xl font-black ${stat.color} group-hover:scale-110 transition-transform`}>{stat.value}</span>
-              <span className="text-[9px] text-[var(--text-secondary)] font-black uppercase tracking-tighter text-center mt-1 opacity-60 leading-none">{stat.label}</span>
+            <div key={i} className={`${stat.bg} p-4 sm:p-5 rounded-[28px] sm:rounded-[36px] flex flex-col items-center justify-center border-2 border-white/50 dark:border-white/5 shadow-sm hover:shadow-md transition-all group`}>
+              <span className={`${stat.isPrice ? 'text-[9px]' : 'text-xl sm:text-2xl'} font-black ${stat.color} group-hover:scale-110 transition-transform text-center`}>{stat.value}</span>
+              <span className="text-[8px] sm:text-[9px] text-[var(--text-secondary)] font-black uppercase tracking-tighter text-center mt-1 opacity-60 leading-none">{stat.label}</span>
             </div>
           ))}
         </div>
@@ -173,45 +181,7 @@ const CraftsmanProfile = () => {
           </p>
         </div>
 
-        {/* Services / Offers - Premium List */}
-        {craftsman.services && craftsman.services.length > 0 && (
-          <div className="space-y-6 px-1">
-            <div className="flex justify-between items-end">
-              <h3 className="text-2xl font-black text-[var(--text-primary)]">{t('craftsmen.servicesTitle')}</h3>
-            </div>
-            <div className="flex flex-col space-y-4">
-              {craftsman.services.map(svc => (
-                <motion.div
-                  key={svc.id}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => navigate('/payment')}
-                  className="bg-[var(--surface-color)] border border-[var(--border-color)] p-6 rounded-[36px] flex justify-between items-center group cursor-pointer hover:border-primary/30 transition-all shadow-sm hover:shadow-xl relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="flex items-center gap-5 relative z-10">
-                    <div className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 transition-transform">
-                      <PlusCircle size={28} />
-                    </div>
-                    <div className="space-y-1">
-                      <h4 className="font-black text-lg text-[var(--text-primary)]">{lang === 'ar' ? svc.title : svc.titleEn}</h4>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-black text-primary">
-                          {svc.price} {t('account.currency')}
-                        </span>
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest opacity-60">
-                          {svc.type === 'hour' ? ` ${t('craftsmen.perHr')}` : ''}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="w-12 h-12 rounded-full bg-[var(--bg-color)] text-slate-300 group-hover:bg-primary group-hover:text-white flex items-center justify-center shadow-sm group-hover:shadow-lg transition-all transform group-hover:scale-110 border border-[var(--border-color)] relative z-10">
-                    <ChevronRight size={22} className={`${lang === 'ar' ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`} />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Services / Offers section removed as requested */}
 
         <div className="space-y-6">
           <h3 className="text-2xl font-black text-[var(--text-primary)] px-1">{t('craftsmen.portfolio')}</h3>
@@ -258,6 +228,15 @@ const CraftsmanProfile = () => {
                     ))}
                   </div>
                 </div>
+                <div className="mb-3 inline-flex items-center gap-2 bg-[var(--bg-color)] px-3 py-1.5 rounded-xl border border-[var(--border-color)] relative z-10">
+                  <span className="text-xs font-black text-[var(--text-primary)]">
+                    {lang === 'ar' ? 'مهمة منجزة:' : 'Completed Task:'} {demoData.crafts.find(c => c.id === craftsman.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
+                  </span>
+                  <span className="w-1 h-1 bg-slate-300 rounded-full" />
+                  <span className="text-[10px] font-bold text-[var(--text-secondary)] opacity-80">
+                    {lang === 'ar' ? `استغرقت ${Math.floor(Math.random() * 3) + 1} أيام` : `Took ${Math.floor(Math.random() * 3) + 1} days`}
+                  </span>
+                </div>
                 <p className="text-sm text-[var(--text-secondary)] font-bold italic leading-relaxed opacity-80 pl-4 border-l-4 border-primary/20 relative z-10">
                   "{review.comment}"
                 </p>
@@ -280,7 +259,7 @@ const CraftsmanProfile = () => {
           >
             <MessageCircle size={24} className="group-hover:scale-110 transition-transform" />
           </motion.button>
-          
+
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/request/new', { state: { prefilledCraft: craftsman.craftId, craftsmanId: craftsman.id } })}
@@ -297,3 +276,4 @@ const CraftsmanProfile = () => {
 };
 
 export default CraftsmanProfile;
+

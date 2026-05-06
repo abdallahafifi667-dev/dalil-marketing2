@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Grid, MessageCircle, User } from 'lucide-react';
+import { Home, Grid, MessageCircle, User, Briefcase } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { motion } from 'framer-motion';
 
@@ -10,8 +10,8 @@ const BottomNav = () => {
   const isCraftsman = localStorage.getItem('userRole') === 'craftsman';
   
   const navItems = isCraftsman ? [
-    { path: '/', icon: <Home size={24} />, label: t('ControlPanel.title') },
-    { path: '/craftsmen', icon: <Grid size={24} />, label: t('crafts.title')},
+    { path: '/', icon: <Home size={24} />, label: t('nav.home') },
+    { path: '/active-jobs', icon: <Briefcase size={24} />, label: t('nav.jobs') || 'أعمالي' },
     { path: '/chat', icon: <MessageCircle size={24} />, label: t('chat.title') },
     { path: '/account', icon: <User size={24} />, label: t('account.title') },
   ] : [
@@ -59,3 +59,4 @@ const BottomNav = () => {
 };
 
 export default BottomNav;
+

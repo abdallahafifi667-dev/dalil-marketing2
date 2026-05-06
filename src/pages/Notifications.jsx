@@ -55,7 +55,7 @@ const Notifications = () => {
             </h2>
             <p className="text-[10px] text-[var(--text-secondary)] font-black uppercase tracking-widest opacity-60 flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-              {notifications.filter(n => n.unread).length} {lang === 'ar' ? 'تنبيهات جديدة' : 'New Notifications'}
+              {t('notifications.new', { count: notifications.filter(n => n.unread).length })}
             </p>
           </div>
           
@@ -64,7 +64,7 @@ const Notifications = () => {
               whileTap={{ scale: 0.9 }}
               onClick={markAllRead}
               className="w-10 h-10 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center border border-emerald-500/20"
-              title={lang === 'ar' ? 'تحديد الكل كمقروء' : 'Mark all as read'}
+              title={t('notifications.markAllRead')}
             >
               <CheckCircle2 size={20} />
             </motion.button>
@@ -72,7 +72,7 @@ const Notifications = () => {
               whileTap={{ scale: 0.9 }}
               onClick={clearAll}
               className="w-10 h-10 bg-red-500/10 text-red-600 rounded-xl flex items-center justify-center border border-red-500/20"
-              title={lang === 'ar' ? 'حذف الكل' : 'Clear all'}
+              title={t('notifications.clearAll')}
             >
               <Trash2 size={20} />
             </motion.button>
@@ -90,28 +90,29 @@ const Notifications = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, x: -20 }}
-                  className={`relative p-5 rounded-[32px] bg-[var(--surface-color)] border border-[var(--border-color)] group hover:border-primary/20 transition-all flex gap-4 ${n.unread ? 'shadow-lg shadow-primary/5' : 'opacity-80'}`}
+                  className={`relative p-6 rounded-[36px] bg-[var(--surface-color)] border border-[var(--border-color)] group hover:border-primary/30 transition-all flex gap-5 ${n.unread ? 'shadow-xl shadow-primary/5 border-primary/20' : 'opacity-80'}`}
                 >
                   {n.unread && (
-                    <div className="absolute top-4 end-4 w-2 h-2 bg-primary rounded-full" />
+                    <div className="absolute top-6 end-6 w-2.5 h-2.5 bg-primary rounded-full border-2 border-[var(--surface-color)] shadow-sm" />
                   )}
                   
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center bg-[var(--bg-color)] shadow-sm shrink-0`}>
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center bg-[var(--bg-color)] shadow-inner shrink-0 transition-transform group-hover:scale-110`}>
                     {getIcon(n.type)}
                   </div>
                   
-                  <div className="flex-1 space-y-1">
+                  <div className="flex-1 space-y-1.5">
                     <div className="flex justify-between items-start">
-                      <h4 className="font-black text-sm text-[var(--text-primary)]">{n.title}</h4>
-                      <span className="text-[8px] font-bold text-[var(--text-secondary)] opacity-40">{n.time}</span>
+                      <h4 className="font-black text-base text-[var(--text-primary)]">{n.title}</h4>
+                      <span className="text-[10px] font-black text-[var(--text-secondary)] opacity-40 uppercase tracking-tighter">{n.time}</span>
                     </div>
-                    <p className="text-xs text-[var(--text-secondary)] font-bold leading-relaxed">{n.body}</p>
+                    <p className="text-sm font-bold text-[var(--text-secondary)] opacity-70 leading-relaxed">{n.body}</p>
                     
                     <button 
                       onClick={() => deleteOne(n.id)}
-                      className="text-[10px] font-black text-red-500 pt-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="text-[10px] font-black text-red-500 pt-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all"
                     >
-                      {lang === 'ar' ? 'حذف' : 'Delete'}
+                      <Trash2 size={12} />
+                      {t('notifications.delete')}
                     </button>
                   </div>
                 </motion.div>
@@ -120,12 +121,15 @@ const Notifications = () => {
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="py-20 text-center flex flex-col items-center justify-center space-y-4"
+                className="py-24 text-center flex flex-col items-center justify-center space-y-6"
               >
-                <div className="w-20 h-20 bg-[var(--surface-color)] rounded-[32px] flex items-center justify-center text-slate-300">
-                  <Bell size={40} />
+                <div className="w-24 h-24 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[44px] flex items-center justify-center text-slate-200 shadow-sm">
+                  <Bell size={44} />
                 </div>
-                <p className="font-black text-[var(--text-secondary)] opacity-40">{lang === 'ar' ? 'لا توجد إشعارات حالياً' : 'No notifications yet'}</p>
+                <div className="space-y-1">
+                  <h3 className="font-black text-xl text-[var(--text-primary)]">{t('notifications.emptyTitle') || (lang === 'ar' ? 'لا يوجد تنبيهات' : 'No Notifications')}</h3>
+                  <p className="font-bold text-sm text-[var(--text-secondary)] opacity-40 px-10">{t('notifications.emptyDesc') || (lang === 'ar' ? 'سوف تظهر هنا كافة التحديثات والرسائل الجديدة فور وصولها.' : 'All updates and messages will appear here once they arrive.')}</p>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
@@ -136,3 +140,4 @@ const Notifications = () => {
 };
 
 export default Notifications;
+

@@ -27,6 +27,10 @@ const Header = () => {
     if (path.includes('/settings/')) return t('account.settings');
     if (path.includes('/request/new')) return t('request.newTitle');
     if (path.includes('/chat/')) return t('chat.chatDetail');
+    if (path === '/proposals') return t('nav.jobs');
+    if (path === '/active-jobs') return t('nav.jobs');
+    if (path === '/reviews') return t('nav.support');
+    if (path === '/terms') return t('nav.support');
     return '';
   };
 
@@ -62,7 +66,7 @@ const Header = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate(-1)}
-                className="w-11 h-11 rounded-[18px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[var(--text-primary)] shadow-md hover:border-primary/50 transition-all"
+                className="w-11 h-11 rounded-[18px] bg-[var(--surface-color)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-primary)] shadow-md hover:border-primary/50 transition-all"
               >
                 <ChevronLeft size={22} className={lang === 'ar' ? 'rotate-180' : ''} />
               </motion.button>
@@ -102,11 +106,11 @@ const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate('/notifications')}
-          className="relative w-11 h-11 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[var(--text-primary)] flex items-center justify-center shadow-md hover:border-primary/50 transition-all"
+          className="relative w-11 h-11 rounded-2xl bg-[var(--surface-color)] border-[var(--border-color)] text-[var(--text-primary)] flex items-center justify-center shadow-sm hover:border-primary/30 transition-all"
         >
-          <Bell size={20} className="text-slate-600 dark:text-slate-300" />
+          <Bell size={20} className="text-[var(--text-secondary)]" />
           {notificationCount > 0 && (
-            <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-slate-900 shadow-sm" />
+            <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-[var(--surface-color)] shadow-sm" />
           )}
         </motion.button>
 
@@ -114,7 +118,7 @@ const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={toggleLang}
-          className="px-3 h-11 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-primary font-black text-[10px] tracking-widest shadow-md hover:border-primary/50 transition-all"
+          className="px-3 h-11 rounded-2xl bg-[var(--surface-color)] border-[var(--border-color)] text-primary font-black text-[10px] tracking-widest shadow-sm hover:border-primary/30 transition-all"
         >
           {lang === 'ar' ? 'EN' : 'AR'}
         </motion.button>
@@ -123,9 +127,9 @@ const Header = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={toggleTheme}
-          className="w-11 h-11 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[var(--text-primary)] flex items-center justify-center shadow-md hover:border-primary/50 transition-all"
+          className="w-11 h-11 rounded-2xl bg-[var(--surface-color)] border-[var(--border-color)] text-[var(--text-primary)] flex items-center justify-center shadow-sm hover:border-primary/30 transition-all"
         >
-          {theme === 'light' ? <Moon size={20} className="text-slate-500" /> : <Sun size={20} className="text-amber-400" />}
+          {theme === 'light' ? <Moon size={20} className="text-slate-400" /> : <Sun size={20} className="text-amber-400" />}
         </motion.button>
       </div>
     </header>
@@ -133,3 +137,4 @@ const Header = () => {
 };
 
 export default Header;
+

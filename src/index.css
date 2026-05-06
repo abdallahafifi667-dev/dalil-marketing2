@@ -11,12 +11,12 @@
 
 @layer base {
   :root {
-    --bg-color: #f1f5f9;
+    --bg-color: #f8fafc;
     --surface-color: #ffffff;
-    --text-primary: #020617;
-    --text-secondary: #475569;
-    --border-color: #e2e8f0;
-    --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+    --text-primary: #0f172a;
+    --text-secondary: #64748b;
+    --border-color: #f1f5f9;
+    --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.04);
   }
 
   .dark {
@@ -29,10 +29,10 @@
   }
 
   html, body {
-    @apply h-full w-full m-0 p-0 overflow-hidden bg-[var(--bg-color)] font-sans antialiased;
+    @apply h-full w-full m-0 p-0 bg-[var(--bg-color)] font-sans antialiased overflow-hidden transition-colors duration-300;
     touch-action: pan-x pan-y;
     -webkit-text-size-adjust: 100%;
-    position: fixed; /* Prevents scroll bounce and shaking on some browsers */
+    overscroll-behavior: none;
   }
 
   * {
@@ -95,14 +95,14 @@
 
   /* Glassmorphism Components - Improved for Light/Dark */
   .glass {
-    @apply backdrop-blur-xl border shadow-xl;
-    background: rgba(255, 255, 255, 0.85);
-    border-color: rgba(255, 255, 255, 0.3);
+    @apply backdrop-blur-2xl border shadow-2xl;
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.5);
   }
 
   .dark .glass {
-    background: rgba(15, 23, 42, 0.8);
-    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(15, 23, 42, 0.7);
+    border-color: rgba(255, 255, 255, 0.1);
   }
 
   .glass-card {
@@ -132,5 +132,43 @@
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Premium Neo-Shadows */
+  .neo-shadow {
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1),
+                0 15px 25px -10px rgba(0, 0, 0, 0.05);
+  }
+
+  .dark .neo-shadow {
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6),
+                0 18px 36px -18px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Gradient Overlays */
+  .grad-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+  }
+
+  /* Shimmer Effect */
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite linear;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* Smooth Pulse */
+  .animate-pulse-slow {
+    animation: pulse-slow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.98); }
   }
 }

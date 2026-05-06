@@ -10,10 +10,14 @@ import {
   XCircle, 
   ChevronRight, 
   Camera, 
-  ArrowUpRight,
   Plus,
   Inbox,
-  LogOut
+  LogOut,
+  HelpCircle,
+  Shield,
+  Star,
+  MapPin,
+  TrendingUp
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,7 +44,6 @@ const Account = ({ onLogout }) => {
     return () => clearInterval(interval);
   }, [localOrders.length]);
 
-  // Filter orders for the current user
   const userOrders = useMemo(() => {
     const combined = [...localOrders, ...orders];
     return combined.filter(o => o.clientId === user.id || o.clientId === 'u1');
@@ -72,171 +75,166 @@ const Account = ({ onLogout }) => {
   };
 
   const tabs = [
-    { id: 'active', label: t('account.activeRequests') || 'طلبات نشطة', icon: <Clock size={16} /> },
-    { id: 'completed', label: t('account.completedRequests') || 'مكتملة', icon: <CheckCircle size={16} /> },
-    { id: 'cancelled', label: t('account.cancelledRequests') || 'ملغاة', icon: <XCircle size={16} /> },
+    { id: 'active', label: t('account.activeRequests') || (lang === 'ar' ? 'نشطة' : 'Active'), icon: <Clock size={16} /> },
+    { id: 'completed', label: t('account.completedRequests') || (lang === 'ar' ? 'مكتملة' : 'Done'), icon: <CheckCircle size={16} /> },
+    { id: 'cancelled', label: t('account.cancelledRequests') || (lang === 'ar' ? 'ملغاة' : 'Cancelled'), icon: <XCircle size={16} /> },
   ];
 
   return (
-    <div className="page-container with-nav-padding pt-0 px-0 space-y-0 relative overflow-x-hidden">
-      {/* Premium Profile Header */}
-      <div className="relative h-[280px]">
-        {/* Cover Image */}
-        <div className="absolute inset-0 bg-slate-900 overflow-hidden">
-          <img 
-            src="https://images.unsplash.com/photo-1557683316-973673baf926?w=1200&h=600&fit=crop" 
-            className="w-full h-full object-cover opacity-60 scale-105"
-            alt="Cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/40 to-[var(--bg-color)]" />
+    <div className="page-container with-nav-padding pt-0 px-0 space-y-0 relative overflow-x-hidden min-h-screen">
+      {/* Immersive Header */}
+      <div className="relative h-[320px] w-full overflow-hidden">
+        <div className="absolute inset-0 bg-slate-900">
+            <img 
+                src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1200&h=600&fit=crop" 
+                className="w-full h-full object-cover opacity-40 scale-110"
+                alt="Profile Backdrop"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-slate-900/40 to-[var(--bg-color)]" />
         </div>
 
-        {/* Header Actions */}
-        <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-20">
-          <button 
-            onClick={() => navigate(`/settings/${user.id}`)}
-            className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all shadow-xl"
-          >
-            <Settings size={22} />
-          </button>
-          
-          <div className="flex items-center gap-3">
-             {/* Balance Pill */}
-             <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 shadow-xl">
-               <div className="flex flex-col items-start">
-                 <span className="text-[8px] font-black text-white/60 uppercase tracking-widest">{t('account.balance')}</span>
-                 <span className="text-sm font-black text-white">{user.balance} <span className="text-[10px] opacity-60 font-normal">{t('account.currency')}</span></span>
-               </div>
-               <button 
-                onClick={() => navigate('/payment')}
-                className="w-8 h-8 rounded-xl bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-110 transition-transform"
-               >
-                 <Plus size={18} />
-               </button>
-             </div>
-          </div>
+        <div className="absolute top-8 left-6 right-6 flex justify-between items-center z-20">
+            <motion.button 
+                whileTap={{ scale: 0.9 }}
+                onClick={() => navigate('/settings')}
+                className="w-12 h-12 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center justify-center text-white"
+            >
+                <Settings size={22} />
+            </motion.button>
         </div>
 
-        {/* Profile Info Overlay */}
-        <div className="absolute -bottom-16 inset-x-0 flex flex-col items-center">
-          <div className="relative">
-            <motion.div 
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="w-32 h-32 rounded-[44px] border-8 border-[var(--bg-color)] shadow-2xl overflow-hidden bg-white dark:bg-slate-900 relative z-10"
-            >
-              <img src={userImage} alt={user.name} className="w-full h-full object-cover" />
-            </motion.div>
-            <button 
-              onClick={() => fileInputRef.current?.click()}
-              className="absolute bottom-1 -right-1 w-10 h-10 bg-primary text-white rounded-2xl flex items-center justify-center border-4 border-[var(--bg-color)] shadow-xl z-20 hover:scale-110 transition-transform"
-            >
-              <Camera size={18} />
-            </button>
-          </div>
-          
-          <div className="mt-4 text-center space-y-1">
-            <h2 className="text-3xl font-black text-[var(--text-primary)] tracking-tight">{user.name}</h2>
-            <div className="flex items-center justify-center gap-2">
-               <span className="bg-primary/10 text-primary px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest">
-                  {user.role === 'client' ? t('account.goldClient') : t('account.verifiedCraftsman')}
-               </span>
-               <span className="text-[var(--text-secondary)] text-[10px] font-bold opacity-60">{user.email}</span>
+        <div className="absolute -bottom-1 inset-x-0 flex flex-col items-center">
+            <div className="relative">
+                <motion.div 
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="w-32 h-32 rounded-[44px] border-[8px] border-white dark:border-slate-900 shadow-2xl overflow-hidden relative z-10"
+                >
+                    <img src={userImage} alt={user.name} className="w-full h-full object-cover" />
+                </motion.div>
+                <button 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="absolute bottom-1 -right-1 w-11 h-11 bg-primary text-white rounded-2xl flex items-center justify-center border-4 border-white dark:border-slate-900 shadow-xl z-20 hover:scale-110 transition-transform"
+                >
+                    <Camera size={20} />
+                </button>
             </div>
-          </div>
+            
+            <div className="mt-4 text-center space-y-1 pb-6">
+                <h2 className="text-3xl font-black text-[var(--text-primary)] tracking-tight">{user.name}</h2>
+                <div className="flex items-center justify-center gap-3">
+                    <div className="flex items-center gap-1.5 text-[var(--text-secondary)] text-[10px] font-black uppercase tracking-widest opacity-60">
+                        <MapPin size={12} className="text-primary" /> {user.location}
+                    </div>
+                </div>
+            </div>
         </div>
       </div>
 
       <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
 
-      {/* Spacing for Header Overlay */}
-      <div className="h-24" />
+      {/* Main Content Area */}
+      <div className="px-6 space-y-10 pt-4">
+        {/* Requests Section */}
+        <div className="space-y-6">
+            <div className="flex justify-between items-end px-1">
+                <div>
+                    <h3 className="text-xl font-black text-[var(--text-primary)]">{lang === 'ar' ? 'طلباتي' : 'My Requests'}</h3>
+                    <p className="text-[10px] font-bold text-[var(--text-secondary)] opacity-40 uppercase tracking-widest">{lang === 'ar' ? 'تابع حالة طلباتك الحالية' : 'TRACK YOUR ACTIVE JOBS'}</p>
+                </div>
+                {activeTab === 'active' && filteredOrders.length > 0 && (
+                     <button onClick={() => navigate('/request/new')} className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center shadow-sm">
+                        <Plus size={20} />
+                    </button>
+                )}
+            </div>
 
-      <div className="px-6 space-y-8">
-        {/* Tabs Navigation */}
-        <div className="flex gap-2 bg-slate-100 dark:bg-slate-900/50 p-1.5 rounded-[28px] border border-slate-100 dark:border-slate-800">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 flex items-center justify-center gap-2 py-3.5 rounded-[22px] text-xs font-black transition-all ${activeTab === tab.id ? 'bg-white dark:bg-slate-800 text-primary shadow-lg' : 'text-slate-500 hover:text-primary'}`}
-            >
-              {tab.icon}
-              <span className="hidden sm:inline">{tab.label}</span>
-            </button>
-          ))}
+            <div className="flex gap-2 bg-[var(--surface-color)] p-1.5 rounded-[28px] border border-[var(--border-color)] shadow-inner">
+                {tabs.map((tab) => (
+                    <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-[22px] text-[10px] font-black transition-all uppercase tracking-widest ${activeTab === tab.id ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-[var(--text-secondary)] opacity-60 hover:opacity-100'}`}
+                    >
+                        {tab.icon}
+                        <span>{tab.label}</span>
+                    </button>
+                ))}
+            </div>
+
+            <div className="space-y-4">
+                <AnimatePresence mode="wait">
+                    {filteredOrders.length > 0 ? (
+                        <motion.div 
+                            key={activeTab}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            className="space-y-4"
+                        >
+                            {filteredOrders.map((order) => (
+                                <motion.div 
+                                    key={order.id}
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => navigate(`/order/${order.id}`)}
+                                    className="bg-[var(--surface-color)] p-5 rounded-[40px] border border-[var(--border-color)] shadow-sm hover:shadow-xl transition-all cursor-pointer group flex justify-between items-center relative overflow-hidden"
+                                >
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-primary/30" />
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-14 h-14 bg-[var(--bg-color)] text-primary rounded-[20px] flex items-center justify-center shrink-0 shadow-inner">
+                                            <Inbox size={24} />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h4 className="font-black text-base text-[var(--text-primary)] truncate max-w-[150px]">{order.title}</h4>
+                                            <div className="flex items-center gap-2 text-[10px] text-[var(--text-secondary)] font-bold opacity-60">
+                                                <span>{order.date}</span>
+                                                <span className="w-1 h-1 bg-slate-300 rounded-full" />
+                                                <span className="text-primary">{t('order.priceOnInspection')}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="w-10 h-10 rounded-2xl bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+                                        <ChevronRight size={18} className={lang === 'ar' ? 'rotate-180' : ''} />
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    ) : (
+                        <motion.div 
+                            key="empty"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="py-12 flex flex-col items-center justify-center text-center space-y-6"
+                        >
+                            <div className="w-24 h-24 bg-primary/5 rounded-[48px] flex items-center justify-center text-primary/20">
+                                <Inbox size={48} />
+                            </div>
+                            <div className="space-y-2 px-10">
+                                <h3 className="text-xl font-black text-[var(--text-primary)]">{lang === 'ar' ? 'لا توجد طلبات هنا' : 'No requests yet'}</h3>
+                                <p className="text-xs text-[var(--text-secondary)] font-bold opacity-60 leading-relaxed">
+                                    {lang === 'ar' ? 'ابدأ الآن واطلب خدمتك الأولى بكل سهولة مع موبول.' : 'Start now and request your first service with Mobulle.'}
+                                </p>
+                            </div>
+                            {activeTab === 'active' && (
+                                <motion.button 
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => navigate('/request/new')}
+                                    className="px-10 h-14 bg-primary text-white rounded-2xl font-black text-sm shadow-xl shadow-primary/20 flex items-center gap-3"
+                                >
+                                    <Plus size={20} />
+                                    {t('home.newRequest')}
+                                </motion.button>
+                            )}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
         </div>
 
-      {/* Requests Content */}
-      <div className="space-y-4">
-        <AnimatePresence mode="wait">
-          {filteredOrders.length > 0 ? (
-            <motion.div 
-              key={activeTab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="space-y-4"
-            >
-              {filteredOrders.map((order) => (
-                <div 
-                  key={order.id}
-                  onClick={() => navigate(`/order/${order.id}`)}
-                  className="bg-[var(--surface-color)] p-5 rounded-[32px] border border-[var(--border-color)] shadow-sm hover:shadow-xl transition-all cursor-pointer group flex justify-between items-center"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shrink-0">
-                      <Inbox size={24} />
-                    </div>
-                    <div>
-                      <h4 className="font-black text-sm text-[var(--text-primary)] mb-1 group-hover:text-primary transition-colors">{order.title}</h4>
-                      <div className="flex items-center gap-2 text-[10px] text-[var(--text-secondary)] font-bold opacity-60">
-                        <span>{order.date}</span>
-                        <span className="w-1 h-1 bg-slate-300 rounded-full" />
-                        <span>{order.budget}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-300 group-hover:bg-primary group-hover:text-white transition-all">
-                    <ChevronRight size={18} className={lang === 'ar' ? 'rotate-180' : ''} />
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div 
-              key="empty"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="py-16 flex flex-col items-center justify-center text-center space-y-4"
-            >
-              <div className="w-24 h-24 bg-slate-50 dark:bg-slate-900 rounded-[40px] flex items-center justify-center text-slate-300">
-                <Inbox size={48} />
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-xl font-black text-[var(--text-primary)]">{t('account.emptyTitle') || 'لا توجد طلبات'}</h3>
-                <p className="text-sm text-[var(--text-secondary)] font-bold opacity-60 max-w-[250px] mx-auto">
-                  {t('account.emptyDesc') || 'لم تقم بإضافة أي طلبات في هذا القسم بعد.'}
-                </p>
-              </div>
-              {activeTab === 'active' && (
-                <button 
-                  onClick={() => navigate('/request/new')}
-                  className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-2xl font-black text-sm shadow-xl shadow-primary/20"
-                >
-                  <Plus size={18} />
-                  {t('home.newRequest')}
-                </button>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="pb-10" />
       </div>
-
-
     </div>
-  </div>
-);
+  );
 };
 
 export default Account;

@@ -5,43 +5,69 @@
     "craftsmen": "Craftsmen",
     "chat": "Chat",
     "account": "Account",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "jobs": "My Jobs",
+    "support": "Support"
   },
   "welcome": "Welcome",
   "login": "Login",
   "register": "Register",
   "home": {
     "title": "Home",
-    "welcomeBack": "Welcome back",
-    "newRequest": "New Request"
+    "welcomeBack": "Welcome Back",
+    "newRequest": "New Request",
+    "hello": "Hello, {{name}}",
+    "search": "Search",
+    "heroTitle": "Request your service now with ease",
+    "heroDesc": "Get offers from the best verified craftsmen in your area within minutes.",
+    "trending": "Trending",
+    "offers": "Offers",
+    "verified": "Verified",
+    "support": "Support",
+    "explore": "EXPLORE SERVICES",
+    "bestRated": "BEST RATED NEARBY",
+    "proBannerTitle": "Are you an expert?",
+    "proBannerDesc": "Join Mobulle now and double your monthly income.",
+    "registerPro": "Register as Pro"
+  },
+  "dashboard": {
+    "managementCenter": "Management Center",
+    "managementDesc": "Tools to control your business",
+    "liveRequests": "Available Requests",
+    "urgent": "Urgent",
+    "online": "Online Now",
+    "performance": "Weekly Performance",
+    "growth": "+12.5% growth from last month",
+    "searchPlaceholder": "Search available requests...",
+    "activeJobs": "Active Jobs"
+  },
+  "ControlPanel": {
+    "title": "Control Panel"
   },
   "crafts": {
     "title": "Crafts",
-    "desc": "Select a specialty"
-  },
-  "ControlPanel": {
-    "title": "لوحة التحكم"
+    "desc": "Choose the specialty you are looking for"
   },
   "chat": {
-    "title": "Messages",
-    "desc": "Connect with craftsmen and track orders",
-    "search": "Search messages...",
-    "since": "Since",
-    "typeMessage": "Type a message...",
+    "title": "Chats",
+    "desc": "Communicate with craftsmen and follow up on your requests",
+    "search": "Search in chats...",
+    "since": "since",
+    "typeMessage": "Type your message...",
+    "online": "Online Now",
+    "clear": "Clear Chat",
+    "activeAgo": "Active 10m ago",
     "replies": {
-      "ok": "Okay, I'll talk to you soon.",
-      "working": "Working on it, what time works for you?",
-      "gotIt": "Got it, following up now.",
-      "welcome": "Hello! Happy to help with any questions."
+      "ok": "Okay, I will contact you soon.",
+      "working": "I am working on it, what time would you like me to come?",
+      "gotIt": "Message received, following up.",
+      "welcome": "Welcome, I am here for any inquiries."
     },
     "chatDetail": "Chat"
   },
   "account": {
     "title": "Account",
     "desc": "Manage your profile and settings",
-    "balance": "Available Balance",
-    "currency": "EGP",
-    "topUp": "Top up",
     "myOrders": "My Orders",
     "payments": "Payments",
     "help": "Help Center",
@@ -52,53 +78,168 @@
     "goldClient": "Gold Client",
     "verifiedCraftsman": "Verified Craftsman",
     "workSettings": "Work Settings",
-    "customize": "Customize"
+    "customize": "Customize",
+    "activeRequests": "Active Requests",
+    "completedRequests": "Completed Requests",
+    "cancelledRequests": "Cancelled Requests",
+    "helpDesc": "Get technical support and help",
+    "currency": "EGP",
+    "wallet": "Wallet",
+    "emptyTitle": "No requests",
+    "emptyDesc": "You haven't added any requests in this section yet."
   },
   "craftsmen": {
     "title": "Craftsmen",
-    "desc": "Find the right pro",
-    "priceHr": "Price/hr",
+    "desc": "Find the right professional",
+    "subtitle": "CONNECT WITH EXPERTS NEAR YOU",
+    "all": "All",
+    "priceHr": "Hourly Price",
     "rating": "Rating",
     "verified": "Verified",
-    "reviews": "Reviews",
-    "jobsDone": "Jobs Done",
-    "experience": "Experience",
-    "priceLabel": "EGP/hour",
-    "aboutMe": "About Me",
-    "servicesTitle": "Services & Offers",
+    "reviews": "Review",
+    "jobsDone": "Completed Job",
+    "experience": "Years Experience",
+    "priceLabel": "EGP/Hour",
+    "aboutMe": "About Craftsman",
+    "servicesTitle": "Available Services",
     "portfolio": "Portfolio",
-    "reviewsTitle": "Reviews",
+    "reviewsTitle": "Customer Reviews",
     "quickChat": "Quick Chat",
     "bookNow": "Book Now",
-    "bioFallback": "Professional expert providing top-quality services with precision and punctuality...",
-    "perHr": "/ hr",
-    "profile": "Profile"
+    "bioFallback": "Professional expert providing the best services with high quality and punctuality...",
+    "perHr": "/ hour",
+    "profile": "Profile",
+    "pricing": "PRICING",
+    "noneFound": "No craftsmen found",
+    "noneFoundDesc": "Try different keywords or categories.",
+    "proposalsHistory": {
+      "title": "Proposals History"
+    },
+    "reviewsHistory": {
+      "title": "Reviews"
+    }
+  },
+  "reviewsHistory": {
+    "title": "Customer Reviews",
+    "subtitle": "See what customers say about your work"
+  },
+  "proposals": {
+    "title": "Proposals History",
+    "subtitle": "Track the status of your sent bids",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "pending": "Pending",
+    "empty": "No proposals sent yet"
+  },
+  "support": {
+    "online": "Support Online",
+    "welcome": "Welcome to Mobulle Support! How can I help you today?",
+    "response": "Thank you for reaching out. Your inquiry has been received and will be forwarded to the specialized team for a response as soon as possible.",
+    "placeholder": "Type your inquiry here..."
+  },
+  "terms": {
+    "title": "Policies & Security",
+    "subtitle": "Learn about your rights and how we protect you",
+    "verified": "Verified & Trusted",
+    "privacy": {
+      "title": "Privacy Policy",
+      "content": "We are committed to protecting your personal data and ensuring its confidentiality. Your information is only used to improve the service experience and facilitate communication."
+    },
+    "terms": {
+      "title": "Terms of Use",
+      "content": "By using the platform, you agree to abide by ethical and professional rules. The platform is not responsible for external agreements made outside the official system."
+    },
+    "security": {
+      "title": "Security & Guarantee",
+      "content": "All verified craftsmen undergo a thorough auditing process to ensure the highest levels of safety and quality for our users."
+    }
+  },
+  "market": {
+    "title": "Job Market",
+    "subtitle": "BROWSE LATEST OPPORTUNITIES IN YOUR AREA",
+    "searchPlaceholder": "Search jobs...",
+    "urgent": "URGENT",
+    "noJobs": "No jobs found",
+    "noJobsDesc": "We couldnt find any jobs matching your search."
+  },
+  "notifications": {
+    "new": "{{count}} New Notifications",
+    "markAllRead": "Mark all as read",
+    "clearAll": "Clear all",
+    "delete": "Delete",
+    "empty": "No notifications yet",
+    "emptyTitle": "No Notifications",
+    "emptyDesc": "All updates and messages will appear here once they arrive."
+  },
+  "activeJobs": {
+    "title": "Active Jobs",
+    "subtitle": "Manage your ongoing work tasks",
+    "call": "Call",
+    "chat": "Chat",
+    "finish": "Mark as Completed",
+    "noneFound": "No active jobs at the moment"
   },
   "request": {
-    "newTitle": "New Request",
-    "newDesc": "Tell us what you need and we will help",
-    "step1": "1. Select Craft",
-    "step2": "2. Request Details",
-    "step3": "3. Budget",
-    "step4": "4. Special Requirements",
-    "title": "Title",
-    "titlePlaceholder": "e.g., Fix Water Tap",
+    "newTitle": "New Maintenance Request",
+    "newDesc": "Tell us what you need and we will help you",
+    "step1": "1. Choose required craft",
+    "step2": "2. Request details",
+    "step3": "3. Set time and location",
+    "step4": "4. Additional requirements",
+    "title": "Request Title",
+    "titlePlaceholder": "Example: Fixing a water faucet",
     "description": "Description",
-    "descPlaceholder": "Describe what you need...",
+    "descPlaceholder": "Explain what you need in detail...",
     "date": "Date",
     "location": "Location",
     "locationPlaceholder": "Area...",
     "reqPlaceholder": "Add requirement...",
     "fillRequired": "Please fill all required fields",
-    "submit": "Confirm & Post Request"
+    "submit": "Confirm and post request",
+    "time": "Request Time"
   },
   "settings": {
-    "desc": "Customize your settings",
+    "desc": "Customize your own settings",
     "phone": "Phone Number",
     "save": "Save Changes",
     "comingSoon": "Coming Soon",
-    "comingSoonDesc": "We are working hard to bring this feature to you",
-    "back": "Go Back"
+    "comingSoonDesc": "We are working hard to provide this feature to you soon",
+    "back": "Back",
+    "general": "General",
+    "securityPrivacy": "Security & Privacy",
+    "helpCenter": "Help Center",
+    "viewMore": "View More",
+    "proProfile": "Pro Profile",
+    "proProfileDesc": "Edit expertise & portfolio",
+    "logout": "Logout",
+    "saved": "Saved",
+    "notifications": {
+      "app": "App Notifications",
+      "email": "Email Notifications",
+      "chat": "Chat Notifications",
+      "orders": "Order Updates"
+    },
+    "security": {
+      "biometric": "Biometric Login",
+      "twoFactor": "Two-Factor Auth",
+      "changePassword": "Change Password",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password"
+    },
+    "pro": {
+      "jobTitle": "Job Title",
+      "plumber": "Professional Plumber",
+      "bioLabel": "Bio"
+    },
+    "help": {
+      "q1": "How to request a service?",
+      "a1": "Go to Home and click \"New Request\".",
+      "q2": "Is payment secure?",
+      "a2": "Yes, we use the latest encryption technologies.",
+      "q3": "How to contact a craftsman?",
+      "a3": "Through the built-in chat system.",
+      "contact": "Contact Support"
+    }
   },
   "search": "Search for service...",
   "logout": "Logout",
@@ -106,14 +247,14 @@
   "topRated": "Top Rated",
   "featured": "Featured",
   "auth": {
-    "email": "Email Address",
+    "email": "Email",
     "fullName": "Full Name",
     "password": "Password",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
-    "loginDesc": "Sign in to access the best craftsmen",
+    "loginDesc": "Log in to access the best craftsmen",
     "registerDesc": "Join us today and start your journey",
-    "welcomeBack": "Welcome Back",
+    "welcomeBack": "Welcome back",
     "client": "Client",
     "craftsman": "Craftsman",
     "demoLogin": "Demo Login",
@@ -121,19 +262,6 @@
   },
   "common": {
     "daysAgo": "{{count}} days ago"
-  },
-  "payment": {
-    "title": "Payment & Security",
-    "desc": "Select your preferred method",
-    "total": "Total Payable",
-    "methods": "Payment Methods",
-    "wallet": "Wallet",
-    "balance": "Balance",
-    "secure": "100% SECURE PAYMENT",
-    "complete": "Complete Payment",
-    "success": "Success! Paid",
-    "successDesc": "Your order is confirmed. Connecting you with the nearest craftsman.",
-    "redirecting": "Redirecting..."
   },
   "order": {
     "details": "Order Details",
@@ -144,6 +272,12 @@
     "liveTracking": "Live Tracking",
     "stageCompleted": "Stage Completed",
     "pendingStage": "Pending Stage",
-    "contactSupport": "Need help? Contact Support"
+    "contactSupport": "Facing a problem? Contact Support",
+    "priceOnInspection": "Price on Inspection"
+  },
+  "payment": {
+    "total": "Total Cost",
+    "method": "Payment Method",
+    "history": "Transaction History"
   }
 }

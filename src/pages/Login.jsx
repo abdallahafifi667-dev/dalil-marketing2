@@ -40,85 +40,85 @@ const Login = ({ onLogin }) => {
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-24 h-24 bg-white dark:bg-slate-900 rounded-[40px] flex items-center justify-center shadow-2xl border border-slate-100 dark:border-white/5"
+          className="w-24 h-24 bg-[var(--surface-color)] rounded-[40px] flex items-center justify-center shadow-2xl border border-slate-100 dark:border-white/5"
         >
           <img src="/favicon.png" alt="Logo" className="w-12 h-12 object-contain" />
         </motion.div>
-        
+
         <div className="space-y-2">
           <h1 className="text-3xl font-black tracking-tight">{t('login')}</h1>
           <p className="text-[var(--text-secondary)] font-bold text-xs px-10 leading-relaxed uppercase tracking-widest opacity-60">
-             {t('auth.loginDesc')}
+            {t('auth.loginDesc')}
           </p>
         </div>
       </div>
 
       <div className="space-y-6 relative z-10 w-full max-w-xs mx-auto">
         <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-1.5">
-                <div className="relative group">
-                  <Mail size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
-                  <input
-                    type="email"
-                    placeholder={t('auth.email')}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full h-14 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all text-sm font-bold text-[var(--text-primary)] shadow-inner"
-                    required
-                  />
-                </div>
+          <div className="space-y-1.5">
+            <div className="relative group">
+              <Mail size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
+              <input
+                type="email"
+                placeholder={t('auth.email')}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full h-14 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all text-sm font-bold text-[var(--text-primary)] shadow-inner"
+                required
+              />
             </div>
+          </div>
 
-            <div className="space-y-1.5">
-                <div className="relative group">
-                  <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
-                  <input
-                    type="password"
-                    placeholder={t('auth.password')}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full h-14 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all text-sm font-bold text-[var(--text-primary)] shadow-inner"
-                    required
-                  />
-                </div>
+          <div className="space-y-1.5">
+            <div className="relative group">
+              <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
+              <input
+                type="password"
+                placeholder={t('auth.password')}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full h-14 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all text-sm font-bold text-[var(--text-primary)] shadow-inner"
+                required
+              />
             </div>
+          </div>
 
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-red-500/10 text-red-500 p-3 rounded-xl flex items-center gap-2 text-[10px] font-black border border-red-500/20"
-              >
-                <AlertCircle size={14} />
-                <span>{error}</span>
-              </motion.div>
-            )}
-
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              type="submit"
-              className="w-full h-14 bg-primary text-white rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-xl shadow-primary/20 hover:bg-primary/90 transition-all mt-4"
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-red-500/10 text-red-500 p-3 rounded-xl flex items-center gap-2 text-[10px] font-black border border-red-500/20"
             >
-              <span>{t('login')}</span>
-              <LogIn size={20} />
-            </motion.button>
+              <AlertCircle size={14} />
+              <span>{error}</span>
+            </motion.div>
+          )}
+
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            type="submit"
+            className="w-full h-14 bg-primary text-white rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-xl shadow-primary/20 hover:bg-primary/90 transition-all mt-4"
+          >
+            <span>{t('login')}</span>
+            <LogIn size={20} />
+          </motion.button>
         </form>
 
         <div className="flex flex-col items-center gap-4 pt-2">
-            <p className="text-[var(--text-secondary)] text-xs font-bold opacity-60">
-                {t('auth.noAccount')}
-                <span onClick={() => navigate('/register')} className="text-primary font-black cursor-pointer hover:underline ms-2"> {t('register')}</span>
-            </p>
-            
-            <button 
-                onClick={() => {
-                    setEmail('client.male@example.com');
-                    setPassword('123');
-                }}
-                className="text-[9px] font-black text-[var(--text-secondary)] opacity-20 uppercase tracking-[0.3em] hover:text-primary transition-colors mt-2"
-            >
-                {t('auth.demoLogin')}
-            </button>
+          <p className="text-[var(--text-secondary)] text-xs font-bold opacity-60">
+            {t('auth.noAccount')}
+            <span onClick={() => navigate('/register')} className="text-primary font-black cursor-pointer hover:underline ms-2"> {t('register')}</span>
+          </p>
+
+          <button
+            onClick={() => {
+              setEmail('client.male@example.com');
+              setPassword('123');
+            }}
+            className="text-[9px] font-black text-[var(--text-secondary)] opacity-20 uppercase tracking-[0.3em] hover:text-primary transition-colors mt-2"
+          >
+            {t('auth.demoLogin')}
+          </button>
         </div>
       </div>
     </motion.div>
@@ -126,3 +126,4 @@ const Login = ({ onLogin }) => {
 };
 
 export default Login;
+

@@ -54,6 +54,13 @@ const OrderDetails = () => {
         className="flex flex-col space-y-8 flex-1 min-h-0 relative z-10"
       >
         <div className="flex items-center gap-4">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => navigate(-1)}
+            className="w-12 h-12 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-2xl flex items-center justify-center text-[var(--text-primary)] shadow-sm"
+          >
+            <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
+          </motion.button>
           <div className="space-y-0.5">
             <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
                {t('order.details')}
@@ -121,7 +128,8 @@ const OrderDetails = () => {
             <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
                 <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('payment.total')}</span>
                 <div className="flex items-center gap-1.5 font-black text-sm text-primary">
-                    <CreditCard size={14} /> {order.totalPrice} <span className="text-[10px] font-bold">{t('account.currency')}</span>
+                    <CreditCard size={14} /> 
+                    <span className="text-[10px]">{t('order.priceOnInspection')}</span>
                 </div>
             </div>
           </div>
@@ -166,8 +174,8 @@ const OrderDetails = () => {
                       "{prop.message}"
                     </p>
                     <div className="flex items-center gap-3">
-                      <span className="text-primary font-black text-sm">
-                        {prop.price} {t('account.currency')}
+                      <span className="text-primary font-black text-[10px] uppercase">
+                        {t('order.priceOnInspection')}
                       </span>
                     </div>
                   </div>
@@ -186,7 +194,7 @@ const OrderDetails = () => {
             </AnimatePresence>
             
             {proposals.length === 0 && (
-              <div className="py-8 text-center bg-slate-50 dark:bg-slate-900/50 rounded-[40px] border border-dashed border-slate-200 dark:border-slate-800">
+              <div className="py-8 text-center bg-[var(--bg-color)] rounded-[40px] border border-dashed border-[var(--border-color)]">
                 <p className="text-xs font-bold text-[var(--text-secondary)] opacity-40 italic">
                   {lang === 'ar' ? 'بانتظار وصول عروض من الحرفيين...' : 'Waiting for craftsmen to apply...'}
                 </p>
@@ -235,3 +243,4 @@ const OrderDetails = () => {
 };
 
 export default OrderDetails;
+

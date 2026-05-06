@@ -43,7 +43,7 @@ export const startOrderSimulation = (orderId, craftId) => {
         id: `prop_${Date.now()}_${index}`,
         orderId,
         craftsmanId: craftsman.id,
-        price: Math.floor(craftsman.pricePerHour * (0.85 + Math.random() * 0.4)),
+        price: 'inspection', // Special value
         message: smartMsg,
         status: 'pending',
         createdAt: new Date().toISOString()

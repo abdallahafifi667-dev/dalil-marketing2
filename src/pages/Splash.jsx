@@ -36,7 +36,7 @@ const Splash = () => {
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             className="absolute -inset-8 bg-gradient-to-tr from-primary/30 to-indigo-500/30 blur-3xl rounded-full"
           />
-          <div className="w-44 h-44 bg-white dark:bg-slate-900 rounded-[56px] flex items-center justify-center shadow-[0_30px_100px_rgba(99,102,241,0.3)] border-4 border-white/50 dark:border-white/5 relative z-10 overflow-hidden">
+          <div className="w-44 h-44 bg-[var(--surface-color)] rounded-[56px] flex items-center justify-center shadow-[0_30px_100px_rgba(99,102,241,0.3)] border-4 border-white/50 dark:border-white/5 relative z-10 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
             <motion.img
               initial={{ y: 20, opacity: 0 }}
@@ -65,3 +65,4 @@ const Splash = () => {
 };
 
 export default Splash;
+

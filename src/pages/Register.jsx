@@ -15,7 +15,7 @@ const Register = ({ onRegister }) => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    
+
     // Create new user object
     const newUser = {
       id: 'u_' + Date.now(),
@@ -25,7 +25,7 @@ const Register = ({ onRegister }) => {
       role,
       balance: 0,
       joinedDate: new Date().toISOString().split('T')[0],
-      image: role === 'client' 
+      image: role === 'client'
         ? 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop'
         : 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=400&h=400&fit=crop'
     };
@@ -82,57 +82,57 @@ const Register = ({ onRegister }) => {
         </div>
 
         <form onSubmit={handleRegister} className="space-y-3">
-            <div className="relative group">
-                <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
-                <input
-                    type="text"
-                    placeholder={t('auth.fullName')}
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"
-                    required
-                />
-            </div>
+          <div className="relative group">
+            <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
+            <input
+              type="text"
+              placeholder={t('auth.fullName')}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"
+              required
+            />
+          </div>
 
-            <div className="relative group">
-                <Mail size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
-                <input
-                    type="email"
-                    placeholder={t('auth.email')}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"
-                    required
-                />
-            </div>
+          <div className="relative group">
+            <Mail size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
+            <input
+              type="email"
+              placeholder={t('auth.email')}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"
+              required
+            />
+          </div>
 
-            <div className="relative group">
-                <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
-                <input
-                    type="password"
-                    placeholder={t('auth.password')}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"
-                    required
-                />
-            </div>
+          <div className="relative group">
+            <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
+            <input
+              type="password"
+              placeholder={t('auth.password')}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full h-13 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl ps-12 pe-4 outline-none transition-all font-bold text-sm text-[var(--text-primary)] shadow-inner"
+              required
+            />
+          </div>
 
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              type="submit"
-              className="w-full h-14 bg-primary text-white rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-xl shadow-primary/20 mt-4"
-            >
-              <span>{t('register')}</span>
-              <ArrowRight size={20} className={lang === 'ar' ? 'rotate-180' : ''} />
-            </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            type="submit"
+            className="w-full h-14 bg-primary text-white rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-xl shadow-primary/20 mt-4"
+          >
+            <span>{t('register')}</span>
+            <ArrowRight size={20} className={lang === 'ar' ? 'rotate-180' : ''} />
+          </motion.button>
         </form>
 
         <div className="text-center pt-2">
-            <p className="text-[var(--text-secondary)] text-xs font-bold opacity-60">
-              {t('auth.hasAccount')}
-              <span onClick={() => navigate('/login')} className="text-primary font-black cursor-pointer hover:underline ms-2"> {t('login')}</span>
-            </p>
+          <p className="text-[var(--text-secondary)] text-xs font-bold opacity-60">
+            {t('auth.hasAccount')}
+            <span onClick={() => navigate('/login')} className="text-primary font-black cursor-pointer hover:underline ms-2"> {t('login')}</span>
+          </p>
         </div>
       </div>
     </motion.div>
@@ -140,3 +140,4 @@ const Register = ({ onRegister }) => {
 };
 
 export default Register;
+

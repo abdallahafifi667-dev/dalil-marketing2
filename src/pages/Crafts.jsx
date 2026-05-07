@@ -26,7 +26,7 @@ const Crafts = () => {
   }, [craftWithCount, searchTerm]);
 
   return (
-    <div className="page-container with-nav-padding pt-8 pb-24 relative overflow-hidden">
+    <div className="page-container with-nav-padding pt-8 relative overflow-hidden">
       {/* Decorative background */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 blur-[130px] rounded-full -mr-40 -mt-40 -z-10" />
 

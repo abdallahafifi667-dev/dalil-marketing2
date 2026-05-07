@@ -74,7 +74,7 @@ const Chat = () => {
         />
       </div>
 
-      <div className="flex flex-col space-y-4 pb-24">
+      <div className="flex flex-col space-y-4">
         {activeChats.map((chat) => {
           const partner = getPartner(chat);
           return (

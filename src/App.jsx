@@ -6,11 +6,12 @@ import { LanguageProvider } from './context/LanguageContext';
 // Components
 import BottomNav from './components/BottomNav';
 import Header from './components/Header';
+import PublicHeader from './components/PublicHeader';
 
 // Lazy Loaded Pages
 const Splash = lazy(() => import('./pages/Splash'));
-const Login = lazy(() => import('./pages/Login'));
-const Register = lazy(() => import('./pages/Register'));
+const Login = lazy(() => import('./pages/public/Login'));
+const Register = lazy(() => import('./pages/public/Register'));
 const Home = lazy(() => import('./pages/Home'));
 const Crafts = lazy(() => import('./pages/Crafts'));
 const Craftsmen = lazy(() => import('./pages/Craftsmen'));
@@ -29,6 +30,9 @@ const ActiveJobs = lazy(() => import('./pages/ActiveJobs'));
 const ReviewsHistory = lazy(() => import('./pages/ReviewsHistory'));
 const TermsPrivacy = lazy(() => import('./pages/TermsPrivacy'));
 const Market = lazy(() => import('./pages/Market'));
+const Landing = lazy(() => import('./pages/public/Landing'));
+const About = lazy(() => import('./pages/public/About'));
+const Contact = lazy(() => import('./pages/public/Contact'));
 
 import ScrollToTop from './components/ScrollToTop';
 
@@ -59,15 +63,22 @@ const AppContent = () => {
     </Suspense>
   );
 
-  const shouldHideNav = location.pathname.startsWith('/chat/') || 
-                         location.pathname.startsWith('/craftsman/') || 
-                         ['/login', '/register'].includes(location.pathname);
-                         
-  const shouldHideHeader = location.pathname.startsWith('/chat/') || 
-                             location.pathname.startsWith('/craftsman/');
+  const publicPaths = ['/login', '/register', '/about', '/contact'];
+  const isPublicPage = publicPaths.includes(location.pathname) || (location.pathname === '/' && !isAuthenticated);
+
+  const shouldHideNav = location.pathname.startsWith('/chat/') ||
+    location.pathname.startsWith('/craftsman/') ||
+    (isPublicPage && !isAuthenticated);
+
+  const shouldHideHeader = location.pathname.startsWith('/chat/') ||
+    location.pathname.startsWith('/craftsman/') ||
+    (isPublicPage && !isAuthenticated);
+
+  const showPublicHeader = !isAuthenticated && isPublicPage;
 
   return (
     <div className="app-frame">
+      {showPublicHeader && <PublicHeader />}
       {isAuthenticated && !shouldHideHeader && <Header />}
 
       <div className={`scroll-content ${location.pathname.includes('/chat/') ? 'overflow-hidden' : ''}`}>
@@ -76,19 +87,22 @@ const AppContent = () => {
           <Routes>
             {!isAuthenticated ? (
               <>
+                <Route path="/" element={<Landing />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/login" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
                 <Route path="/register" element={<Register onRegister={() => setIsAuthenticated(true)} />} />
-                <Route path="*" element={<Navigate to="/login" />} />
+                <Route path="*" element={<Navigate to="/" />} />
               </>
             ) : (
               <>
                 {/* Role-based Home Routing */}
                 <Route path="/" element={
-                  localStorage.getItem('userRole') === 'craftsman' 
-                  ? <CraftsmanDashboard /> 
-                  : <Home />
+                  localStorage.getItem('userRole') === 'craftsman'
+                    ? <CraftsmanDashboard />
+                    : <Home />
                 } />
-                
+
                 <Route path="/crafts" element={<Crafts />} />
                 <Route path="/craftsmen" element={<Craftsmen />} />
                 <Route path="/request/new" element={<CreateRequest />} />

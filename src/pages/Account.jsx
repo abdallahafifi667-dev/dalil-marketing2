@@ -27,6 +27,8 @@ const Account = ({ onLogout }) => {
   const { user, orders } = demoData;
   const [userImage, setUserImage] = useState(user.image);
   const [activeTab, setActiveTab] = useState('active');
+  const [viewMode, setViewMode] = useState('client'); // 'client' or 'pro'
+  const isCraftsman = localStorage.getItem('userRole') === 'craftsman';
   const fileInputRef = React.useRef(null);
 
   const [localOrders, setLocalOrders] = useState(() => {
@@ -46,8 +48,11 @@ const Account = ({ onLogout }) => {
 
   const userOrders = useMemo(() => {
     const combined = [...localOrders, ...orders];
-    return combined.filter(o => o.clientId === user.id || o.clientId === 'u1');
-  }, [localOrders, orders, user.id]);
+    if (viewMode === 'pro') {
+        return combined.filter(o => o.craftsmanId === 'u1');
+    }
+    return combined.filter(o => o.clientId === 'u1');
+  }, [localOrders, orders, viewMode]);
 
   const filteredOrders = useMemo(() => {
     if (activeTab === 'active') return userOrders.filter(o => o.status === 'pending' || o.status === 'in_progress');
@@ -74,10 +79,14 @@ const Account = ({ onLogout }) => {
     }
   };
 
-  const tabs = [
-    { id: 'active', label: t('account.activeRequests') || (lang === 'ar' ? 'نشطة' : 'Active'), icon: <Clock size={16} /> },
-    { id: 'completed', label: t('account.completedRequests') || (lang === 'ar' ? 'مكتملة' : 'Done'), icon: <CheckCircle size={16} /> },
-    { id: 'cancelled', label: t('account.cancelledRequests') || (lang === 'ar' ? 'ملغاة' : 'Cancelled'), icon: <XCircle size={16} /> },
+  const tabs = viewMode === 'client' ? [
+    { id: 'active', label: t('account.activeRequests'), icon: <Clock size={16} /> },
+    { id: 'completed', label: t('account.completedRequests'), icon: <CheckCircle size={16} /> },
+    { id: 'cancelled', label: t('account.cancelledRequests'), icon: <XCircle size={16} /> },
+  ] : [
+    { id: 'active', label: t('account.inProgress'), icon: <TrendingUp size={16} /> },
+    { id: 'completed', label: t('account.delivered'), icon: <CheckCircle size={16} /> },
+    { id: 'cancelled', label: t('account.failed'), icon: <XCircle size={16} /> },
   ];
 
   return (
@@ -135,9 +144,27 @@ const Account = ({ onLogout }) => {
 
       {/* Main Content Area */}
       <div className="px-6 space-y-10 pt-4">
+        {/* Toggle View for Craftsman */}
+        {isCraftsman && (
+            <div className="bg-[var(--surface-color)] p-1.5 rounded-3xl border border-[var(--border-color)] flex gap-2 shadow-inner">
+                <button 
+                    onClick={() => setViewMode('client')}
+                    className={`flex-1 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${viewMode === 'client' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-[var(--text-secondary)] opacity-40'}`}
+                >
+                    {t('account.personalRequests')}
+                </button>
+                <button 
+                    onClick={() => setViewMode('pro')}
+                    className={`flex-1 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all ${viewMode === 'pro' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-[var(--text-secondary)] opacity-40'}`}
+                >
+                    {t('account.professionalJobs')}
+                </button>
+            </div>
+        )}
+
         {/* Requests Section */}
         <div className="space-y-6">
-            <div className="flex justify-between items-end px-1">
+            {/* <div className="flex justify-between items-end px-1">
                 <div>
                     <h3 className="text-xl font-black text-[var(--text-primary)]">{lang === 'ar' ? 'طلباتي' : 'My Requests'}</h3>
                     <p className="text-[10px] font-bold text-[var(--text-secondary)] opacity-40 uppercase tracking-widest">{lang === 'ar' ? 'تابع حالة طلباتك الحالية' : 'TRACK YOUR ACTIVE JOBS'}</p>
@@ -147,17 +174,20 @@ const Account = ({ onLogout }) => {
                         <Plus size={20} />
                     </button>
                 )}
-            </div>
+            </div> */}
 
-            <div className="flex gap-2 bg-[var(--surface-color)] p-1.5 rounded-[28px] border border-[var(--border-color)] shadow-inner">
+            <div className="flex border-b border-[var(--border-color)]">
                 {tabs.map((tab) => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
-                        className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-[22px] text-[10px] font-black transition-all uppercase tracking-widest ${activeTab === tab.id ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-[var(--text-secondary)] opacity-60 hover:opacity-100'}`}
+                        className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 pb-4 pt-2 text-[10px] sm:text-xs font-black transition-all uppercase tracking-widest relative ${activeTab === tab.id ? 'text-primary' : 'text-[var(--text-secondary)] opacity-60 hover:opacity-100'}`}
                     >
                         {tab.icon}
                         <span>{tab.label}</span>
+                        {activeTab === tab.id && (
+                            <motion.div layoutId="account-tab-indicator" className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-full shadow-[0_-2px_10px_rgba(99,102,241,0.5)]" />
+                        )}
                     </button>
                 ))}
             </div>
@@ -210,9 +240,9 @@ const Account = ({ onLogout }) => {
                                 <Inbox size={48} />
                             </div>
                             <div className="space-y-2 px-10">
-                                <h3 className="text-xl font-black text-[var(--text-primary)]">{lang === 'ar' ? 'لا توجد طلبات هنا' : 'No requests yet'}</h3>
+                                <h3 className="text-xl font-black text-[var(--text-primary)]">{t('account.noRequests')}</h3>
                                 <p className="text-xs text-[var(--text-secondary)] font-bold opacity-60 leading-relaxed">
-                                    {lang === 'ar' ? 'ابدأ الآن واطلب خدمتك الأولى بكل سهولة مع موبول.' : 'Start now and request your first service with Mobulle.'}
+                                    {t('account.noRequestsDesc')}
                                 </p>
                             </div>
                             {activeTab === 'active' && (
@@ -231,7 +261,6 @@ const Account = ({ onLogout }) => {
             </div>
         </div>
 
-        <div className="pb-10" />
       </div>
     </div>
   );

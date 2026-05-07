@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
-import { Sun, Moon, ChevronLeft, Bell } from 'lucide-react';
+import { Sun, Moon, ChevronLeft, Bell, Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -91,7 +91,7 @@ const Header = () => {
           >
             {item.label}
             {location.pathname === item.path && (
-              <motion.div 
+              <motion.div
                 layoutId="nav-underline"
                 className="absolute -bottom-1 left-0 right-0 h-1 bg-primary rounded-full shadow-sm shadow-primary/30"
               />
@@ -131,6 +131,10 @@ const Header = () => {
         >
           {theme === 'light' ? <Moon size={20} className="text-slate-400" /> : <Sun size={20} className="text-amber-400" />}
         </motion.button>
+
+        <button onClick={() => navigate('/request/new')} className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center shadow-sm">
+          <Plus size={20} />
+        </button>
       </div>
     </header>
   );

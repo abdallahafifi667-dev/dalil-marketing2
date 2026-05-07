@@ -30,7 +30,7 @@ export const users = [
     name: 'أحمد محمود',
     email: 'craft.male@example.com',
     password: '123',
-    image: 'https://images.unsplash.com/photo-1540569014015-19a7be504e3a?w=400&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
     role: 'craftsman',
     gender: 'male',
     craftId: 'c1', // Plumbing

@@ -104,7 +104,7 @@ const SettingsPage = () => {
           </div>
         </div>
 
-        <div className="bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[48px] p-8 shadow-2xl neo-shadow">
+        <div className="bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[32px] md:rounded-[48px] p-5 md:p-8 shadow-2xl neo-shadow">
           {!id && (
             <div className="flex flex-col space-y-10">
               {/* GENERAL SECTION */}
@@ -221,7 +221,7 @@ const SettingsPage = () => {
                         type="text"
                         value={settings.profile.name}
                         onChange={(e) => updateProfile('name', e.target.value)}
-                        className="w-full h-16 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-[28px] px-6 outline-none font-black text-base transition-all text-[var(--text-primary)] shadow-sm"
+                        className="w-full h-14 md:h-16 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl md:rounded-[28px] px-5 outline-none font-black text-sm md:text-base transition-all text-[var(--text-primary)] shadow-sm"
                       />
                     </div>
                     <div className="space-y-2">
@@ -230,7 +230,7 @@ const SettingsPage = () => {
                         type="email"
                         value={settings.profile.email}
                         onChange={(e) => updateProfile('email', e.target.value)}
-                        className="w-full h-16 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-[28px] px-6 outline-none font-black text-base transition-all text-[var(--text-primary)] shadow-sm"
+                        className="w-full h-14 md:h-16 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl md:rounded-[28px] px-5 outline-none font-black text-sm md:text-base transition-all text-[var(--text-primary)] shadow-sm"
                       />
                     </div>
                     <div className="space-y-2">
@@ -239,7 +239,7 @@ const SettingsPage = () => {
                         type="tel"
                         value={settings.profile.phone}
                         onChange={(e) => updateProfile('phone', e.target.value)}
-                        className="w-full h-16 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-[28px] px-6 outline-none font-black text-base transition-all text-[var(--text-primary)] shadow-sm"
+                        className="w-full h-14 md:h-16 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl md:rounded-[28px] px-5 outline-none font-black text-sm md:text-base transition-all text-[var(--text-primary)] shadow-sm"
                       />
                     </div>
                   </div>
@@ -297,11 +297,11 @@ const SettingsPage = () => {
                 <div className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] px-2">{t('settings.pro.jobTitle')}</label>
-                    <input
-                      type="text"
-                      defaultValue={t('settings.pro.plumber')}
-                      className="w-full h-16 bg-[var(--bg-color)] border-2 border-[var(--border-color)] focus:border-primary/20 rounded-[24px] px-6 outline-none font-bold text-base transition-all text-[var(--text-primary)]"
-                    />
+                      <input
+                        type="text"
+                        defaultValue={t('settings.pro.plumber')}
+                        className="w-full h-14 md:h-16 bg-[var(--bg-color)] border-2 border-[var(--border-color)] focus:border-primary/20 rounded-2xl md:rounded-[24px] px-5 outline-none font-bold text-sm md:text-base transition-all text-[var(--text-primary)]"
+                      />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] px-2">{t('settings.pro.bioLabel')}</label>
@@ -318,7 +318,7 @@ const SettingsPage = () => {
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   onClick={saveSettings}
-                  className={`w-full h-16 rounded-[24px] font-black text-lg shadow-xl transition-all flex items-center justify-center gap-3 ${isSaved ? 'bg-emerald-500 text-white' : 'bg-primary text-white shadow-primary/20'}`}
+                  className={`w-full h-14 md:h-16 rounded-[20px] md:rounded-[24px] font-black text-base md:text-lg shadow-xl transition-all flex items-center justify-center gap-3 ${isSaved ? 'bg-emerald-500 text-white' : 'bg-primary text-white shadow-primary/20'}`}
                 >
                   {isSaved ? (
                     <>

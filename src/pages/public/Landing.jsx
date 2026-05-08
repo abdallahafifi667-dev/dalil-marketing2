@@ -2,14 +2,19 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
-import { 
-  ArrowRight, 
-  Shield, 
-  Sparkles, 
-  Smartphone, 
-  Heart, 
+import {
+  ArrowRight,
+  Shield,
+  Sparkles,
+  Smartphone,
+  Heart,
   CheckCircle,
-  Star
+  Star,
+  Zap,
+  ShieldCheck,
+  Coins,
+  Clock,
+  Wrench
 } from 'lucide-react';
 
 const Landing = () => {
@@ -92,9 +97,9 @@ const Landing = () => {
             className="flex-1 relative"
           >
             <div className="relative z-10 rounded-[48px] overflow-hidden shadow-2xl border-8 border-white/10">
-              <img 
-                src="/WhatsApp Image 2026-05-03 at 12.48.46 AM.jpeg" 
-                alt="دليل الحرفيين" 
+              <img
+                src="/favicon.png"
+                alt="دليل الحرفيين"
                 className="w-full h-auto"
               />
             </div>
@@ -124,9 +129,9 @@ const Landing = () => {
             </ul>
           </div>
           <div className="flex-1 relative">
-            <img 
-              src="/home.png" 
-              alt="App Preview" 
+            <img
+              src="/home.png"
+              alt="App Preview"
               className="rounded-[3rem] shadow-2xl border-4 border-[var(--border-color)]"
             />
           </div>
@@ -134,27 +139,70 @@ const Landing = () => {
       </section>
 
       {/* Core Features */}
-      <section className="py-24 px-6 bg-slate-50 dark:bg-slate-950">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-[var(--text-primary)] mb-6">{t('home.stats.title')}</h2>
-            <p className="text-xl text-[var(--text-secondary)] font-medium max-w-3xl mx-auto">{t('home.stats.subtitle')}</p>
+      <section className="py-32 px-6 bg-slate-50 dark:bg-slate-950/50 relative overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute top-1/4 -left-20 w-80 h-80 bg-blue-500/10 blur-[100px] rounded-full" />
+        <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-teal-500/10 blur-[100px] rounded-full" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-20 space-y-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="inline-block px-4 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm font-black uppercase tracking-widest mb-4"
+            >
+              {t('nav.brand')}
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-4xl md:text-6xl font-black text-[var(--text-primary)] tracking-tight"
+            >
+              {t('home.stats.title')}
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-xl text-[var(--text-secondary)] font-medium max-w-2xl mx-auto leading-relaxed"
+            >
+              {t('home.stats.subtitle')}
+            </motion.p>
           </div>
+
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { key: 'speed', icon: <Smartphone />, color: 'bg-blue-100 text-blue-600' },
-              { key: 'verified', icon: <Shield />, color: 'bg-teal-100 text-teal-600' },
-              { key: 'quality', icon: <Heart />, color: 'bg-purple-100 text-purple-600' }
+              { key: 'speed', icon: <Heart size={32} />, color: 'from-pink-500 to-rose-400', lightColor: 'bg-pink-100/50 text-pink-600' },
+              { key: 'verified', icon: <Wrench size={32} />, color: 'from-blue-500 to-cyan-400', lightColor: 'bg-blue-100/50 text-blue-600' },
+              { key: 'quality', icon: <Clock size={32} />, color: 'from-amber-500 to-orange-400', lightColor: 'bg-amber-100/50 text-amber-600' }
             ].map((f, i) => (
-              <div key={i} className="p-10 bg-[var(--surface-color)] rounded-[3rem] shadow-xl border border-[var(--border-color)] space-y-6">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${f.color}`}>
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -10, transition: { duration: 0.2 } }}
+                className="group relative p-10 bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl rounded-[3rem] shadow-2xl shadow-slate-200/50 dark:shadow-none border border-white/50 dark:border-white/10 space-y-8"
+              >
+                <div className={`w-20 h-20 rounded-3xl flex items-center justify-center bg-gradient-to-br ${f.color} text-white shadow-lg transform group-hover:rotate-6 transition-transform duration-300`}>
                   {f.icon}
                 </div>
-                <h3 className="text-2xl font-black text-[var(--text-primary)]">{t(`home.features.items.${f.key}.title`)}</h3>
-                <p className="text-lg text-[var(--text-secondary)] leading-relaxed font-medium">
-                  {t(`home.features.items.${f.key}.desc`)}
-                </p>
-              </div>
+                <div className="space-y-4">
+                  <h3 className="text-2xl md:text-3xl font-black text-[var(--text-primary)] leading-tight">
+                    {t(`home.features.items.${f.key}.title`)}
+                  </h3>
+                  <p className="text-lg text-[var(--text-secondary)] leading-relaxed font-medium">
+                    {t(`home.features.items.${f.key}.desc`)}
+                  </p>
+                </div>
+                <div className="absolute top-6 right-10 text-8xl font-black text-slate-200 dark:text-slate-800/20 select-none pointer-events-none opacity-50">
+                  0{i + 1}
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -168,13 +216,13 @@ const Landing = () => {
             <p className="text-xl text-[var(--text-secondary)] font-medium">{t('home.faq.subtitle')}</p>
           </div>
           <div className="space-y-6">
-            {[1, 2, 3].map((i) => (
+            {[1, 2, 3, 4].map((i) => (
               <div key={i} className="p-8 rounded-3xl bg-[var(--surface-color)] border border-[var(--border-color)]">
                 <h3 className="text-xl font-black text-[var(--text-primary)] mb-4 flex items-center gap-3">
                   <div className="w-2 h-2 rounded-full bg-primary" />
                   {t(`home.faq.q${i}`)}
                 </h3>
-                <p className="text-lg text-[var(--text-secondary)] font-medium leading-relaxed">
+                <p className="text-lg text-[var(--text-secondary)] font-medium leading-relaxed whitespace-pre-line">
                   {t(`home.faq.a${i}`)}
                 </p>
               </div>
@@ -214,16 +262,6 @@ const Landing = () => {
             <p className="text-xl md:text-2xl text-[var(--text-secondary)] leading-relaxed font-medium mb-12">
               {t('home.testimonials.subtitle')}
             </p>
-            <div className="flex flex-wrap justify-center gap-10">
-              {['transparency', 'security', 'growth'].map((v, i) => (
-                <div key={i} className="flex flex-col items-center">
-                  <div className="text-3xl font-black text-primary mb-1">0{i+1}</div>
-                  <div className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-widest opacity-40">
-                    {t(`home.cta.values.${v}`)}
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>

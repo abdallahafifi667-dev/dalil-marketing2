@@ -57,7 +57,7 @@ const About = () => {
             className="rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white dark:border-slate-800"
           >
             <img
-              src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=1200"
+              src="/about-hero.png"
               alt="Team"
               className="w-full h-[400px] object-cover"
             />
@@ -210,11 +210,10 @@ const About = () => {
                     <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2 leading-tight">
                       {member.name}
                     </h3>
-                    <a href={`mailto:${member.email}`}
-                      className="flex items-center gap-2 text-blue-600 dark:text-teal-400 text-sm font-medium hover:underline justify-center">
-                      <Mail className="w-4 h-4 shrink-0" />
-                      {member.email}
-                    </a>
+                    <div className="flex items-center gap-2 text-blue-600 dark:text-teal-400 text-sm font-black justify-center">
+                      <Users className="w-4 h-4 shrink-0" />
+                      {t('about.foundingMember')}
+                    </div>
                   </div>
                 </motion.div>
               ))}

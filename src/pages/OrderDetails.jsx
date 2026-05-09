@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import { demoData } from '../data';
 import { useLanguage } from '../context/LanguageContext';
-import { ChevronLeft, MapPin, Clock, CreditCard, User, CheckCircle2, MessageCircle, Star } from 'lucide-react';
+import { ChevronLeft, MapPin, Clock, CreditCard, User, CheckCircle2, MessageCircle, Star, StopCircle, XCircle, MoreVertical, AlertCircle, Send } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -12,8 +13,13 @@ const OrderDetails = () => {
   const order = demoData.orders.find(o => o.id === id) || 
                 JSON.parse(localStorage.getItem('demo_orders') || '[]').find(o => o.id === id);
   const craftsman = demoData.craftsmen.find(m => m.id === order?.craftsmanId);
+  const userRole = localStorage.getItem('userRole') || 'client';
+  const client = demoData.users.find(u => u.id === order?.clientId);
 
   const [proposals, setProposals] = useState([]);
+  const [showMenu, setShowMenu] = useState(false);
+  const [confirmModal, setConfirmModal] = useState({ show: false, type: null }); // type: 'stop' or 'cancel'
+  const [proposalModal, setProposalModal] = useState({ show: false, price: '', message: '' });
 
   useEffect(() => {
     const fetchProposals = () => {
@@ -41,6 +47,53 @@ const OrderDetails = () => {
     { label: t('order.statusFinished'), time: '--', completed: order.status === 'completed' },
   ];
 
+  const handleConfirmAction = () => {
+    const isStop = confirmModal.type === 'stop';
+    const newStatus = isStop ? 'stopped' : 'cancelled';
+    
+    const updatedOrder = { ...order, status: newStatus };
+    const saved = JSON.parse(localStorage.getItem('demo_orders') || '[]');
+    const idx = saved.findIndex(o => o.id === id);
+    if (idx > -1) {
+      saved[idx] = updatedOrder;
+      localStorage.setItem('demo_orders', JSON.stringify(saved));
+      setConfirmModal({ show: false, type: null });
+      toast.success(lang === 'ar' ? 'تم تحديث حالة الطلب بنجاح' : 'Order status updated successfully');
+      window.location.reload();
+    }
+  };
+
+  const handleSubmitProposal = () => {
+    if (!proposalModal.price || !proposalModal.message) {
+      toast.error(lang === 'ar' ? 'الرجاء إدخال السعر والرسالة' : 'Please enter price and message');
+      return;
+    }
+
+    const newProposal = {
+      id: `prop_${Date.now()}`,
+      orderId: id,
+      craftsmanId: demoData.user.id, // Currently logged in user
+      price: proposalModal.price,
+      message: proposalModal.message,
+      status: 'pending',
+      date: new Date().toISOString()
+    };
+
+    const savedProposals = JSON.parse(localStorage.getItem('demo_proposals') || '[]');
+    savedProposals.push(newProposal);
+    localStorage.setItem('demo_proposals', JSON.stringify(savedProposals));
+    
+    // Update local state immediately
+    const fullProposal = {
+      ...newProposal,
+      craftsman: demoData.user
+    };
+    setProposals([...proposals, fullProposal]);
+
+    setProposalModal({ show: false, price: '', message: '' });
+    toast.success(lang === 'ar' ? 'تم تقديم العرض بنجاح!' : 'Your proposal has been submitted successfully!');
+  };
+
   return (
     <div className="page-container with-nav-padding pt-8 relative overflow-hidden">
       {/* Decorative Background Elements */}
@@ -53,87 +106,210 @@ const OrderDetails = () => {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col space-y-8 flex-1 min-h-0 relative z-10"
       >
-        <div className="flex items-center gap-4">
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => navigate(-1)}
-            className="w-12 h-12 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-2xl flex items-center justify-center text-[var(--text-primary)] shadow-sm"
-          >
-            <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
-          </motion.button>
-          <div className="space-y-0.5">
-            <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
-               {t('order.details')}
-            </h2>
-            <p className="text-[10px] text-primary font-black uppercase tracking-widest">
-              #{id.slice(-6).toUpperCase()}
-            </p>
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => navigate(-1)}
+              className="w-12 h-12 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-2xl flex items-center justify-center text-[var(--text-primary)] shadow-sm"
+            >
+              <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
+            </motion.button>
+            <div className="space-y-0.5">
+              <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
+                 {t('order.details')}
+              </h2>
+              <p className="text-[10px] text-primary font-black uppercase tracking-widest">
+                #{id.slice(-6).toUpperCase()}
+              </p>
+            </div>
+          </div>
+
+          <div className="relative">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setShowMenu(!showMenu)}
+              className="w-12 h-12 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-2xl flex items-center justify-center text-[var(--text-primary)] shadow-sm"
+            >
+              <MoreVertical size={24} />
+            </motion.button>
+
+            <AnimatePresence>
+              {showMenu && (
+                <>
+                  <div 
+                    className="fixed inset-0 z-40" 
+                    onClick={() => setShowMenu(false)} 
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    className="absolute top-14 end-0 w-56 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[24px] shadow-2xl z-50 overflow-hidden py-2"
+                  >
+                    <button 
+                      onClick={() => { setConfirmModal({ show: true, type: 'stop' }); setShowMenu(false); }}
+                      disabled={order.status === 'stopped' || order.status === 'cancelled'}
+                      className="w-full flex items-center gap-3 px-5 py-4 text-sm font-black text-amber-500 hover:bg-amber-500/5 transition-colors disabled:opacity-30"
+                    >
+                      <StopCircle size={18} />
+                      {t('request.stop')}
+                    </button>
+                    <button 
+                      onClick={() => { setConfirmModal({ show: true, type: 'cancel' }); setShowMenu(false); }}
+                      disabled={order.status === 'cancelled'}
+                      className="w-full flex items-center gap-3 px-5 py-4 text-sm font-black text-red-500 hover:bg-red-500/5 transition-colors disabled:opacity-30"
+                    >
+                      <XCircle size={18} />
+                      {t('request.cancel')}
+                    </button>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
           </div>
         </div>
 
-        {/* Map / Visual Banner */}
-        <div className="h-56 w-full rounded-[48px] overflow-hidden relative shadow-2xl border-4 border-[var(--surface-color)]">
+        {/* Map / Visual Banner - Enhanced */}
+        <div className="h-64 w-full rounded-[48px] overflow-hidden relative shadow-2xl border-4 border-[var(--surface-color)] bg-slate-100 dark:bg-slate-900">
+          <div className="absolute inset-0 opacity-20 dark:opacity-40" style={{ backgroundImage: 'radial-gradient(var(--primary-color) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
           <img
-            src="https://miro.medium.com/v2/resize:fit:1400/1*qV92t4STTh98E6NnS-dVTg.png"
-            alt="Map"
-            className="w-full h-full object-cover opacity-60 dark:opacity-40 grayscale"
+            src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&q=80&w=1200"
+            alt="Map Background"
+            className="w-full h-full object-cover opacity-50 dark:opacity-30 grayscale"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+          
+          {/* Animated Path on Map */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+            <motion.path
+              d="M100,50 Q150,150 250,100 T400,180"
+              fill="none"
+              stroke="var(--primary-color)"
+              strokeWidth="4"
+              strokeDasharray="10, 10"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+          </svg>
+
           <div className="absolute top-6 end-6">
-            <div className="bg-primary text-white px-5 py-2 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-primary/30 border-2 border-white/20">
+            <div className={`px-5 py-2 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl border-2 border-white/20 text-white ${
+              order.status === 'cancelled' ? 'bg-red-500 shadow-red-500/30' : 
+              order.status === 'stopped' ? 'bg-amber-500 shadow-amber-500/30' : 'bg-primary shadow-primary/30'
+            }`}>
               {order.status}
             </div>
           </div>
-          {/* Pulsing Dot on Map */}
+
+          {/* Pulsing Dot on Map - Represents User */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-             <div className="w-4 h-4 bg-primary rounded-full animate-ping absolute" />
-             <div className="w-4 h-4 bg-primary rounded-full relative border-2 border-white" />
+             <div className="w-6 h-6 bg-primary rounded-full animate-ping absolute opacity-40" />
+             <div className="w-6 h-6 bg-primary rounded-full relative border-4 border-white shadow-lg flex items-center justify-center">
+               <div className="w-2 h-2 bg-white rounded-full" />
+             </div>
+          </div>
+
+          {/* Destination Marker */}
+          <div className="absolute bottom-10 right-20">
+             <MapPin size={32} className="text-red-500 drop-shadow-lg" fill="currentColor" fillOpacity={0.2} />
           </div>
         </div>
 
-        {/* Craftsman Card - Premium */}
-        <div className="bg-[var(--surface-color)] rounded-[40px] p-6 border border-[var(--border-color)] shadow-sm relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="flex items-center gap-5 relative z-10">
-            <div className="relative">
-              <img
-                src={craftsman?.image}
-                alt={craftsman?.name}
-                className="w-16 h-16 rounded-[24px] object-cover border-2 border-[var(--bg-color)] shadow-md"
-              />
-              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white">✓</div>
+        {/* Profile Card based on Role and Status */}
+        {userRole === 'craftsman' && order.status === 'pending' ? (
+          <div className="bg-[var(--surface-color)] rounded-[40px] p-6 border border-[var(--border-color)] shadow-sm relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="flex items-center gap-5 relative z-10">
+              <div className="relative">
+                <img
+                  src={client?.image || 'https://ui-avatars.com/api/?name=C&background=random'}
+                  alt={client?.name || 'Client'}
+                  className="w-16 h-16 rounded-[24px] object-cover border-2 border-[var(--bg-color)] shadow-md"
+                />
+              </div>
+              <div className="flex-1 space-y-0.5">
+                <h4 className="font-black text-xl text-[var(--text-primary)] leading-tight">{client?.name || (lang === 'ar' ? 'العميل' : 'Client')}</h4>
+                <p className="text-xs font-bold text-primary uppercase tracking-widest opacity-80">
+                  {lang === 'ar' ? 'صاحب الطلب' : 'Job Owner'}
+                </p>
+              </div>
             </div>
-            <div className="flex-1 space-y-0.5">
-              <h4 className="font-black text-xl text-[var(--text-primary)] leading-tight">{craftsman?.name}</h4>
-              <p className="text-xs font-bold text-primary uppercase tracking-widest opacity-80">
-                {demoData.crafts.find(c => c.id === craftsman?.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
-              </p>
-            </div>
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => navigate(`/chat/${craftsman?.id}`)}
-              className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shadow-sm hover:bg-primary hover:text-white transition-all"
-            >
-              <MessageCircle size={24} />
-            </motion.button>
-          </div>
 
-          <div className="flex gap-4 mt-6 pt-6 border-t border-dashed border-[var(--border-color)] relative z-10">
-            <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
-                <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('request.date')}</span>
-                <div className="flex items-center gap-1.5 font-black text-sm text-[var(--text-primary)]">
-                    <Clock size={14} className="text-primary" /> {order.date}
-                </div>
-            </div>
-            <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
-                <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('payment.total')}</span>
-                <div className="flex items-center gap-1.5 font-black text-sm text-primary">
-                    <CreditCard size={14} /> 
-                    <span className="text-[10px]">{t('order.priceOnInspection')}</span>
-                </div>
+            <div className="flex gap-4 mt-6 pt-6 border-t border-dashed border-[var(--border-color)] relative z-10">
+              <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
+                  <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('request.date')}</span>
+                  <div className="flex items-center gap-1.5 font-black text-sm text-[var(--text-primary)]">
+                      <Clock size={14} className="text-primary" /> {order.date}
+                  </div>
+              </div>
+              <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
+                  <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('payment.total')}</span>
+                  <div className="flex items-center gap-1.5 font-black text-sm text-primary">
+                      <CreditCard size={14} /> 
+                      <span className="text-[10px]">{t('order.priceOnInspection')}</span>
+                  </div>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="bg-[var(--surface-color)] rounded-[40px] p-6 border border-[var(--border-color)] shadow-sm relative overflow-hidden group">
+            {craftsman ? (
+              <>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-5 relative z-10">
+                  <div className="relative">
+                    <img
+                      src={craftsman?.image}
+                      alt={craftsman?.name}
+                      className="w-16 h-16 rounded-[24px] object-cover border-2 border-[var(--bg-color)] shadow-md"
+                    />
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center text-[10px] text-white">✓</div>
+                  </div>
+                  <div className="flex-1 space-y-0.5">
+                    <h4 className="font-black text-xl text-[var(--text-primary)] leading-tight">{craftsman?.name}</h4>
+                    <p className="text-xs font-bold text-primary uppercase tracking-widest opacity-80">
+                      {demoData.crafts.find(c => c.id === craftsman?.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
+                    </p>
+                  </div>
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => navigate(`/chat/${craftsman?.id}`)}
+                    className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shadow-sm hover:bg-primary hover:text-white transition-all"
+                  >
+                    <MessageCircle size={24} />
+                  </motion.button>
+                </div>
+
+                <div className="flex gap-4 mt-6 pt-6 border-t border-dashed border-[var(--border-color)] relative z-10">
+                  <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
+                      <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('request.date')}</span>
+                      <div className="flex items-center gap-1.5 font-black text-sm text-[var(--text-primary)]">
+                          <Clock size={14} className="text-primary" /> {order.date}
+                      </div>
+                  </div>
+                  <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
+                      <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('payment.total')}</span>
+                      <div className="flex items-center gap-1.5 font-black text-sm text-primary">
+                          <CreditCard size={14} /> 
+                          <span className="text-[10px]">{t('order.priceOnInspection')}</span>
+                      </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+               <div className="flex flex-col items-center justify-center py-6 space-y-2">
+                  <div className="w-16 h-16 bg-[var(--bg-color)] rounded-2xl flex items-center justify-center border border-dashed border-[var(--border-color)]">
+                     <User size={24} className="text-[var(--text-secondary)] opacity-30" />
+                  </div>
+                  <p className="font-black text-sm text-[var(--text-secondary)] opacity-60">
+                    {lang === 'ar' ? 'بانتظار تحديد حرفي' : 'Waiting for craftsman assignment'}
+                  </p>
+               </div>
+            )}
+          </div>
+        )}
 
         {/* Proposals Section - "Life" in the app */}
         <div className="space-y-6">
@@ -230,12 +406,140 @@ const OrderDetails = () => {
           </div>
         </div>
 
-        <motion.button 
-            whileTap={{ scale: 0.95 }}
-            className="w-full h-16 bg-[var(--surface-color)] border-2 border-[var(--border-color)] rounded-[32px] text-[var(--text-secondary)] font-black text-base hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm"
-        >
-          {t('order.contactSupport')}
-        </motion.button>
+
+        {userRole === 'craftsman' && order.status === 'pending' ? (
+            <motion.button 
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setProposalModal({ show: true, price: '', message: '' })}
+                className="w-full h-16 bg-primary text-white font-black text-base rounded-[32px] hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2"
+            >
+              <CheckCircle2 size={20} />
+              {lang === 'ar' ? 'تقديم عرض للعمل' : 'Submit Job Proposal'}
+            </motion.button>
+        ) : (
+            <motion.button 
+                whileTap={{ scale: 0.95 }}
+                className="w-full h-16 bg-[var(--surface-color)] border-2 border-[var(--border-color)] rounded-[32px] text-[var(--text-secondary)] font-black text-base hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm"
+            >
+              {t('order.contactSupport')}
+            </motion.button>
+        )}
+
+        {/* Confirmation Modal */}
+        <AnimatePresence>
+          {confirmModal.show && (
+            <div className="fixed inset-0 z-[2000] flex items-center justify-center p-6">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setConfirmModal({ show: false, type: null })}
+                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" 
+              />
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                className="bg-[var(--surface-color)] border border-[var(--border-color)] w-full max-w-sm rounded-[40px] p-8 shadow-2xl relative z-10"
+              >
+                <div className={`w-16 h-16 rounded-3xl mb-6 flex items-center justify-center ${confirmModal.type === 'stop' ? 'bg-amber-100 text-amber-600' : 'bg-red-100 text-red-600'}`}>
+                  <AlertCircle size={32} />
+                </div>
+                <h3 className="text-xl font-black text-[var(--text-primary)] mb-2">
+                  {confirmModal.type === 'stop' ? (lang === 'ar' ? 'إيقاف الطلب؟' : 'Stop Request?') : (lang === 'ar' ? 'إلغاء الطلب؟' : 'Cancel Request?')}
+                </h3>
+                <p className="text-sm font-bold text-[var(--text-secondary)] opacity-60 leading-relaxed mb-8">
+                  {confirmModal.type === 'stop' 
+                    ? (lang === 'ar' ? 'هل أنت متأكد من إيقاف استقبال العروض لهذا الطلب؟ يمكنك تفعيله لاحقاً.' : 'Are you sure you want to stop receiving offers for this request?') 
+                    : (lang === 'ar' ? 'هل أنت متأكد من إلغاء هذا الطلب نهائياً؟ لا يمكن التراجع عن هذه الخطوة.' : 'Are you sure you want to cancel this request permanently? This action cannot be undone.')}
+                </p>
+                <div className="flex gap-4">
+                  <button 
+                    onClick={() => setConfirmModal({ show: false, type: null })}
+                    className="flex-1 h-14 rounded-2xl font-black text-sm text-[var(--text-primary)] bg-[var(--bg-color)] border border-[var(--border-color)]"
+                  >
+                    {lang === 'ar' ? 'تراجع' : 'Cancel'}
+                  </button>
+                  <button 
+                    onClick={handleConfirmAction}
+                    className={`flex-1 h-14 rounded-2xl font-black text-sm text-white shadow-lg ${confirmModal.type === 'stop' ? 'bg-amber-500 shadow-amber-500/20' : 'bg-red-500 shadow-red-500/20'}`}
+                  >
+                    {lang === 'ar' ? 'تأكيد' : 'Confirm'}
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
+        {/* Submit Proposal Modal */}
+        <AnimatePresence>
+          {proposalModal.show && (
+            <div className="fixed inset-0 z-[2000] flex items-center justify-center p-6">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setProposalModal({ show: false, price: '', message: '' })}
+                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" 
+              />
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                className="bg-[var(--surface-color)] border border-[var(--border-color)] w-full max-w-sm rounded-[40px] p-8 shadow-2xl relative z-10 space-y-6"
+              >
+                <div className="flex justify-between items-center">
+                  <h3 className="text-xl font-black text-[var(--text-primary)]">
+                    {lang === 'ar' ? 'تفاصيل العرض' : 'Proposal Details'}
+                  </h3>
+                  <button 
+                    onClick={() => setProposalModal({ show: false, price: '', message: '' })}
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-[var(--bg-color)] text-[var(--text-secondary)]"
+                  >
+                    <XCircle size={20} />
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-widest px-2">
+                      {lang === 'ar' ? 'السعر المقترح (ج.م)' : 'Proposed Price (EGP)'}
+                    </label>
+                    <input 
+                      type="number"
+                      value={proposalModal.price}
+                      onChange={(e) => setProposalModal({ ...proposalModal, price: e.target.value })}
+                      placeholder={lang === 'ar' ? 'مثال: 150' : 'e.g. 150'}
+                      className="w-full bg-[var(--bg-color)] border border-[var(--border-color)] text-[var(--text-primary)] h-14 rounded-2xl px-5 font-black placeholder:font-normal focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-widest px-2">
+                      {lang === 'ar' ? 'رسالة للعميل' : 'Message to Client'}
+                    </label>
+                    <textarea 
+                      value={proposalModal.message}
+                      onChange={(e) => setProposalModal({ ...proposalModal, message: e.target.value })}
+                      placeholder={lang === 'ar' ? 'اكتب تفاصيل عرضك هنا...' : 'Write your proposal details here...'}
+                      className="w-full bg-[var(--bg-color)] border border-[var(--border-color)] text-[var(--text-primary)] h-28 rounded-2xl p-5 font-bold text-sm placeholder:font-normal focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+                    />
+                  </div>
+                </div>
+
+                <motion.button 
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleSubmitProposal}
+                  className="w-full h-14 rounded-2xl font-black text-sm text-white bg-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+                >
+                  <Send size={18} />
+                  {lang === 'ar' ? 'إرسال العرض' : 'Send Proposal'}
+                </motion.button>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
         <div className="pb-10" />
       </motion.div>
     </div>

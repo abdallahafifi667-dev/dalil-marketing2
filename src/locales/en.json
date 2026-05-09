@@ -9,7 +9,8 @@
     "contact": "Contact Us",
     "login": "Login",
     "register": "Register",
-    "jobs": "My Jobs"
+    "jobs": "My Jobs",
+    "support": "Support"
   },
   "hero": {
     "badge": "The #1 Platform for Craftsmen in Egypt",
@@ -41,7 +42,7 @@
       "title": "All Craftsmen in Your Pocket",
       "subtitle": "The Craftsmen Directory website makes it easy for you to search and book in one place.",
       "feature1": "Easy search for technicians",
-      "feature2": "Real-time tracking of arrival",
+      "feature2": "Easy communication between user and craftsman",
       "feature3": "24/7 direct technical support"
     },
     "stats": {
@@ -93,7 +94,9 @@
     "urgent": "Urgent",
     "online": "Online",
     "performance": "Weekly Performance",
-    "growth": "+12.5% growth from last month"
+    "growth": "+12.5% growth from last month",
+    "searchPlaceholder": "Search market requests...",
+    "activeJobs": "Active Jobs"
   },
   "notifications": {
     "title": "Notifications",
@@ -115,7 +118,10 @@
     "client": "Client",
     "craftsman": "Craftsman",
     "demoLogin": "Demo Login",
-    "invalid": "Invalid email or password"
+    "invalid": "Invalid email or password",
+    "confirmPassword": "Confirm Password",
+    "passwordMismatch": "Passwords do not match",
+    "location": "Location"
   },
   "common": {
     "daysAgo": "{{count}} days ago",
@@ -177,6 +183,7 @@
     "description": "We are not just a directory — we are your trusted partner to reach the best skilled hands for your home and business.",
     "team": "Meet Our Team",
     "teamDesc": "The creative and innovative minds that built Dalil Al-Harafeen.",
+    "foundingMember": "Founding Member",
     "valuesTitle": "Our Core Values",
     "values": {
       "trust": "Trust",
@@ -259,6 +266,9 @@
   },
   "topRated": "Top Rated",
   "craftsmen": {
+    "title": "Top Craftsmen",
+    "subtitle": "Connect with the most skilled verified experts in your area",
+    "all": "All Craftsmen",
     "portfolio": "Portfolio",
     "reviewsTitle": "Customer Reviews",
     "bookingWith": "Booking with",
@@ -267,7 +277,29 @@
     "jobsDone": "Jobs Done",
     "priceLabel": "Inspection Price",
     "aboutMe": "About Me",
-    "bookNow": "Book Now"
+    "bookNow": "Book Now",
+    "proposalsHistory": {
+      "title": "Proposals History"
+    },
+    "reviewsHistory": {
+      "title": "Reviews History",
+      "subtitle": "What customers say about your services"
+    }
+  },
+  "activeJobs": {
+    "title": "Active Jobs",
+    "subtitle": "Track your active jobs and communicate with clients",
+    "call": "Call",
+    "chat": "Chat",
+    "finish": "Finish Job",
+    "noneFound": "No active jobs currently"
+  },
+  "proposals": {
+    "title": "My Proposals",
+    "subtitle": "Record of your submitted proposals and their status"
+  },
+  "support": {
+    "welcome": "Welcome to Support Center"
   },
   "chat": {
     "title": "Chats",
@@ -359,6 +391,9 @@
     "time": "Time",
     "location": "Job Location",
     "submit": "Broadcast Request Now",
+    "copy": "Copy Request",
+    "stop": "Stop Request",
+    "cancel": "Cancel Request",
     "fillRequired": "Please fill in all required fields",
     "success": "Your request has been broadcasted!"
   }

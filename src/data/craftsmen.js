@@ -33,6 +33,19 @@ const craftPortfolios = {
   c10: ['1504328345606-18bbc8c9d7d1', '1535119024890-73534e674e3c', '1493070129024-7df09c3f0b20', '1517146705904-937000889f07'], // Upholstery
 };
 
+const craftSkills = {
+  c1: ['تسليك البالوعات', 'تركيب السباكة', 'إصلاح الحنفيات', 'تأسيس شبكات مياه'],
+  c2: ['تركيب لوحات كهرباء', 'إصلاح أعطال الإنارة', 'تأسيس كهرباء شقق', 'تركيب أجهزة'],
+  c3: ['صيانة أثاث', 'تركيب أبواب', 'تصميم مطابخ', 'نجارة عمارة'],
+  c4: ['دهانات حوائط', 'ديكورات جبس', 'ورق حائط', 'عزل أسطح'],
+  c5: ['شحن فريون', 'تنظيف فلاتر', 'إصلاح بوردة', 'تركيب تكييف'],
+  c6: ['تركيب سيراميك', 'رخام وجرانيت', 'بورسلين', 'عزل حمامات'],
+  c7: ['أبواب وشبابيك', 'مطابخ الوميتال', 'شيش حصيرة', 'صيانة'],
+  c8: ['أسقف معلقة', 'بيت نور', 'فواصل جبس', 'كرانيش'],
+  c9: ['تركيب باركيه', 'صيانة باركيه', 'أرضيات خشب', 'تلميع'],
+  c10: ['تنجيد انتريهات', 'ستائر', 'تجديد مراتب', 'تفصيل كنب'],
+};
+
 export const craftsmen = Array.from({ length: 120 }).map((_, index) => {
   const id = `gen_m${index + 1}`;
   const firstName = names[index % names.length];
@@ -70,5 +83,7 @@ export const craftsmen = Array.from({ length: 120 }).map((_, index) => {
     badges: index % 5 === 0 ? ['Top Rated', 'Expert'] : ['Trusted'],
     services: serviceExamples.sort(() => 0.5 - Math.random()).slice(0, 3),
     portfolio: finalPortfolio,
+    skills: craftSkills[craftId] || [],
+    experienceYears: 5 + Math.floor(Math.random() * 15),
   };
 });

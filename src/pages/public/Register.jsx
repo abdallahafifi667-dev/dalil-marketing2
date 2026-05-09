@@ -11,10 +11,18 @@ const Register = ({ onRegister }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
+    setError('');
+
+    if (password !== confirmPassword) {
+      setError(t('auth.passwordMismatch'));
+      return;
+    }
 
     const newUser = {
       id: 'u_' + Date.now(),
@@ -115,6 +123,28 @@ const Register = ({ onRegister }) => {
                 required
               />
             </div>
+
+            <div className="relative group">
+              <Lock size={16} className="absolute start-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] opacity-30 group-focus-within:text-primary transition-colors" />
+              <input
+                type="password"
+                placeholder={t('auth.confirmPassword')}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full h-12 bg-[var(--bg-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-xl ps-10 pe-4 outline-none transition-all font-bold text-xs text-[var(--text-primary)] shadow-inner"
+                required
+              />
+            </div>
+
+            {error && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-red-500 text-[10px] font-bold text-center"
+              >
+                {error}
+              </motion.p>
+            )}
           </div>
 
           <motion.button

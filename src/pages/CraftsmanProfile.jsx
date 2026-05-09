@@ -154,17 +154,30 @@ const CraftsmanProfile = () => {
         </div>
 
         {/* Stats Grid - Premium Cards */}
-        <div className="grid grid-cols-3 gap-3 sm:gap-4 px-1">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 px-1">
           {[
             { label: t('craftsmen.jobsDone'), value: craftsman.completedOrders, color: 'text-indigo-600', bg: 'bg-indigo-500/10' },
-            { label: lang === 'ar' ? 'أعمال مميزة' : 'Featured Jobs', value: Math.floor(craftsman.completedOrders / 4), color: 'text-emerald-600', bg: 'bg-emerald-500/10' },
+            { label: lang === 'ar' ? 'سنوات الخبرة' : 'Years Exp.', value: craftsman.experienceYears, color: 'text-emerald-600', bg: 'bg-emerald-500/10' },
+            { label: lang === 'ar' ? 'أعمال مميزة' : 'Featured', value: Math.floor(craftsman.completedOrders / 4), color: 'text-purple-600', bg: 'bg-purple-500/10' },
             { label: t('craftsmen.priceLabel'), value: t('order.priceOnInspection'), isPrice: true, color: 'text-primary', bg: 'bg-primary/10' }
           ].map((stat, i) => (
-            <div key={i} className={`${stat.bg} p-4 sm:p-5 rounded-[28px] sm:rounded-[36px] flex flex-col items-center justify-center border-2 border-white/50 dark:border-white/5 shadow-sm hover:shadow-md transition-all group`}>
-              <span className={`${stat.isPrice ? 'text-[9px]' : 'text-xl sm:text-2xl'} font-black ${stat.color} group-hover:scale-110 transition-transform text-center`}>{stat.value}</span>
-              <span className="text-[8px] sm:text-[9px] text-[var(--text-secondary)] font-black uppercase tracking-tighter text-center mt-1 opacity-60 leading-none">{stat.label}</span>
+            <div key={i} className={`${stat.bg} p-4 rounded-[32px] flex flex-col items-center justify-center border border-white/50 dark:border-white/5 shadow-sm hover:shadow-md transition-all`}>
+              <span className={`${stat.isPrice ? 'text-[9px]' : 'text-xl'} font-black ${stat.color} text-center`}>{stat.value}</span>
+              <span className="text-[8px] text-[var(--text-secondary)] font-black uppercase tracking-tighter text-center mt-1 opacity-60 leading-none">{stat.label}</span>
             </div>
           ))}
+        </div>
+
+        {/* Skills Section */}
+        <div className="space-y-4 px-1">
+          <h3 className="text-xl font-black text-[var(--text-primary)]">{lang === 'ar' ? 'المهارات والخبرات' : 'Skills & Expertise'}</h3>
+          <div className="flex flex-wrap gap-2">
+            {craftsman.skills?.map((skill, i) => (
+              <span key={i} className="px-4 py-2 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-full text-xs font-bold text-[var(--text-secondary)] shadow-sm">
+                #{skill}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* About Section - Redesigned */}

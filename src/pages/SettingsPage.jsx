@@ -14,7 +14,8 @@ const SettingsPage = () => {
     profile: {
       name: demoData.user.name,
       email: demoData.user.email,
-      phone: demoData.user.phone || '01234567890'
+      phone: demoData.user.phone || '01234567890',
+      location: demoData.user.location || 'القاهرة'
     },
     notifications: {
       app: true,
@@ -43,8 +44,31 @@ const SettingsPage = () => {
   };
 
   const saveSettings = () => {
+    // Persist profile changes to localStorage
+    const registeredUsers = JSON.parse(localStorage.getItem('registered_users') || '[]');
+    const currentUserId = localStorage.getItem('userId') || 'u1';
+    
+    // Find or create user entry
+    let userIndex = registeredUsers.findIndex(u => u.id === currentUserId);
+    const updatedUser = {
+      ...demoData.user,
+      ...settings.profile,
+      id: currentUserId
+    };
+
+    if (userIndex > -1) {
+      registeredUsers[userIndex] = updatedUser;
+    } else {
+      registeredUsers.push(updatedUser);
+    }
+
+    localStorage.setItem('registered_users', JSON.stringify(registeredUsers));
+    
     setIsSaved(true);
-    setTimeout(() => setIsSaved(false), 3000);
+    setTimeout(() => {
+      setIsSaved(false);
+      window.location.reload(); // Reload to apply changes across app
+    }, 1500);
   };
 
   const handleLogout = () => {
@@ -206,8 +230,35 @@ const SettingsPage = () => {
                     <div className="w-32 h-32 rounded-[48px] border-4 border-white dark:border-slate-800 shadow-2xl overflow-hidden">
                       <img src={demoData.user.image} alt="User" className="w-full h-full object-cover" />
                     </div>
+                    <input 
+                      type="file" 
+                      id="avatar-upload" 
+                      className="hidden" 
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            const imageData = event.target.result;
+                            const registeredUsers = JSON.parse(localStorage.getItem('registered_users') || '[]');
+                            const currentUserId = localStorage.getItem('userId') || 'u1';
+                            let userIndex = registeredUsers.findIndex(u => u.id === currentUserId);
+                            if (userIndex > -1) {
+                              registeredUsers[userIndex].image = imageData;
+                            } else {
+                              registeredUsers.push({ id: currentUserId, image: imageData });
+                            }
+                            localStorage.setItem('registered_users', JSON.stringify(registeredUsers));
+                            window.location.reload();
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
                     <motion.button
                       whileTap={{ scale: 0.9 }}
+                      onClick={() => document.getElementById('avatar-upload').click()}
                       className="absolute -bottom-2 -end-2 w-12 h-12 bg-primary text-white rounded-2xl flex items-center justify-center border-4 border-[var(--surface-color)] shadow-xl"
                     >
                       <Camera size={20} />
@@ -239,6 +290,15 @@ const SettingsPage = () => {
                         type="tel"
                         value={settings.profile.phone}
                         onChange={(e) => updateProfile('phone', e.target.value)}
+                        className="w-full h-14 md:h-16 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl md:rounded-[28px] px-5 outline-none font-black text-sm md:text-base transition-all text-[var(--text-primary)] shadow-sm"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] px-3">{t('auth.location') || (lang === 'ar' ? 'الموقع' : 'Location')}</label>
+                      <input
+                        type="text"
+                        value={settings.profile.location}
+                        onChange={(e) => updateProfile('location', e.target.value)}
                         className="w-full h-14 md:h-16 bg-[var(--surface-color)] border border-[var(--border-color)] focus:border-primary/50 rounded-2xl md:rounded-[28px] px-5 outline-none font-black text-sm md:text-base transition-all text-[var(--text-primary)] shadow-sm"
                       />
                     </div>

@@ -27,6 +27,24 @@ const ChatDetail = () => {
 
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const newMsg = {
+          id: Date.now(),
+          image: event.target.result,
+          sender: 'me',
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        };
+        setMessages(prev => [...prev, newMsg]);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Polling for simulated messages
   useEffect(() => {
@@ -98,50 +116,47 @@ const ChatDetail = () => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[var(--bg-color)] overflow-hidden relative">
+    <div className="flex flex-col h-screen max-h-screen bg-[var(--bg-color)] overflow-hidden relative">
       {/* Decorative background blobs */}
       <div className="absolute top-1/4 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full -mr-32 -z-10" />
       <div className="absolute bottom-1/4 left-0 w-48 h-48 bg-indigo-500/5 blur-[80px] rounded-full -ml-24 -z-10" />
 
       {/* Fixed Header with Partner Info */}
-      <div className="h-24 glass border-b border-white/5 z-[1001] flex items-center px-4 gap-4 shrink-0 relative">
-        <div className="w-full flex items-center gap-4">
-          <button onClick={() => navigate(-1)} className="p-2 -ms-2 text-[var(--text-secondary)] hover:text-primary transition-colors">
-            <ChevronLeft size={24} className={lang === 'ar' ? 'rotate-180' : ''} />
-          </button>
-          <div className="flex items-center gap-3 flex-1">
-            <div className="relative">
+      <div className="h-20 glass border-b border-white/10 z-[1001] flex items-center px-4 shrink-0 relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl">
+        <div className="w-full flex items-center gap-3">
+          <motion.button 
+            whileTap={{ scale: 0.9 }}
+            onClick={() => navigate(-1)} 
+            className="w-10 h-10 flex items-center justify-center text-[var(--text-secondary)] hover:text-primary transition-colors bg-[var(--surface-color)] border border-[var(--border-color)] rounded-xl shadow-sm"
+          >
+            <ChevronLeft size={20} className={lang === 'ar' ? 'rotate-180' : ''} />
+          </motion.button>
+          
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="relative shrink-0">
               <img 
                 src={partner?.image || `https://ui-avatars.com/api/?name=${partner?.name || 'U'}&background=random`} 
-                className="w-12 h-12 rounded-[18px] object-cover border-2 border-[var(--surface-color)] shadow-sm" 
+                className="w-11 h-11 rounded-2xl object-cover border-2 border-white shadow-sm" 
                 alt={partner?.name} 
               />
-              <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-[var(--surface-color)] shadow-sm" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm" />
             </div>
             <div className="min-w-0">
-              <h4 className="font-black text-[var(--text-primary)] text-base truncate">{partner?.name}</h4>
-              <p className="text-[10px] text-green-500 font-black uppercase tracking-widest flex items-center gap-1.5">
-                {partner?.online !== false ? (
-                  <>
-                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                    {t('chat.online') || 'متصل الآن'}
-                  </>
-                ) : (
-                  <span className="text-[var(--text-secondary)] opacity-60">
-                    {t('chat.activeAgo')}
-                  </span>
-                )}
-              </p>
+              <h4 className="font-black text-[var(--text-primary)] text-sm truncate leading-tight">{partner?.name}</h4>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                <span className="text-[9px] text-green-500 font-black uppercase tracking-wider">{t('chat.online') || 'متصل الآن'}</span>
+              </div>
             </div>
           </div>
-
+          
           <div className="relative">
             <motion.button 
               whileTap={{ scale: 0.9 }} 
               onClick={() => setShowMenu(!showMenu)}
-              className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all ${showMenu ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' : 'bg-[var(--surface-color)] text-[var(--text-primary)] border-[var(--border-color)] shadow-sm hover:border-primary/30'}`}
+              className="w-10 h-10 rounded-xl flex items-center justify-center bg-[var(--surface-color)] text-[var(--text-primary)] border border-[var(--border-color)] shadow-sm"
             >
-              <MoreVertical size={20} />
+              <MoreVertical size={18} />
             </motion.button>
             
             <AnimatePresence>
@@ -178,14 +193,31 @@ const ChatDetail = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`max-w-[85%] px-5 py-3 rounded-[32px] shadow-sm relative group ${msg.sender === 'me' 
-                  ? 'bg-primary text-white rounded-tr-none' 
-                  : 'bg-[var(--surface-color)] text-[var(--text-primary)] border border-[var(--border-color)] rounded-tl-none'
+              <div className={`max-w-[85%] ${msg.image ? 'p-1' : 'px-4 py-2.5'} rounded-2xl shadow-sm relative group ${msg.sender === 'me' 
+                  ? 'bg-primary text-white rounded-br-none' 
+                  : 'bg-[var(--surface-color)] text-[var(--text-primary)] border border-[var(--border-color)] rounded-bl-none'
                 }`}>
-                <p className="text-sm font-bold leading-relaxed">{msg.text}</p>
-                <span className={`text-[8px] font-black uppercase tracking-widest mt-1.5 block opacity-40 ${msg.sender === 'me' ? 'text-white' : 'text-[var(--text-secondary)]'}`}>
-                  {msg.time}
-                </span>
+                {/* Bubble Tail */}
+                <div className={`absolute bottom-0 w-3 h-3 ${msg.sender === 'me' 
+                  ? '-right-1.5 bg-primary' 
+                  : '-left-1.5 bg-[var(--surface-color)] border-b border-l border-[var(--border-color)]'
+                }`} style={{ clipPath: msg.sender === 'me' ? 'polygon(0 0, 0% 100%, 100% 100%)' : 'polygon(100% 0, 0 100%, 100% 100%)' }} />
+                
+                {msg.image ? (
+                  <div className="rounded-xl overflow-hidden">
+                    <img src={msg.image} alt="Sent" className="w-full max-h-64 object-cover" />
+                    <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-1 block opacity-40 ${msg.sender === 'me' ? 'text-white' : 'text-[var(--text-secondary)]'}`}>
+                      {msg.time}
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-sm font-bold leading-relaxed">{msg.text}</p>
+                    <span className={`text-[8px] font-black uppercase tracking-widest mt-1 block opacity-40 ${msg.sender === 'me' ? 'text-white' : 'text-[var(--text-secondary)]'}`}>
+                      {msg.time}
+                    </span>
+                  </>
+                )}
               </div>
             </motion.div>
           ))}
@@ -203,34 +235,52 @@ const ChatDetail = () => {
         </div>
       </div>
 
-      {/* Input Area - Compact & Fixed */}
-      <div className="px-4 py-4 glass border-t border-[var(--border-color)] shrink-0">
-        <form onSubmit={handleSend} className="flex items-center gap-3 w-full">
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            type="button"
-            className="w-12 h-12 bg-[var(--surface-color)] text-[var(--text-secondary)] rounded-2xl flex items-center justify-center border border-[var(--border-color)] hover:text-primary transition-all shrink-0 shadow-sm"
+      {/* Input Area - Sticky Bottom Bar */}
+      <div className="glass border-t border-white/10 px-4 pt-3 pb-8 shrink-0 z-[1000] bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl">
+        <div className="max-w-[600px] mx-auto">
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            onChange={handleImageSelect} 
+            accept="image/*" 
+            className="hidden" 
+          />
+          <form 
+            onSubmit={handleSend} 
+            className="flex items-center gap-2"
           >
-            <ImageIcon size={22} />
-          </motion.button>
-          <div className="flex-1 relative">
-            <input
-              type="text"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              placeholder={t('chat.typeMessage') || 'اكتب رسالتك هنا...'}
-              className="w-full h-14 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[24px] ps-5 pe-12 outline-none focus:border-primary/50 font-bold text-sm text-[var(--text-primary)] transition-all shadow-inner"
-            />
-            <button type="button" className="absolute end-4 top-1/2 -translate-y-1/2 text-[var(--text-secondary)] hover:text-primary transition-colors"><Smile size={20} /></button>
-          </div>
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            type="submit"
-            className="w-14 h-14 bg-gradient-to-r from-primary to-indigo-600 text-white rounded-[22px] flex items-center justify-center shadow-2xl shadow-primary/30 hover:opacity-90 transition-all shrink-0"
-          >
-            <Send size={22} className={lang === 'ar' ? 'rotate-180' : ''} />
-          </motion.button>
-        </form>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              type="button"
+              onClick={() => fileInputRef.current.click()}
+              className="w-11 h-11 bg-primary/10 text-primary rounded-2xl flex items-center justify-center hover:bg-primary hover:text-white transition-all shrink-0"
+            >
+              <ImageIcon size={20} />
+            </motion.button>
+            
+            <div className="flex-1 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-2xl flex items-center px-3 shadow-inner">
+              <input
+                type="text"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder={t('chat.typeMessage') || 'اكتب رسالتك هنا...'}
+                className="flex-1 h-11 bg-transparent outline-none font-bold text-sm text-[var(--text-primary)]"
+              />
+              <button type="button" className="p-2 text-[var(--text-secondary)] hover:text-primary transition-colors">
+                <Smile size={20} />
+              </button>
+            </div>
+
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              type="submit"
+              disabled={!inputText.trim()}
+              className={`w-11 h-11 rounded-2xl flex items-center justify-center transition-all shrink-0 ${inputText.trim() ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-400'}`}
+            >
+              <Send size={20} className={lang === 'ar' ? 'rotate-180' : ''} />
+            </motion.button>
+          </form>
+        </div>
       </div>
     </div>
   );

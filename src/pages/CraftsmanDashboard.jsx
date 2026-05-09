@@ -24,12 +24,25 @@ const CraftsmanDashboard = () => {
   
 
 
-  // Simulation of live market requests based on local state
-  const [liveRequests] = useState([
-    { id: 'lr1', title: 'تحتاج سباك فوراً - تسريب مياه', titleEn: 'Need Plumber - Water Leak', distance: '0.8 km', budget: '150', time: '2 mins ago' },
-    { id: 'lr2', title: 'تركيب دش كامل في الحمام', titleEn: 'Full Shower Installation', distance: '2.1 km', budget: '450', time: '15 mins ago' },
-    { id: 'lr3', title: 'صيانة صرف صحي للمطبخ', titleEn: 'Kitchen Drainage Maintenance', distance: '1.5 km', budget: '200', time: '30 mins ago' },
-  ]);
+  // Simulation of live market requests based on real demo data
+  const liveRequests = demoData.orders
+    .filter(o => o.status === 'pending')
+    .slice(0, 3)
+    .map(o => ({
+      ...o,
+      distance: `${(Math.random() * 5 + 0.5).toFixed(1)} km`,
+      time: `${Math.floor(Math.random() * 59) + 1} mins ago`
+    }));
+
+  const performanceData = [
+    { day: lang === 'ar' ? 'السبت' : 'Sat', value: 40 },
+    { day: lang === 'ar' ? 'الأحد' : 'Sun', value: 70 },
+    { day: lang === 'ar' ? 'الاثنين' : 'Mon', value: 45 },
+    { day: lang === 'ar' ? 'الثلاثاء' : 'Tue', value: 90 },
+    { day: lang === 'ar' ? 'الأربعاء' : 'Wed', value: 65 },
+    { day: lang === 'ar' ? 'الخميس' : 'Thu', value: 80 },
+    { day: lang === 'ar' ? 'الجمعة' : 'Fri', value: 100 },
+  ];
 
   return (
     <div className="page-container with-nav-padding pt-8 space-y-8 overflow-x-hidden relative">
@@ -80,7 +93,8 @@ const CraftsmanDashboard = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.1 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-[var(--surface-color)] border border-[var(--border-color)] p-6 rounded-[40px] space-y-4 relative overflow-hidden group cursor-pointer shadow-xl shadow-slate-200/40 dark:shadow-none"
+              onClick={() => navigate(`/order/${order.id}`)}
+              className="bg-[var(--surface-color)] border border-[var(--border-color)] p-6 rounded-[40px] space-y-4 relative overflow-hidden group cursor-pointer shadow-xl shadow-slate-200/40 dark:shadow-none hover:border-primary/30 transition-all"
             >
               <div className="flex justify-between items-start">
                 <div className="space-y-2 flex-1">
@@ -150,30 +164,53 @@ const CraftsmanDashboard = () => {
         </div>
       </section>
 
-      {/* Performance Graph Placeholder */}
+      {/* Performance Graph - Redesigned */}
       <section className="bg-gradient-to-br from-primary via-indigo-600 to-purple-700 p-8 rounded-[48px] text-white shadow-2xl shadow-primary/30 relative overflow-hidden mx-1">
-        <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 blur-3xl rounded-full -mr-20 -mt-20" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-400/20 blur-2xl rounded-full -ml-16 -mb-16" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[100px] rounded-full -mr-32 -mt-32" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-400/20 blur-[80px] rounded-full -ml-24 -mb-24" />
         
-        <div className="relative z-10 space-y-6">
+        <div className="relative z-10 space-y-8">
           <div className="flex justify-between items-center">
-             <div>
-               <h4 className="font-black text-xl tracking-tight">{t('dashboard.performance')}</h4>
-               <p className="text-[10px] font-bold opacity-70 uppercase tracking-widest">{t('dashboard.growth')}</p>
+             <div className="space-y-1">
+               <h4 className="font-black text-2xl tracking-tight">{t('dashboard.performance')}</h4>
+               <p className="text-[10px] font-bold opacity-70 uppercase tracking-widest flex items-center gap-2">
+                 <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                 {t('dashboard.growth')}
+               </p>
              </div>
-             <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30">
-                <TrendingUp size={24} className="text-white" />
+             <div className="w-14 h-14 bg-white/20 backdrop-blur-xl rounded-[22px] flex items-center justify-center border border-white/30 shadow-inner">
+                <TrendingUp size={28} className="text-white" />
              </div>
           </div>
-          <div className="h-24 flex items-end gap-2 px-2">
-            {[40, 70, 45, 90, 65, 80, 100].map((h, i) => (
-              <motion.div 
-                key={i}
-                initial={{ height: 0 }}
-                animate={{ height: `${h}%` }}
-                transition={{ delay: i * 0.1, duration: 0.8 }}
-                className="flex-1 bg-gradient-to-t from-white/10 to-white/40 rounded-t-xl border-t border-white/20 shadow-lg"
-              />
+
+          <div className="grid grid-cols-2 gap-4 mb-2">
+             <div className="bg-white/10 backdrop-blur-md rounded-3xl p-4 border border-white/10">
+                <p className="text-[8px] font-black opacity-60 uppercase tracking-tighter mb-1">{lang === 'ar' ? 'إجمالي الأرباح' : 'TOTAL EARNINGS'}</p>
+                <p className="text-xl font-black">12,450 <span className="text-[10px] opacity-60">{lang === 'ar' ? 'ج.م' : 'EGP'}</span></p>
+             </div>
+             <div className="bg-white/10 backdrop-blur-md rounded-3xl p-4 border border-white/10">
+                <p className="text-[8px] font-black opacity-60 uppercase tracking-tighter mb-1">{lang === 'ar' ? 'الطلبات المكتملة' : 'COMPLETED JOBS'}</p>
+                <p className="text-xl font-black">24 <span className="text-[10px] opacity-60">{lang === 'ar' ? 'طلب' : 'Jobs'}</span></p>
+             </div>
+          </div>
+          
+          <div className="h-32 flex items-end justify-between px-1">
+            {performanceData.map((item, i) => (
+              <div key={i} className="flex flex-col items-center gap-3 flex-1">
+                <div className="w-full px-1.5 h-full flex items-end">
+                  <motion.div 
+                    initial={{ height: 0 }}
+                    animate={{ height: `${item.value}%` }}
+                    transition={{ delay: i * 0.1, duration: 1, ease: "circOut" }}
+                    className="w-full bg-gradient-to-t from-white/5 to-white/40 rounded-t-xl border-t border-white/20 shadow-lg relative group"
+                  >
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-white text-primary text-[8px] font-black px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-xl">
+                      {item.value}%
+                    </div>
+                  </motion.div>
+                </div>
+                <span className="text-[8px] font-black opacity-60 uppercase tracking-widest">{item.day}</span>
+              </div>
             ))}
           </div>
         </div>

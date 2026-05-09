@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { Search, MapPin, Clock, Filter, ChevronRight, Inbox, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { demoData } from '../data';
 
 const Market = () => {
   const { t, lang } = useLanguage();
@@ -10,17 +11,20 @@ const Market = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   // Simulation of live market requests
-  const [allRequests] = useState([
-    { id: 'lr1', title: 'تحتاج سباك فوراً - تسريب مياه', titleEn: 'Need Plumber - Water Leak', distance: '0.8 km', budget: '150', time: '2 mins ago', category: 'Plumbing' },
-    { id: 'lr2', title: 'تركيب دش كامل في الحمام', titleEn: 'Full Shower Installation', distance: '2.1 km', budget: '450', time: '15 mins ago', category: 'Plumbing' },
-    { id: 'lr3', title: 'صيانة صرف صحي للمطبخ', titleEn: 'Kitchen Drainage Maintenance', distance: '1.5 km', budget: '200', time: '30 mins ago', category: 'Plumbing' },
-    { id: 'lr4', title: 'تصليح عطل في لوحة الكهرباء', titleEn: 'Electrical Panel Repair', distance: '3.4 km', budget: '300', time: '1 hour ago', category: 'Electricity' },
-    { id: 'lr5', title: 'دهان غرفة معيشة كاملة', titleEn: 'Full Living Room Painting', distance: '5.2 km', budget: '1200', time: '3 hours ago', category: 'Painting' },
-  ]);
+  const [allRequests] = useState(demoData.orders
+    .filter(o => o.status === 'pending')
+    .map(o => ({
+      ...o,
+      titleEn: o.title, 
+      distance: `${(Math.random() * 5 + 0.5).toFixed(1)} km`,
+      time: `${Math.floor(Math.random() * 59) + 1} mins ago`,
+      category: demoData.crafts.find(c => c.id === o.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn'] || 'General'
+    }))
+  );
 
   const filteredRequests = allRequests.filter(req => 
     req.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    req.titleEn.toLowerCase().includes(searchTerm.toLowerCase())
+    (req.titleEn && req.titleEn.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (

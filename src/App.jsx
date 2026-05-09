@@ -2,6 +2,8 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Components
 import BottomNav from './components/BottomNav';
@@ -78,6 +80,7 @@ const AppContent = () => {
 
   return (
     <div className="app-frame">
+      <ToastContainer position="top-center" autoClose={3000} hideProgressBar newestOnTop theme="colored" />
       {showPublicHeader && <PublicHeader />}
       {isAuthenticated && !shouldHideHeader && <Header />}
 

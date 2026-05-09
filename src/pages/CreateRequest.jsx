@@ -12,21 +12,22 @@ const CreateRequest = () => {
     const { crafts, craftsmen } = demoData;
 
     // Check for pre-filled state
-    const prefilledCraft = location.state?.prefilledCraft || '';
-    const craftsmanId = location.state?.craftsmanId || null;
+    const prefilledCraft = location.state?.prefilledCraft || location.state?.prefilledData?.craft || '';
+    const prefilledData = location.state?.prefilledData || null;
+    const craftsmanId = location.state?.craftsmanId || prefilledData?.craftsmanId || null;
     const selectedCraftsman = useMemo(() => 
         craftsmanId ? craftsmen.find(m => m.id === craftsmanId) : null
     , [craftsmanId, craftsmen]);
     
     const [formData, setFormData] = useState({
         craft: prefilledCraft,
-        title: '',
-        description: '',
-        date: '',
-        timeHours: '12',
-        timeMinutes: '00',
-        location: '',
-        requirements: [],
+        title: prefilledData?.title || '',
+        description: prefilledData?.description || '',
+        date: prefilledData?.date || '',
+        timeHours: prefilledData?.timeHours || '12',
+        timeMinutes: prefilledData?.timeMinutes || '00',
+        location: prefilledData?.location || '',
+        requirements: prefilledData?.requirements || [],
     });
 
     const [newRequirement, setNewRequirement] = useState('');

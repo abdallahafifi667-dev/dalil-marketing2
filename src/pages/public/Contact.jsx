@@ -48,10 +48,10 @@ const Contact = () => {
     <div className="min-h-screen bg-white dark:bg-slate-950 overflow-y-auto pt-20">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-slate-900 to-blue-950 dark:from-slate-950 dark:to-slate-900 pt-20 pb-20 overflow-hidden text-center">
-        <motion.div 
-            animate={{ x: [0, 80, -80, 0], y: [0, -80, 80, 0] }} 
-            transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-            className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px] opacity-20 pointer-events-none" 
+        <motion.div
+          animate={{ x: [0, 80, -80, 0], y: [0, -80, 80, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+          className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[120px] opacity-20 pointer-events-none"
         />
         <div className="max-w-5xl mx-auto px-4 relative z-10">
           <motion.div
@@ -62,7 +62,7 @@ const Contact = () => {
           >
             <Mail className="w-10 h-10 text-white" />
           </motion.div>
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl md:text-7xl font-black text-white mb-4"
@@ -138,7 +138,7 @@ const Contact = () => {
                     <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('contact.form.message')}</label>
                     <textarea name="message" rows={6} required className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border-2 border-slate-100 dark:border-slate-800 focus:border-primary outline-none transition-all resize-none" placeholder={t('contact.form.messagePlaceholder')} />
                   </div>
-                  <button 
+                  <button
                     type="submit" disabled={isSubmitting}
                     className="w-full h-16 bg-primary text-white rounded-2xl font-black text-lg shadow-xl shadow-primary/20 flex items-center justify-center gap-3 disabled:opacity-50"
                   >

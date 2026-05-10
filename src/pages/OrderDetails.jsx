@@ -10,8 +10,8 @@ const OrderDetails = () => {
   const { id } = useParams();
   const { lang, t } = useLanguage();
   const navigate = useNavigate();
-  const order = demoData.orders.find(o => o.id === id) || 
-                JSON.parse(localStorage.getItem('demo_orders') || '[]').find(o => o.id === id);
+  const order = demoData.orders.find(o => o.id === id) ||
+    JSON.parse(localStorage.getItem('demo_orders') || '[]').find(o => o.id === id);
   const craftsman = demoData.craftsmen.find(m => m.id === order?.craftsmanId);
   const userRole = localStorage.getItem('userRole') || 'client';
   const client = demoData.users.find(u => u.id === order?.clientId);
@@ -25,7 +25,7 @@ const OrderDetails = () => {
     const fetchProposals = () => {
       const savedProposals = JSON.parse(localStorage.getItem('demo_proposals') || '[]');
       const filtered = savedProposals.filter(p => p.orderId === id);
-      
+
       // Map to full craftsman data
       const enriched = filtered.map(p => ({
         ...p,
@@ -50,7 +50,7 @@ const OrderDetails = () => {
   const handleConfirmAction = () => {
     const isStop = confirmModal.type === 'stop';
     const newStatus = isStop ? 'stopped' : 'cancelled';
-    
+
     const updatedOrder = { ...order, status: newStatus };
     const saved = JSON.parse(localStorage.getItem('demo_orders') || '[]');
     const idx = saved.findIndex(o => o.id === id);
@@ -82,7 +82,7 @@ const OrderDetails = () => {
     const savedProposals = JSON.parse(localStorage.getItem('demo_proposals') || '[]');
     savedProposals.push(newProposal);
     localStorage.setItem('demo_proposals', JSON.stringify(savedProposals));
-    
+
     // Update local state immediately
     const fullProposal = {
       ...newProposal,
@@ -117,7 +117,7 @@ const OrderDetails = () => {
             </motion.button>
             <div className="space-y-0.5">
               <h2 className="text-2xl font-black tracking-tight text-[var(--text-primary)]">
-                 {t('order.details')}
+                {t('order.details')}
               </h2>
               <p className="text-[10px] text-primary font-black uppercase tracking-widest">
                 #{id.slice(-6).toUpperCase()}
@@ -137,9 +137,9 @@ const OrderDetails = () => {
             <AnimatePresence>
               {showMenu && (
                 <>
-                  <div 
-                    className="fixed inset-0 z-40" 
-                    onClick={() => setShowMenu(false)} 
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setShowMenu(false)}
                   />
                   <motion.div
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -147,7 +147,7 @@ const OrderDetails = () => {
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     className="absolute top-14 end-0 w-56 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[24px] shadow-2xl z-50 overflow-hidden py-2"
                   >
-                    <button 
+                    <button
                       onClick={() => { setConfirmModal({ show: true, type: 'stop' }); setShowMenu(false); }}
                       disabled={order.status === 'stopped' || order.status === 'cancelled'}
                       className="w-full flex items-center gap-3 px-5 py-4 text-sm font-black text-amber-500 hover:bg-amber-500/5 transition-colors disabled:opacity-30"
@@ -155,7 +155,7 @@ const OrderDetails = () => {
                       <StopCircle size={18} />
                       {t('request.stop')}
                     </button>
-                    <button 
+                    <button
                       onClick={() => { setConfirmModal({ show: true, type: 'cancel' }); setShowMenu(false); }}
                       disabled={order.status === 'cancelled'}
                       className="w-full flex items-center gap-3 px-5 py-4 text-sm font-black text-red-500 hover:bg-red-500/5 transition-colors disabled:opacity-30"
@@ -179,7 +179,7 @@ const OrderDetails = () => {
             className="w-full h-full object-cover opacity-50 dark:opacity-30 grayscale"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-          
+
           {/* Animated Path on Map */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
             <motion.path
@@ -195,25 +195,24 @@ const OrderDetails = () => {
           </svg>
 
           <div className="absolute top-6 end-6">
-            <div className={`px-5 py-2 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl border-2 border-white/20 text-white ${
-              order.status === 'cancelled' ? 'bg-red-500 shadow-red-500/30' : 
-              order.status === 'stopped' ? 'bg-amber-500 shadow-amber-500/30' : 'bg-primary shadow-primary/30'
-            }`}>
+            <div className={`px-5 py-2 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl border-2 border-white/20 text-white ${order.status === 'cancelled' ? 'bg-red-500 shadow-red-500/30' :
+                order.status === 'stopped' ? 'bg-amber-500 shadow-amber-500/30' : 'bg-primary shadow-primary/30'
+              }`}>
               {order.status}
             </div>
           </div>
 
           {/* Pulsing Dot on Map - Represents User */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-             <div className="w-6 h-6 bg-primary rounded-full animate-ping absolute opacity-40" />
-             <div className="w-6 h-6 bg-primary rounded-full relative border-4 border-white shadow-lg flex items-center justify-center">
-               <div className="w-2 h-2 bg-white rounded-full" />
-             </div>
+            <div className="w-6 h-6 bg-primary rounded-full animate-ping absolute opacity-40" />
+            <div className="w-6 h-6 bg-primary rounded-full relative border-4 border-white shadow-lg flex items-center justify-center">
+              <div className="w-2 h-2 bg-white rounded-full" />
+            </div>
           </div>
 
           {/* Destination Marker */}
           <div className="absolute bottom-10 right-20">
-             <MapPin size={32} className="text-red-500 drop-shadow-lg" fill="currentColor" fillOpacity={0.2} />
+            <MapPin size={32} className="text-red-500 drop-shadow-lg" fill="currentColor" fillOpacity={0.2} />
           </div>
         </div>
 
@@ -239,17 +238,17 @@ const OrderDetails = () => {
 
             <div className="flex gap-4 mt-6 pt-6 border-t border-dashed border-[var(--border-color)] relative z-10">
               <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
-                  <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('request.date')}</span>
-                  <div className="flex items-center gap-1.5 font-black text-sm text-[var(--text-primary)]">
-                      <Clock size={14} className="text-primary" /> {order.date}
-                  </div>
+                <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('request.date')}</span>
+                <div className="flex items-center gap-1.5 font-black text-sm text-[var(--text-primary)]">
+                  <Clock size={14} className="text-primary" /> {order.date}
+                </div>
               </div>
               <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
-                  <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('payment.total')}</span>
-                  <div className="flex items-center gap-1.5 font-black text-sm text-primary">
-                      <CreditCard size={14} /> 
-                      <span className="text-[10px]">{t('order.priceOnInspection')}</span>
-                  </div>
+                <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('payment.total')}</span>
+                <div className="flex items-center gap-1.5 font-black text-sm text-primary">
+                  <CreditCard size={14} />
+                  <span className="text-[10px]">{t('order.priceOnInspection')}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -284,29 +283,29 @@ const OrderDetails = () => {
 
                 <div className="flex gap-4 mt-6 pt-6 border-t border-dashed border-[var(--border-color)] relative z-10">
                   <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
-                      <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('request.date')}</span>
-                      <div className="flex items-center gap-1.5 font-black text-sm text-[var(--text-primary)]">
-                          <Clock size={14} className="text-primary" /> {order.date}
-                      </div>
+                    <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('request.date')}</span>
+                    <div className="flex items-center gap-1.5 font-black text-sm text-[var(--text-primary)]">
+                      <Clock size={14} className="text-primary" /> {order.date}
+                    </div>
                   </div>
                   <div className="flex-1 flex flex-col items-center p-3 bg-[var(--bg-color)] rounded-2xl border border-[var(--border-color)]">
-                      <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('payment.total')}</span>
-                      <div className="flex items-center gap-1.5 font-black text-sm text-primary">
-                          <CreditCard size={14} /> 
-                          <span className="text-[10px]">{t('order.priceOnInspection')}</span>
-                      </div>
+                    <span className="text-[9px] font-black text-[var(--text-secondary)] opacity-60 uppercase tracking-widest mb-1">{t('payment.total')}</span>
+                    <div className="flex items-center gap-1.5 font-black text-sm text-primary">
+                      <CreditCard size={14} />
+                      <span className="text-[10px]">{t('order.priceOnInspection')}</span>
+                    </div>
                   </div>
                 </div>
               </>
             ) : (
-               <div className="flex flex-col items-center justify-center py-6 space-y-2">
-                  <div className="w-16 h-16 bg-[var(--bg-color)] rounded-2xl flex items-center justify-center border border-dashed border-[var(--border-color)]">
-                     <User size={24} className="text-[var(--text-secondary)] opacity-30" />
-                  </div>
-                  <p className="font-black text-sm text-[var(--text-secondary)] opacity-60">
-                    {lang === 'ar' ? 'بانتظار تحديد حرفي' : 'Waiting for craftsman assignment'}
-                  </p>
-               </div>
+              <div className="flex flex-col items-center justify-center py-6 space-y-2">
+                <div className="w-16 h-16 bg-[var(--bg-color)] rounded-2xl flex items-center justify-center border border-dashed border-[var(--border-color)]">
+                  <User size={24} className="text-[var(--text-secondary)] opacity-30" />
+                </div>
+                <p className="font-black text-sm text-[var(--text-secondary)] opacity-60">
+                  {lang === 'ar' ? 'بانتظار تحديد حرفي' : 'Waiting for craftsman assignment'}
+                </p>
+              </div>
             )}
           </div>
         )}
@@ -334,7 +333,7 @@ const OrderDetails = () => {
                   className="bg-[var(--surface-color)] p-5 rounded-[40px] border border-[var(--border-color)] shadow-sm flex items-center gap-4 group relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
+
                   <div className="w-16 h-16 rounded-[24px] overflow-hidden border-2 border-[var(--bg-color)] shadow-md relative z-10 shrink-0">
                     <img src={prop.craftsman?.image} alt={prop.craftsman?.name} className="w-full h-full object-cover" />
                   </div>
@@ -368,7 +367,7 @@ const OrderDetails = () => {
                 </motion.div>
               ))}
             </AnimatePresence>
-            
+
             {proposals.length === 0 && (
               <div className="py-8 text-center bg-[var(--bg-color)] rounded-[40px] border border-dashed border-[var(--border-color)]">
                 <p className="text-xs font-bold text-[var(--text-secondary)] opacity-40 italic">
@@ -408,33 +407,33 @@ const OrderDetails = () => {
 
 
         {userRole === 'craftsman' && order.status === 'pending' ? (
-            <motion.button 
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setProposalModal({ show: true, price: '', message: '' })}
-                className="w-full h-16 bg-primary text-white font-black text-base rounded-[32px] hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2"
-            >
-              <CheckCircle2 size={20} />
-              {lang === 'ar' ? 'تقديم عرض للعمل' : 'Submit Job Proposal'}
-            </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setProposalModal({ show: true, price: '', message: '' })}
+            className="w-full h-16 bg-primary text-white font-black text-base rounded-[32px] hover:bg-primary/90 transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2"
+          >
+            <CheckCircle2 size={20} />
+            {lang === 'ar' ? 'تقديم عرض للعمل' : 'Submit Job Proposal'}
+          </motion.button>
         ) : (
-            <motion.button 
-                whileTap={{ scale: 0.95 }}
-                className="w-full h-16 bg-[var(--surface-color)] border-2 border-[var(--border-color)] rounded-[32px] text-[var(--text-secondary)] font-black text-base hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm"
-            >
-              {t('order.contactSupport')}
-            </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            className="w-full h-16 bg-[var(--surface-color)] border-2 border-[var(--border-color)] rounded-[32px] text-[var(--text-secondary)] font-black text-base hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm"
+          >
+            {t('order.contactSupport')}
+          </motion.button>
         )}
 
         {/* Confirmation Modal */}
         <AnimatePresence>
           {confirmModal.show && (
             <div className="fixed inset-0 z-[2000] flex items-center justify-center p-6">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setConfirmModal({ show: false, type: null })}
-                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" 
+                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
               />
               <motion.div
                 initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -449,18 +448,18 @@ const OrderDetails = () => {
                   {confirmModal.type === 'stop' ? (lang === 'ar' ? 'إيقاف الطلب؟' : 'Stop Request?') : (lang === 'ar' ? 'إلغاء الطلب؟' : 'Cancel Request?')}
                 </h3>
                 <p className="text-sm font-bold text-[var(--text-secondary)] opacity-60 leading-relaxed mb-8">
-                  {confirmModal.type === 'stop' 
-                    ? (lang === 'ar' ? 'هل أنت متأكد من إيقاف استقبال العروض لهذا الطلب؟ يمكنك تفعيله لاحقاً.' : 'Are you sure you want to stop receiving offers for this request?') 
+                  {confirmModal.type === 'stop'
+                    ? (lang === 'ar' ? 'هل أنت متأكد من إيقاف استقبال العروض لهذا الطلب؟ يمكنك تفعيله لاحقاً.' : 'Are you sure you want to stop receiving offers for this request?')
                     : (lang === 'ar' ? 'هل أنت متأكد من إلغاء هذا الطلب نهائياً؟ لا يمكن التراجع عن هذه الخطوة.' : 'Are you sure you want to cancel this request permanently? This action cannot be undone.')}
                 </p>
                 <div className="flex gap-4">
-                  <button 
+                  <button
                     onClick={() => setConfirmModal({ show: false, type: null })}
                     className="flex-1 h-14 rounded-2xl font-black text-sm text-[var(--text-primary)] bg-[var(--bg-color)] border border-[var(--border-color)]"
                   >
                     {lang === 'ar' ? 'تراجع' : 'Cancel'}
                   </button>
-                  <button 
+                  <button
                     onClick={handleConfirmAction}
                     className={`flex-1 h-14 rounded-2xl font-black text-sm text-white shadow-lg ${confirmModal.type === 'stop' ? 'bg-amber-500 shadow-amber-500/20' : 'bg-red-500 shadow-red-500/20'}`}
                   >
@@ -476,12 +475,12 @@ const OrderDetails = () => {
         <AnimatePresence>
           {proposalModal.show && (
             <div className="fixed inset-0 z-[2000] flex items-center justify-center p-6">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setProposalModal({ show: false, price: '', message: '' })}
-                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" 
+                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
               />
               <motion.div
                 initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -493,7 +492,7 @@ const OrderDetails = () => {
                   <h3 className="text-xl font-black text-[var(--text-primary)]">
                     {lang === 'ar' ? 'تفاصيل العرض' : 'Proposal Details'}
                   </h3>
-                  <button 
+                  <button
                     onClick={() => setProposalModal({ show: false, price: '', message: '' })}
                     className="w-8 h-8 flex items-center justify-center rounded-full bg-[var(--bg-color)] text-[var(--text-secondary)]"
                   >
@@ -506,7 +505,7 @@ const OrderDetails = () => {
                     <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-widest px-2">
                       {lang === 'ar' ? 'السعر المقترح (ج.م)' : 'Proposed Price (EGP)'}
                     </label>
-                    <input 
+                    <input
                       type="number"
                       value={proposalModal.price}
                       onChange={(e) => setProposalModal({ ...proposalModal, price: e.target.value })}
@@ -518,7 +517,7 @@ const OrderDetails = () => {
                     <label className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-widest px-2">
                       {lang === 'ar' ? 'رسالة للعميل' : 'Message to Client'}
                     </label>
-                    <textarea 
+                    <textarea
                       value={proposalModal.message}
                       onChange={(e) => setProposalModal({ ...proposalModal, message: e.target.value })}
                       placeholder={lang === 'ar' ? 'اكتب تفاصيل عرضك هنا...' : 'Write your proposal details here...'}
@@ -527,7 +526,7 @@ const OrderDetails = () => {
                   </div>
                 </div>
 
-                <motion.button 
+                <motion.button
                   whileTap={{ scale: 0.95 }}
                   onClick={handleSubmitProposal}
                   className="w-full h-14 rounded-2xl font-black text-sm text-white bg-primary shadow-lg shadow-primary/20 flex items-center justify-center gap-2"

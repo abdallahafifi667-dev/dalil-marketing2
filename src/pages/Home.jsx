@@ -107,7 +107,7 @@ const Home = () => {
         </div>
 
         <div className="relative group/section">
-          <div 
+          <div
             id="top-rated-scroll"
             className="flex gap-5 overflow-x-auto pb-8 scrollbar-hide -mx-6 px-6 scroll-smooth"
           >
@@ -151,19 +151,19 @@ const Home = () => {
           </div>
 
           {/* Navigation Arrows */}
-          <button 
+          <button
             onClick={() => {
-                const el = document.getElementById('top-rated-scroll');
-                el.scrollBy({ left: lang === 'ar' ? 300 : -300, behavior: 'smooth' });
+              const el = document.getElementById('top-rated-scroll');
+              el.scrollBy({ left: lang === 'ar' ? 300 : -300, behavior: 'smooth' });
             }}
             className="absolute top-1/2 -start-4 -translate-y-1/2 w-12 h-12 glass border border-white/20 rounded-2xl flex items-center justify-center text-primary shadow-2xl z-20 opacity-0 group-hover/section:opacity-100 transition-opacity"
           >
             <ChevronRight className={lang === 'ar' ? '' : 'rotate-180'} size={24} />
           </button>
-          <button 
-             onClick={() => {
-                const el = document.getElementById('top-rated-scroll');
-                el.scrollBy({ left: lang === 'ar' ? -300 : 300, behavior: 'smooth' });
+          <button
+            onClick={() => {
+              const el = document.getElementById('top-rated-scroll');
+              el.scrollBy({ left: lang === 'ar' ? -300 : 300, behavior: 'smooth' });
             }}
             className="absolute top-1/2 -end-4 -translate-y-1/2 w-12 h-12 glass border border-white/20 rounded-2xl flex items-center justify-center text-primary shadow-2xl z-20 opacity-0 group-hover/section:opacity-100 transition-opacity"
           >

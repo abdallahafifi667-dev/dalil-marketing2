@@ -13,10 +13,10 @@ const ProposalsHistory = () => {
     // Simulate fetching proposals sent by this craftsman
     const saved = JSON.parse(localStorage.getItem('demo_proposals') || '[]');
     setProposals(saved.map(p => ({
-        ...p,
-        status: p.status || 'pending', // pending, accepted, rejected
-        date: new Date().toLocaleDateString('ar-EG'),
-        title: t('proposals.mockTitle') || (lang === 'ar' ? 'تركيب سباكة حمام' : 'Bathroom Plumbing Installation')
+      ...p,
+      status: p.status || 'pending', // pending, accepted, rejected
+      date: new Date().toLocaleDateString('ar-EG'),
+      title: t('proposals.mockTitle') || (lang === 'ar' ? 'تركيب سباكة حمام' : 'Bathroom Plumbing Installation')
     })));
   }, [lang]);
 
@@ -80,34 +80,34 @@ const ProposalsHistory = () => {
                   <span className="text-sm">{prop.price === 'inspection' ? t('order.priceOnInspection') : prop.price}</span>
                   {prop.price !== 'inspection' && <span className="text-[10px] opacity-60 uppercase">{t('account.currency')}</span>}
                 </div>
-                
+
                 <div className="flex gap-2">
-                    <motion.button
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => navigate(`/chat/client_${prop.id}`)}
-                      className="w-10 h-10 bg-[var(--bg-color)] text-[var(--text-secondary)] rounded-xl flex items-center justify-center border border-[var(--border-color)] hover:text-primary hover:border-primary/30 transition-all"
-                    >
-                      <MessageSquare size={18} />
-                    </motion.button>
-                    <motion.button
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => navigate(`/order/${prop.orderId}`)}
-                      className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center border border-primary/20 hover:bg-primary hover:text-white transition-all"
-                    >
-                      <ChevronRight size={18} className={lang === 'ar' ? 'rotate-180' : ''} />
-                    </motion.button>
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => navigate(`/chat/client_${prop.id}`)}
+                    className="w-10 h-10 bg-[var(--bg-color)] text-[var(--text-secondary)] rounded-xl flex items-center justify-center border border-[var(--border-color)] hover:text-primary hover:border-primary/30 transition-all"
+                  >
+                    <MessageSquare size={18} />
+                  </motion.button>
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => navigate(`/order/${prop.orderId}`)}
+                    className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center border border-primary/20 hover:bg-primary hover:text-white transition-all"
+                  >
+                    <ChevronRight size={18} className={lang === 'ar' ? 'rotate-180' : ''} />
+                  </motion.button>
                 </div>
               </div>
             </motion.div>
           ))
         ) : (
           <div className="py-20 text-center space-y-4 bg-[var(--bg-color)] rounded-[48px] border-2 border-dashed border-[var(--border-color)]">
-             <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto shadow-sm">
-                <Clock size={32} className="text-slate-300" />
-             </div>
-             <p className="text-sm font-bold text-[var(--text-secondary)] opacity-40">
-                {t('proposals.empty')}
-             </p>
+            <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center mx-auto shadow-sm">
+              <Clock size={32} className="text-slate-300" />
+            </div>
+            <p className="text-sm font-bold text-[var(--text-secondary)] opacity-40">
+              {t('proposals.empty')}
+            </p>
           </div>
         )}
       </div>

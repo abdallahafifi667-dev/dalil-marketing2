@@ -15,15 +15,15 @@ const Market = () => {
     .filter(o => o.status === 'pending')
     .map(o => ({
       ...o,
-      titleEn: o.title, 
+      titleEn: o.title,
       distance: `${(Math.random() * 5 + 0.5).toFixed(1)} km`,
       time: `${Math.floor(Math.random() * 59) + 1} mins ago`,
       category: demoData.crafts.find(c => c.id === o.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn'] || 'General'
     }))
   );
 
-  const filteredRequests = allRequests.filter(req => 
-    req.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const filteredRequests = allRequests.filter(req =>
+    req.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (req.titleEn && req.titleEn.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
@@ -31,7 +31,7 @@ const Market = () => {
     <div className="page-container with-nav-padding pt-6 pb-24 relative overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 blur-[120px] rounded-full -mr-40 -mt-40 -z-10" />
-      
+
       <div className="space-y-6 px-1 relative z-10">
         <div className="space-y-1">
           <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)]">
@@ -83,7 +83,7 @@ const Market = () => {
                     </h4>
                   </div>
                   <div className="bg-primary/5 text-primary px-4 py-2 rounded-2xl font-black text-[10px] uppercase tracking-widest border border-primary/10">
-                     {t('order.priceOnInspection')}
+                    {t('order.priceOnInspection')}
                   </div>
                 </div>
 
@@ -106,15 +106,15 @@ const Market = () => {
 
           {filteredRequests.length === 0 && (
             <div className="py-20 flex flex-col items-center justify-center text-center space-y-6">
-                <div className="w-24 h-24 bg-[var(--bg-color)] rounded-[48px] flex items-center justify-center text-slate-200">
-                    <Inbox size={48} />
-                </div>
-                <div className="space-y-1 px-10">
-                    <h3 className="text-xl font-black text-[var(--text-primary)]">{t('market.noJobs')}</h3>
-                    <p className="text-sm text-[var(--text-secondary)] font-bold opacity-60">
-                        {t('market.noJobsDesc')}
-                    </p>
-                </div>
+              <div className="w-24 h-24 bg-[var(--bg-color)] rounded-[48px] flex items-center justify-center text-slate-200">
+                <Inbox size={48} />
+              </div>
+              <div className="space-y-1 px-10">
+                <h3 className="text-xl font-black text-[var(--text-primary)]">{t('market.noJobs')}</h3>
+                <p className="text-sm text-[var(--text-secondary)] font-bold opacity-60">
+                  {t('market.noJobsDesc')}
+                </p>
+              </div>
             </div>
           )}
         </div>

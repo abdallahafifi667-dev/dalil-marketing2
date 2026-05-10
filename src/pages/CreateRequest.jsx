@@ -15,10 +15,10 @@ const CreateRequest = () => {
     const prefilledCraft = location.state?.prefilledCraft || location.state?.prefilledData?.craft || '';
     const prefilledData = location.state?.prefilledData || null;
     const craftsmanId = location.state?.craftsmanId || prefilledData?.craftsmanId || null;
-    const selectedCraftsman = useMemo(() => 
+    const selectedCraftsman = useMemo(() =>
         craftsmanId ? craftsmen.find(m => m.id === craftsmanId) : null
-    , [craftsmanId, craftsmen]);
-    
+        , [craftsmanId, craftsmen]);
+
     const [formData, setFormData] = useState({
         craft: prefilledCraft,
         title: prefilledData?.title || '',
@@ -65,9 +65,9 @@ const CreateRequest = () => {
             alert(t('request.fillRequired'));
             return;
         }
-        
+
         setIsBroadcasting(true);
-        
+
         // Simulate broadcasting delay for "Life" effect
         setTimeout(() => {
             const orderId = `ord_${Math.random().toString(36).substr(2, 9)}`;
@@ -81,7 +81,7 @@ const CreateRequest = () => {
                 craftsmanId: craftsmanId,
                 totalPrice: '0'
             };
-            
+
             // Save to local storage
             const orders = JSON.parse(localStorage.getItem('demo_orders') || '[]');
             orders.unshift(newOrder);
@@ -91,7 +91,7 @@ const CreateRequest = () => {
             import('../utils/simulation').then(({ startOrderSimulation }) => {
                 startOrderSimulation(orderId, formData.craft);
             });
-            
+
             navigate(`/order/${orderId}`);
         }, 2500);
     };
@@ -100,14 +100,14 @@ const CreateRequest = () => {
         <div className="page-container with-nav-padding pt-6 relative overflow-hidden">
             <AnimatePresence>
                 {isBroadcasting && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 z-[2000] bg-slate-900/90 backdrop-blur-xl flex flex-col items-center justify-center text-center px-10"
                     >
                         <div className="relative mb-10">
-                            <motion.div 
+                            <motion.div
                                 animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
                                 transition={{ repeat: Infinity, duration: 2 }}
                                 className="absolute inset-0 bg-primary/30 rounded-full blur-2xl"
@@ -123,7 +123,7 @@ const CreateRequest = () => {
             </AnimatePresence>
             {/* Decorative Background */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 blur-[130px] rounded-full -mr-40 -mt-40 -z-10" />
-            
+
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -141,7 +141,7 @@ const CreateRequest = () => {
 
                 {/* Craftsman Preview (If selected) */}
                 {selectedCraftsman && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="bg-primary/5 border-2 border-primary/20 p-5 rounded-[32px] flex items-center gap-5 relative overflow-hidden group"
@@ -179,10 +179,10 @@ const CreateRequest = () => {
                                         : 'border-[var(--border-color)] bg-[var(--bg-color)]'
                                         }`}
                                 >
-                                    <img 
-                                        src={craft.image} 
-                                        alt={craft.nameEn} 
-                                        className={`w-8 h-8 object-contain ${formData.craft === craft.id ? 'brightness-0 invert' : ''}`} 
+                                    <img
+                                        src={craft.image}
+                                        alt={craft.nameEn}
+                                        className={`w-8 h-8 object-contain ${formData.craft === craft.id ? 'brightness-0 invert' : ''}`}
                                     />
                                     <span className={`text-[9px] font-black text-center leading-tight ${formData.craft === craft.id ? 'text-white' : 'text-[var(--text-primary)]'}`}>
                                         {lang === 'ar' ? craft.nameAr : craft.nameEn}
@@ -198,7 +198,7 @@ const CreateRequest = () => {
                     <label className="block text-xs font-black text-primary uppercase tracking-[0.2em] px-1">
                         {t('request.step2')}
                     </label>
-                    
+
                     <div className="space-y-4">
                         <div className="relative group">
                             <User size={18} className="absolute start-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" />
@@ -304,9 +304,9 @@ const CreateRequest = () => {
                 <div className="px-4 py-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl flex items-start gap-3">
                     <AlertTriangle size={18} className="text-amber-500 shrink-0 mt-0.5" />
                     <p className="text-[10px] font-bold text-amber-600 leading-relaxed">
-                        {lang === 'ar' 
-                          ? 'تنبيه: الأسعار النهائية يتم تحديدها من قبل الحرفي بعد معاينة مكان العمل فعلياً لضمان دقة التقييم.' 
-                          : 'Note: Final pricing is determined by the expert after physical inspection of the job site to ensure accurate assessment.'}
+                        {lang === 'ar'
+                            ? 'تنبيه: الأسعار النهائية يتم تحديدها من قبل الحرفي بعد معاينة مكان العمل فعلياً لضمان دقة التقييم.'
+                            : 'Note: Final pricing is determined by the expert after physical inspection of the job site to ensure accurate assessment.'}
                     </p>
                 </div>
 

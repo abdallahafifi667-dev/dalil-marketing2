@@ -58,9 +58,9 @@ const Notifications = () => {
               {t('notifications.new', { count: notifications.filter(n => n.unread).length })}
             </p>
           </div>
-          
+
           <div className="flex gap-2">
-             <motion.button
+            <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={markAllRead}
               className="w-10 h-10 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center border border-emerald-500/20"
@@ -95,19 +95,19 @@ const Notifications = () => {
                   {n.unread && (
                     <div className="absolute top-6 end-6 w-2.5 h-2.5 bg-primary rounded-full border-2 border-[var(--surface-color)] shadow-sm" />
                   )}
-                  
+
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center bg-[var(--bg-color)] shadow-inner shrink-0 transition-transform group-hover:scale-110`}>
                     {getIcon(n.type)}
                   </div>
-                  
+
                   <div className="flex-1 space-y-1.5">
                     <div className="flex justify-between items-start">
                       <h4 className="font-black text-base text-[var(--text-primary)]">{n.title}</h4>
                       <span className="text-[10px] font-black text-[var(--text-secondary)] opacity-40 uppercase tracking-tighter">{n.time}</span>
                     </div>
                     <p className="text-sm font-bold text-[var(--text-secondary)] opacity-70 leading-relaxed">{n.body}</p>
-                    
-                    <button 
+
+                    <button
                       onClick={() => deleteOne(n.id)}
                       className="text-[10px] font-black text-red-500 pt-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all"
                     >
@@ -118,7 +118,7 @@ const Notifications = () => {
                 </motion.div>
               ))
             ) : (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="py-24 text-center flex flex-col items-center justify-center space-y-6"

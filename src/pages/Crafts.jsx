@@ -67,7 +67,7 @@ const Crafts = () => {
               className="flex flex-col p-4 bg-[var(--surface-color)] rounded-[40px] border border-[var(--border-color)] hover:border-primary/30 transition-all cursor-pointer group shadow-sm hover:shadow-xl relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -mr-12 -mt-12 group-hover:bg-primary/10 transition-colors" />
-              
+
               <div className="w-full aspect-square bg-[var(--bg-color)] rounded-[32px] flex items-center justify-center p-0 overflow-hidden relative z-10 mb-4 shadow-inner">
                 <img
                   src={craft.image}
@@ -75,16 +75,16 @@ const Crafts = () => {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               </div>
-              
+
               <div className="space-y-1 relative z-10 px-1">
                 <h4 className="font-black text-sm text-[var(--text-primary)] leading-tight truncate">
                   {lang === 'ar' ? craft.nameAr : craft.nameEn}
                 </h4>
                 <div className="flex justify-between items-center">
-                    <p className="text-[10px] font-black text-primary uppercase">
-                        {craft.count} {t('auth.craftsman')}
-                    </p>
-                    <ArrowRight size={14} className={`text-primary opacity-40 group-hover:opacity-100 transition-all ${lang === 'ar' ? 'rotate-180' : ''}`} />
+                  <p className="text-[10px] font-black text-primary uppercase">
+                    {craft.count} {t('auth.craftsman')}
+                  </p>
+                  <ArrowRight size={14} className={`text-primary opacity-40 group-hover:opacity-100 transition-all ${lang === 'ar' ? 'rotate-180' : ''}`} />
                 </div>
               </div>
             </motion.div>

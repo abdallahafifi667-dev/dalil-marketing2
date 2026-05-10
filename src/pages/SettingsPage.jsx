@@ -47,7 +47,7 @@ const SettingsPage = () => {
     // Persist profile changes to localStorage
     const registeredUsers = JSON.parse(localStorage.getItem('registered_users') || '[]');
     const currentUserId = localStorage.getItem('userId') || 'u1';
-    
+
     // Find or create user entry
     let userIndex = registeredUsers.findIndex(u => u.id === currentUserId);
     const updatedUser = {
@@ -63,7 +63,7 @@ const SettingsPage = () => {
     }
 
     localStorage.setItem('registered_users', JSON.stringify(registeredUsers));
-    
+
     setIsSaved(true);
     setTimeout(() => {
       setIsSaved(false);
@@ -213,10 +213,10 @@ const SettingsPage = () => {
                   <div className="w-14 h-14 bg-red-500/10 group-hover:bg-white/20 text-red-500 group-hover:text-white rounded-2xl flex items-center justify-center shrink-0">
                     <LogOut size={20} />
                   </div>
-                    <div className="flex-1">
-                      <span className="font-black text-base">{t('settings.logout')}</span>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-red-500 group-hover:text-white">{t('settings.viewMore')}</p>
-                    </div>
+                  <div className="flex-1">
+                    <span className="font-black text-base">{t('settings.logout')}</span>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-red-500 group-hover:text-white">{t('settings.viewMore')}</p>
+                  </div>
                 </motion.div>
               </div>
             </div>
@@ -230,10 +230,10 @@ const SettingsPage = () => {
                     <div className="w-32 h-32 rounded-[48px] border-4 border-white dark:border-slate-800 shadow-2xl overflow-hidden">
                       <img src={demoData.user.image} alt="User" className="w-full h-full object-cover" />
                     </div>
-                    <input 
-                      type="file" 
-                      id="avatar-upload" 
-                      className="hidden" 
+                    <input
+                      type="file"
+                      id="avatar-upload"
+                      className="hidden"
                       accept="image/*"
                       onChange={(e) => {
                         const file = e.target.files[0];
@@ -357,11 +357,11 @@ const SettingsPage = () => {
                 <div className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] px-2">{t('settings.pro.jobTitle')}</label>
-                      <input
-                        type="text"
-                        defaultValue={t('settings.pro.plumber')}
-                        className="w-full h-14 md:h-16 bg-[var(--bg-color)] border-2 border-[var(--border-color)] focus:border-primary/20 rounded-2xl md:rounded-[24px] px-5 outline-none font-bold text-sm md:text-base transition-all text-[var(--text-primary)]"
-                      />
+                    <input
+                      type="text"
+                      defaultValue={t('settings.pro.plumber')}
+                      className="w-full h-14 md:h-16 bg-[var(--bg-color)] border-2 border-[var(--border-color)] focus:border-primary/20 rounded-2xl md:rounded-[24px] px-5 outline-none font-bold text-sm md:text-base transition-all text-[var(--text-primary)]"
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black text-primary uppercase tracking-[0.2em] px-2">{t('settings.pro.bioLabel')}</label>

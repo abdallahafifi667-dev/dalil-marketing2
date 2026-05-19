@@ -10,9 +10,12 @@ const Market = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Simulation of live market requests
+  const craftsman = demoData.user;
+  const craftId = craftsman?.craftId || 'c1';
+
+  // Simulation of live market requests filtered by craftsman specialty
   const [allRequests] = useState(demoData.orders
-    .filter(o => o.status === 'pending')
+    .filter(o => o.status === 'pending' && o.craftId === craftId)
     .map(o => ({
       ...o,
       titleEn: o.title,

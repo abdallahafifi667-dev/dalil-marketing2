@@ -30,6 +30,40 @@ const Notifications = () => {
     setNotifications(notifications.filter(n => n.id !== id));
   };
 
+  const handleNotificationClick = (n) => {
+    // Mark clicked notification as read
+    setNotifications(notifications.map(item => item.id === n.id ? { ...item, unread: false } : item));
+
+    const isPro = localStorage.getItem('viewMode') === 'pro' || localStorage.getItem('userRole') === 'craftsman';
+
+    if (n.type === 'message') {
+      navigate('/chat');
+    } else if (n.type === 'proposal') {
+      if (isPro) {
+        navigate('/proposals');
+      } else {
+        const savedOrders = JSON.parse(localStorage.getItem('demo_orders') || '[]');
+        if (savedOrders.length > 0) {
+          navigate(`/order/${savedOrders[0].id}`);
+        } else {
+          navigate('/order/o1');
+        }
+      }
+    } else if (n.type === 'payment') {
+      navigate('/account');
+    } else if (n.type === 'review') {
+      navigate('/reviews');
+    } else if (n.type === 'system') {
+      navigate('/settings/help');
+    } else {
+      if (isPro) {
+        navigate('/craftsman/dashboard');
+      } else {
+        navigate('/');
+      }
+    }
+  };
+
   const getIcon = (type) => {
     switch (type) {
       case 'message': return <MessageSquare className="text-blue-500" size={20} />;
@@ -51,11 +85,11 @@ const Notifications = () => {
         <div className="flex justify-between items-center">
           <div className="flex flex-col space-y-1 px-1">
             <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)]">
-              {t('nav.notifications')}
+              {t('nav.notifications', lang === 'ar' ? 'الإشعارات' : 'Notifications')}
             </h2>
             <p className="text-[10px] text-[var(--text-secondary)] font-black uppercase tracking-widest opacity-60 flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-              {t('notifications.new', { count: notifications.filter(n => n.unread).length })}
+              {t('notifications.new', lang === 'ar' ? 'لديك {{count}} إشعارات غير مقروءة' : 'You have {{count}} unread notifications', { count: notifications.filter(n => n.unread).length })}
             </p>
           </div>
 
@@ -64,7 +98,7 @@ const Notifications = () => {
               whileTap={{ scale: 0.9 }}
               onClick={markAllRead}
               className="w-10 h-10 bg-emerald-500/10 text-emerald-600 rounded-xl flex items-center justify-center border border-emerald-500/20"
-              title={t('notifications.markAllRead')}
+              title={t('notifications.markAllRead', lang === 'ar' ? 'تحديد الكل كمقروء' : 'Mark all as read')}
             >
               <CheckCircle2 size={20} />
             </motion.button>
@@ -72,7 +106,7 @@ const Notifications = () => {
               whileTap={{ scale: 0.9 }}
               onClick={clearAll}
               className="w-10 h-10 bg-red-500/10 text-red-600 rounded-xl flex items-center justify-center border border-red-500/20"
-              title={t('notifications.clearAll')}
+              title={t('notifications.clearAll', lang === 'ar' ? 'مسح الكل' : 'Clear all')}
             >
               <Trash2 size={20} />
             </motion.button>
@@ -90,7 +124,8 @@ const Notifications = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, x: -20 }}
-                  className={`relative p-6 rounded-[36px] bg-[var(--surface-color)] border border-[var(--border-color)] group hover:border-primary/30 transition-all flex gap-5 ${n.unread ? 'shadow-xl shadow-primary/5 border-primary/20' : 'opacity-80'}`}
+                  onClick={() => handleNotificationClick(n)}
+                  className={`relative p-6 rounded-[36px] bg-[var(--surface-color)] border border-[var(--border-color)] group hover:border-primary/30 cursor-pointer transition-all flex gap-5 active:scale-[0.99] ${n.unread ? 'shadow-xl shadow-primary/5 border-primary/20' : 'opacity-80'}`}
                 >
                   {n.unread && (
                     <div className="absolute top-6 end-6 w-2.5 h-2.5 bg-primary rounded-full border-2 border-[var(--surface-color)] shadow-sm" />
@@ -108,11 +143,14 @@ const Notifications = () => {
                     <p className="text-sm font-bold text-[var(--text-secondary)] opacity-70 leading-relaxed">{n.body}</p>
 
                     <button
-                      onClick={() => deleteOne(n.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteOne(n.id);
+                      }}
                       className="text-[10px] font-black text-red-500 pt-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all"
                     >
                       <Trash2 size={12} />
-                      {t('notifications.delete')}
+                      {t('notifications.delete', lang === 'ar' ? 'حذف الإشعار' : 'Delete Notification')}
                     </button>
                   </div>
                 </motion.div>
@@ -127,8 +165,12 @@ const Notifications = () => {
                   <Bell size={44} />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-black text-xl text-[var(--text-primary)]">{t('notifications.emptyTitle') || (lang === 'ar' ? 'لا يوجد تنبيهات' : 'No Notifications')}</h3>
-                  <p className="font-bold text-sm text-[var(--text-secondary)] opacity-40 px-10">{t('notifications.emptyDesc') || (lang === 'ar' ? 'سوف تظهر هنا كافة التحديثات والرسائل الجديدة فور وصولها.' : 'All updates and messages will appear here once they arrive.')}</p>
+                  <h3 className="font-black text-xl text-[var(--text-primary)]">
+                    {t('notifications.emptyTitle', lang === 'ar' ? 'لا يوجد تنبيهات حالياً' : 'No notifications yet')}
+                  </h3>
+                  <p className="font-bold text-sm text-[var(--text-secondary)] opacity-40 px-10">
+                    {t('notifications.emptyDesc', lang === 'ar' ? 'سوف تظهر هنا كافة التحديثات والرسائل الجديدة فور وصولها.' : 'All updates and messages will appear here once they arrive.')}
+                  </p>
                 </div>
               </motion.div>
             )}

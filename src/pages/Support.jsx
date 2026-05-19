@@ -41,7 +41,7 @@ const Support = () => {
     };
 
     return (
-        <div className="page-container h-screen flex flex-col bg-[var(--bg-color)] relative overflow-hidden">
+        <div className="page-container h-[calc(100vh-144px)] flex flex-col bg-[var(--bg-color)] relative overflow-hidden px-4 md:px-6">
             {/* Decorative Background */}
             <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 blur-[130px] rounded-full -mr-40 -mt-40 -z-0" />
 
@@ -104,7 +104,7 @@ const Support = () => {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[32px] mb-8 mx-1 flex items-center gap-3 shadow-xl relative z-10">
+            <div className="p-4 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[32px] mb-4 mx-1 flex items-center gap-3 shadow-xl relative z-10">
                 <input
                     type="text"
                     value={input}

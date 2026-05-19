@@ -10,8 +10,8 @@ const OrderDetails = () => {
   const { id } = useParams();
   const { lang, t } = useLanguage();
   const navigate = useNavigate();
-  const order = demoData.orders.find(o => o.id === id) ||
-    JSON.parse(localStorage.getItem('demo_orders') || '[]').find(o => o.id === id);
+  const order = JSON.parse(localStorage.getItem('demo_orders') || '[]').find(o => o.id === id) ||
+    demoData.orders.find(o => o.id === id);
   const craftsman = demoData.craftsmen.find(m => m.id === order?.craftsmanId);
   const userRole = localStorage.getItem('userRole') || 'client';
   const client = demoData.users.find(u => u.id === order?.clientId);
@@ -41,10 +41,32 @@ const OrderDetails = () => {
 
   if (!order) return <div className="p-10 text-center font-black">{t('order.notFound')}</div>;
 
+  const getStatusLabel = (status) => {
+    switch (status) {
+      case 'pending': return lang === 'ar' ? 'بانتظار العروض' : 'Pending Offers';
+      case 'in_progress': return lang === 'ar' ? 'قيد التنفيذ والعمل' : 'Job In Progress';
+      case 'completed': return lang === 'ar' ? 'مكتمل' : 'Completed';
+      case 'cancelled': return lang === 'ar' ? 'ملغي' : 'Cancelled';
+      case 'stopped': return lang === 'ar' ? 'متوقف' : 'Stopped';
+      default: return status;
+    }
+  };
+
+  const getStatusColorClass = (status) => {
+    switch (status) {
+      case 'cancelled': return 'bg-red-500 shadow-red-500/30';
+      case 'stopped': return 'bg-amber-500 shadow-amber-500/30';
+      case 'in_progress': return 'bg-blue-500 shadow-blue-500/30';
+      case 'completed': return 'bg-emerald-500 shadow-emerald-500/30';
+      default: return 'bg-primary shadow-primary/30';
+    }
+  };
+
   const steps = [
-    { label: t('order.statusOrdered'), time: '10:00 AM', completed: true },
-    { label: t('order.statusProcessing'), time: '10:15 AM', completed: order.status !== 'pending' },
-    { label: t('order.statusFinished'), time: '--', completed: order.status === 'completed' },
+    { label: lang === 'ar' ? 'تم تقديم الطلب' : 'Request Placed', time: '10:00 AM', completed: true },
+    { label: lang === 'ar' ? 'استقبال عروض الحرفيين' : 'Receiving Proposals', time: '10:15 AM', completed: order.status !== 'stopped' && order.status !== 'cancelled' },
+    { label: lang === 'ar' ? 'قيد التنفيذ والعمل' : 'Job In Progress', time: order.status === 'in_progress' || order.status === 'completed' ? '11:00 AM' : '--', completed: order.status === 'in_progress' || order.status === 'completed' },
+    { label: lang === 'ar' ? 'تم اكتمال المهمة بنجاح' : 'Task Completed', time: order.status === 'completed' ? '12:30 PM' : '--', completed: order.status === 'completed' },
   ];
 
   const handleConfirmAction = () => {
@@ -56,11 +78,13 @@ const OrderDetails = () => {
     const idx = saved.findIndex(o => o.id === id);
     if (idx > -1) {
       saved[idx] = updatedOrder;
-      localStorage.setItem('demo_orders', JSON.stringify(saved));
-      setConfirmModal({ show: false, type: null });
-      toast.success(lang === 'ar' ? 'تم تحديث حالة الطلب بنجاح' : 'Order status updated successfully');
-      window.location.reload();
+    } else {
+      saved.push(updatedOrder);
     }
+    localStorage.setItem('demo_orders', JSON.stringify(saved));
+    setConfirmModal({ show: false, type: null });
+    toast.success(lang === 'ar' ? 'تم تحديث حالة الطلب بنجاح' : 'Order status updated successfully');
+    window.location.reload();
   };
 
   const handleSubmitProposal = () => {
@@ -149,7 +173,7 @@ const OrderDetails = () => {
                   >
                     <button
                       onClick={() => { setConfirmModal({ show: true, type: 'stop' }); setShowMenu(false); }}
-                      disabled={order.status === 'stopped' || order.status === 'cancelled'}
+                      disabled={order.status === 'in_progress' || order.status === 'stopped' || order.status === 'cancelled' || order.status === 'completed'}
                       className="w-full flex items-center gap-3 px-5 py-4 text-sm font-black text-amber-500 hover:bg-amber-500/5 transition-colors disabled:opacity-30"
                     >
                       <StopCircle size={18} />
@@ -157,7 +181,7 @@ const OrderDetails = () => {
                     </button>
                     <button
                       onClick={() => { setConfirmModal({ show: true, type: 'cancel' }); setShowMenu(false); }}
-                      disabled={order.status === 'cancelled'}
+                      disabled={order.status === 'cancelled' || order.status === 'completed'}
                       className="w-full flex items-center gap-3 px-5 py-4 text-sm font-black text-red-500 hover:bg-red-500/5 transition-colors disabled:opacity-30"
                     >
                       <XCircle size={18} />
@@ -195,10 +219,8 @@ const OrderDetails = () => {
           </svg>
 
           <div className="absolute top-6 end-6">
-            <div className={`px-5 py-2 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl border-2 border-white/20 text-white ${order.status === 'cancelled' ? 'bg-red-500 shadow-red-500/30' :
-                order.status === 'stopped' ? 'bg-amber-500 shadow-amber-500/30' : 'bg-primary shadow-primary/30'
-              }`}>
-              {order.status}
+            <div className={`px-5 py-2 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl border-2 border-white/20 text-white ${getStatusColorClass(order.status)}`}>
+              {getStatusLabel(order.status)}
             </div>
           </div>
 
@@ -268,7 +290,7 @@ const OrderDetails = () => {
                   </div>
                   <div className="flex-1 space-y-0.5">
                     <h4 className="font-black text-xl text-[var(--text-primary)] leading-tight">{craftsman?.name}</h4>
-                    <p className="text-xs font-bold text-primary uppercase tracking-widest opacity-80">
+                    <p className="text-sm font-bold text-primary uppercase tracking-widest opacity-80">
                       {demoData.crafts.find(c => c.id === craftsman?.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
                     </p>
                   </div>

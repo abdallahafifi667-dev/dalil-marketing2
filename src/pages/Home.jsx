@@ -89,7 +89,7 @@ const Home = () => {
               <div className="w-full aspect-square bg-[var(--surface-color)] border border-[var(--border-color)] rounded-[24px] flex items-center justify-center p-0 overflow-hidden group-hover:border-primary/50 group-hover:shadow-lg transition-all shadow-sm">
                 <img src={craft.image} alt={craft.nameEn} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
               </div>
-              <p className="text-[9px] font-black text-[var(--text-primary)] text-center leading-tight truncate w-full px-1">
+              <p className="text-xs font-black text-[var(--text-primary)] text-center leading-tight truncate w-full px-1">
                 {lang === 'ar' ? craft.nameAr : craft.nameEn}
               </p>
             </motion.div>
@@ -130,7 +130,7 @@ const Home = () => {
                   <div className="space-y-1">
                     <h5 className="font-black text-base text-[var(--text-primary)] truncate max-w-[180px]">{m.name}</h5>
                     <div className="flex items-center justify-center gap-2">
-                      <span className="text-primary font-black text-[9px] uppercase tracking-wider bg-primary/10 px-2.5 py-1 rounded-lg">
+                      <span className="text-primary font-black text-xs uppercase tracking-wider bg-primary/10 px-2.5 py-1 rounded-lg">
                         {crafts.find(c => c.id === m.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
                       </span>
                       <div className="flex items-center gap-1 text-amber-500 font-black text-[10px]">

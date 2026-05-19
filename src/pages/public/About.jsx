@@ -16,8 +16,8 @@ const About = () => {
     ];
     const girlNames = [
       "هبة الله محمد برغش", "Heba-Allah Mohamed Barghash",
-      "نورهان أشرف البسيوني", "Nourhan Ashraf El-Bassiouny",
-      "سما محمد بدر", "Sama Mohamed Badr"
+      "سما محمد بدر", "Sama Mohamed Badr",
+      "نورهان أشرف البسيوني", "Nourhan Ashraf El-Bassiouny"
     ];
 
     if (manNames.includes(name)) return "/founder-man.png";

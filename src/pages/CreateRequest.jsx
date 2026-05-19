@@ -26,6 +26,7 @@ const CreateRequest = () => {
         date: prefilledData?.date || '',
         timeHours: prefilledData?.timeHours || '12',
         timeMinutes: prefilledData?.timeMinutes || '00',
+        timePeriod: prefilledData?.timePeriod || 'PM',
         location: prefilledData?.location || '',
         requirements: prefilledData?.requirements || [],
     });
@@ -38,7 +39,27 @@ const CreateRequest = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        if (name === 'timeHours') {
+            let val = parseInt(value);
+            if (!isNaN(val)) {
+                if (val < 1) val = 1;
+                if (val > 12) val = 12;
+                setFormData({ ...formData, timeHours: val.toString() });
+            } else {
+                setFormData({ ...formData, timeHours: '' });
+            }
+        } else if (name === 'timeMinutes') {
+            let val = parseInt(value);
+            if (!isNaN(val)) {
+                if (val < 0) val = 0;
+                if (val > 59) val = 59;
+                setFormData({ ...formData, timeMinutes: val.toString().padStart(2, '0') });
+            } else {
+                setFormData({ ...formData, timeMinutes: '' });
+            }
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const addRequirement = () => {
@@ -76,7 +97,8 @@ const CreateRequest = () => {
                 ...formData,
                 clientId: 'u1', // Associate with demo user
                 status: 'pending',
-                date: lang === 'ar' ? 'اليوم' : 'Today',
+                date: formData.date || (lang === 'ar' ? 'اليوم' : 'Today'),
+                time: `${formData.timeHours}:${formData.timeMinutes} ${formData.timePeriod}`,
                 createdAt: new Date().toISOString(),
                 craftsmanId: craftsmanId,
                 totalPrice: '0'
@@ -154,7 +176,7 @@ const CreateRequest = () => {
                             <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-1">{t('craftsmen.bookingWith') || 'حجز مع'}</p>
                             <h4 className="text-xl font-black text-[var(--text-primary)] truncate">{selectedCraftsman.name}</h4>
                             <div className="flex items-center gap-2 mt-1">
-                                <span className="px-2 py-0.5 bg-primary/10 text-primary font-black text-[9px] uppercase rounded-md">
+                                <span className="px-2 py-0.5 bg-primary/10 text-primary font-black text-xs uppercase rounded-md">
                                     {crafts.find(c => c.id === selectedCraftsman.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
                                 </span>
                             </div>
@@ -172,9 +194,9 @@ const CreateRequest = () => {
                             {crafts.map((craft) => (
                                 <motion.button
                                     key={craft.id}
-                                    whileTap={{ scale: 0.9 }}
+                                    whileTap={{ scale: 0.95 }}
                                     onClick={() => handleCraftChange(craft.id)}
-                                    className={`shrink-0 w-24 h-24 rounded-[24px] border-2 transition-all flex flex-col items-center justify-center gap-2 ${formData.craft === craft.id
+                                    className={`shrink-0 w-24 h-24 rounded-[24px] border-2 transition-all flex flex-col items-center justify-center p-2 gap-1.5 ${formData.craft === craft.id
                                         ? 'border-primary bg-primary text-white shadow-lg shadow-primary/30'
                                         : 'border-[var(--border-color)] bg-[var(--bg-color)]'
                                         }`}
@@ -182,9 +204,9 @@ const CreateRequest = () => {
                                     <img
                                         src={craft.image}
                                         alt={craft.nameEn}
-                                        className={`w-8 h-8 object-contain ${formData.craft === craft.id ? 'brightness-0 invert' : ''}`}
+                                        className={`w-12 h-12 object-contain ${formData.craft === craft.id ? 'brightness-0 invert' : ''}`}
                                     />
-                                    <span className={`text-[9px] font-black text-center leading-tight ${formData.craft === craft.id ? 'text-white' : 'text-[var(--text-primary)]'}`}>
+                                    <span className={`text-[10px] font-black text-center leading-tight ${formData.craft === craft.id ? 'text-white' : 'text-[var(--text-primary)]'}`}>
                                         {lang === 'ar' ? craft.nameAr : craft.nameEn}
                                     </span>
                                 </motion.button>
@@ -233,13 +255,40 @@ const CreateRequest = () => {
                         <label className="text-[10px] font-black text-[var(--text-secondary)] uppercase tracking-widest px-2 flex items-center gap-1.5 opacity-60">
                             <Calendar size={12} /> {t('request.date')}
                         </label>
-                        <input
-                            type="date"
-                            name="date"
-                            value={formData.date}
-                            onChange={handleInputChange}
-                            className="w-full h-14 bg-[var(--bg-color)] border-2 border-transparent focus:border-primary/20 rounded-2xl px-6 outline-none font-black text-base shadow-sm transition-all text-[var(--text-primary)]"
-                        />
+                        <div className="relative flex items-center bg-[var(--bg-color)] rounded-2xl border-2 border-transparent focus-within:border-primary/20 shadow-sm transition-all">
+                            <input
+                                type="text"
+                                name="date"
+                                placeholder={lang === 'ar' ? 'اختر أو اكتب التاريخ (مثلاً: 2026-05-15)' : 'Select or type date (e.g. 2026-05-15)'}
+                                value={formData.date}
+                                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                                className="w-full h-14 bg-transparent px-6 outline-none font-bold text-base text-[var(--text-primary)]"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const dateInput = document.getElementById('hidden-date-picker');
+                                    if (dateInput) {
+                                        if (typeof dateInput.showPicker === 'function') {
+                                            dateInput.showPicker();
+                                        } else {
+                                            dateInput.click();
+                                        }
+                                    }
+                                }}
+                                className="absolute end-4 w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all"
+                            >
+                                <Calendar size={18} />
+                            </button>
+                            <input
+                                type="date"
+                                id="hidden-date-picker"
+                                className="absolute opacity-0 pointer-events-none w-0 h-0"
+                                onChange={(e) => {
+                                    setFormData({ ...formData, date: e.target.value });
+                                }}
+                            />
+                        </div>
                     </div>
 
                     {/* Improved Time Picker - Numeric Friendly */}
@@ -275,9 +324,21 @@ const CreateRequest = () => {
                                 />
                                 <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 bg-[var(--surface-color)] text-[8px] font-black text-slate-400 uppercase rounded-full border border-[var(--border-color)]">MIN</span>
                             </div>
-                            <div className="flex h-14 bg-[var(--bg-color)] rounded-2xl p-1 border border-[var(--border-color)]">
-                                <button type="button" className="flex-1 px-4 rounded-xl font-black text-[10px] bg-primary text-white shadow-sm">AM</button>
-                                <button type="button" className="flex-1 px-4 rounded-xl font-black text-[10px] text-slate-400">PM</button>
+                            <div className="flex h-14 bg-[var(--bg-color)] rounded-2xl p-1 border border-[var(--border-color)] shrink-0">
+                                <button
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, timePeriod: 'AM' })}
+                                    className={`px-4 rounded-xl font-black text-[10px] transition-all ${formData.timePeriod === 'AM' ? 'bg-primary text-white shadow-sm' : 'text-slate-400'}`}
+                                >
+                                    AM
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, timePeriod: 'PM' })}
+                                    className={`px-4 rounded-xl font-black text-[10px] transition-all ${formData.timePeriod === 'PM' ? 'bg-primary text-white shadow-sm' : 'text-slate-400'}`}
+                                >
+                                    PM
+                                </button>
                             </div>
                         </div>
                     </div>

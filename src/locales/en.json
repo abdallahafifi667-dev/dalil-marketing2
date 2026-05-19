@@ -10,7 +10,16 @@
     "login": "Login",
     "register": "Register",
     "jobs": "My Jobs",
-    "support": "Support"
+    "support": "Support",
+    "notifications": "Notifications"
+  },
+  "notifications": {
+    "new": "You have {{count}} unread notifications",
+    "markAllRead": "Mark all as read",
+    "clearAll": "Clear all",
+    "delete": "Delete notification",
+    "emptyTitle": "No notifications yet",
+    "emptyDesc": "All updates and messages will appear here once they arrive."
   },
   "hero": {
     "badge": "The #1 Platform for Craftsmen in Egypt",
@@ -205,12 +214,12 @@
         "email": "hebabarghash1@gmail.com"
       },
       {
-        "name": "Nourhan Ashraf El-Bassiouny",
-        "email": "norhanashraf92255@gmail.com"
-      },
-      {
         "name": "Sama Mohamed Badr",
         "email": "sama25374@gmail.com"
+      },
+      {
+        "name": "Nourhan Ashraf El-Bassiouny",
+        "email": "norhanashraf92255@gmail.com"
       },
       {
         "name": "Hassan Mohamed Abdel-Aty",
@@ -278,6 +287,8 @@
     "priceLabel": "Inspection Price",
     "aboutMe": "About Me",
     "bookNow": "Book Now",
+    "pricing": "Pricing Model",
+    "bioFallback": "No bio description provided yet by the expert.",
     "proposalsHistory": {
       "title": "Proposals History"
     },
@@ -296,10 +307,29 @@
   },
   "proposals": {
     "title": "My Proposals",
-    "subtitle": "Record of your submitted proposals and their status"
+    "subtitle": "Record of your submitted proposals and their status",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "pending": "Pending",
+    "empty": "You have not submitted any proposals yet."
   },
   "support": {
-    "welcome": "Welcome to Support Center"
+    "welcome": "Welcome to the Support Center! How can we assist you today?",
+    "placeholder": "Type your query here...",
+    "response": "Thank you for contacting us. Your message has been received and a support representative will respond shortly.",
+    "online": "Online"
+  },
+  "market": {
+    "title": "Job Market",
+    "subtitle": "Browse client requests near you and submit proposals",
+    "searchPlaceholder": "Search available market requests...",
+    "urgent": "Urgent",
+    "noJobs": "No jobs available",
+    "noJobsDesc": "There are no pending jobs in your area right now. Check back later."
+  },
+  "reviewsHistory": {
+    "title": "Reviews History",
+    "subtitle": "What clients say about the quality and speed of your completed jobs"
   },
   "chat": {
     "title": "Chats",

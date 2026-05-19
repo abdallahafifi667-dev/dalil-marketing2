@@ -73,7 +73,7 @@ const Craftsmen = () => {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => setSelectedCraft('all')}
-            className={`shrink-0 px-6 h-11 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all border ${selectedCraft === 'all' 
+            className={`shrink-0 px-6 h-11 rounded-2xl font-black text-xs uppercase tracking-widest transition-all border ${selectedCraft === 'all' 
               ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' 
               : 'bg-[var(--surface-color)] text-[var(--text-secondary)] border-[var(--border-color)] hover:border-primary/30'}`}
           >
@@ -84,7 +84,7 @@ const Craftsmen = () => {
               key={craft.id}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedCraft(craft.id)}
-              className={`shrink-0 px-6 h-11 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all border flex items-center gap-2 ${selectedCraft === craft.id 
+              className={`shrink-0 px-6 h-11 rounded-2xl font-black text-xs uppercase tracking-widest transition-all border flex items-center gap-2 ${selectedCraft === craft.id 
                 ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' 
                 : 'bg-[var(--surface-color)] text-[var(--text-secondary)] border-[var(--border-color)] hover:border-primary/30'}`}
             >
@@ -129,7 +129,7 @@ const Craftsmen = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-[9px] font-black uppercase tracking-widest">
+                        <span className="px-3 py-1 bg-primary/10 text-primary rounded-lg text-xs font-black uppercase tracking-widest">
                             {crafts.find(c => c.id === m.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
                         </span>
                         <span className="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-[var(--text-secondary)] rounded-lg text-[9px] font-black uppercase tracking-widest">

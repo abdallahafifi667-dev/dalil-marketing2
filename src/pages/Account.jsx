@@ -49,10 +49,11 @@ const Account = ({ onLogout }) => {
     const userOrders = useMemo(() => {
         const combined = [...localOrders, ...orders];
         if (viewMode === 'pro') {
-            return combined.filter(o => o.craftsmanId === 'u1');
+            const craftId = user?.craftId || 'c1';
+            return combined.filter(o => o.craftId === craftId);
         }
         return combined.filter(o => o.clientId === 'u1');
-    }, [localOrders, orders, viewMode]);
+    }, [localOrders, orders, viewMode, user]);
 
     const filteredOrders = useMemo(() => {
         if (activeTab === 'active') return userOrders.filter(o => o.status === 'pending' || o.status === 'in_progress');

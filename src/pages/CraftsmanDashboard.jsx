@@ -21,12 +21,11 @@ const CraftsmanDashboard = () => {
   const { t, lang } = useLanguage();
   const navigate = useNavigate();
   const craftsman = demoData.user; // Use the actual logged-in user
-
-
+  const craftId = craftsman?.craftId || 'c1';
 
   // Simulation of live market requests based on real demo data
   const liveRequests = demoData.orders
-    .filter(o => o.status === 'pending')
+    .filter(o => o.status === 'pending' && o.craftId === craftId)
     .slice(0, 3)
     .map(o => ({
       ...o,
@@ -122,7 +121,12 @@ const CraftsmanDashboard = () => {
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
-                  className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center"
+                  whileTap={{ scale: 0.95 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(`/chat/chat_${order.clientId}`);
+                  }}
+                  className="w-10 h-10 bg-primary/10 text-primary rounded-xl flex items-center justify-center relative z-10"
                 >
                   <MessageSquare size={18} />
                 </motion.button>

@@ -77,7 +77,7 @@ const Crafts = () => {
               </div>
 
               <div className="space-y-1 relative z-10 px-1">
-                <h4 className="font-black text-sm text-[var(--text-primary)] leading-tight truncate">
+                <h4 className="font-black text-lg text-[var(--text-primary)] leading-tight truncate">
                   {lang === 'ar' ? craft.nameAr : craft.nameEn}
                 </h4>
                 <div className="flex justify-between items-center">

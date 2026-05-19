@@ -119,7 +119,7 @@ const CraftsmanProfile = () => {
           <div className="space-y-3 flex-1 min-w-0">
             <h1 className="text-4xl font-black tracking-tight text-[var(--text-primary)] leading-tight">{craftsman.name}</h1>
             <div className="flex items-center gap-3 flex-wrap">
-              <div className="bg-primary/10 text-primary px-3 py-1 rounded-xl text-xs font-black uppercase tracking-wider">
+              <div className="bg-primary/10 text-primary px-3 py-1 rounded-xl text-sm font-black uppercase tracking-wider">
                 {demoData.crafts.find(c => c.id === craftsman.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
               </div>
               <span className="w-1.5 h-1.5 bg-slate-300 rounded-full opacity-50" />
@@ -242,7 +242,7 @@ const CraftsmanProfile = () => {
                   </div>
                 </div>
                 <div className="mb-3 inline-flex items-center gap-2 bg-[var(--bg-color)] px-3 py-1.5 rounded-xl border border-[var(--border-color)] relative z-10">
-                  <span className="text-xs font-black text-[var(--text-primary)]">
+                  <span className="text-sm font-black text-[var(--text-primary)]">
                     {lang === 'ar' ? 'مهمة منجزة:' : 'Completed Task:'} {demoData.crafts.find(c => c.id === craftsman.craftId)?.[lang === 'ar' ? 'nameAr' : 'nameEn']}
                   </span>
                   <span className="w-1 h-1 bg-slate-300 rounded-full" />

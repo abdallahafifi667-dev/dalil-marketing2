@@ -84,7 +84,7 @@ const AppContent = () => {
       {showPublicHeader && <PublicHeader />}
       {isAuthenticated && !shouldHideHeader && <Header />}
 
-      <div className={`scroll-content ${location.pathname.includes('/chat/') ? 'overflow-hidden' : ''}`}>
+      <div className={`scroll-content ${location.pathname.includes('/chat/') || location.pathname === '/settings/help' ? 'overflow-hidden' : ''}`}>
         <Suspense fallback={<LoadingSpinner />}>
           <ScrollToTop />
           <Routes>

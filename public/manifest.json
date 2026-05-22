@@ -1,0 +1,39 @@
+{
+  "name": "دليل الحرفيين",
+  "short_name": "دليل الحرفيين",
+  "description": "المنصة الأولى في مصر للبحث عن أمهر الحرفيين الموثقين",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "business",
+    "productivity",
+    "lifestyle"
+  ],
+  "screenshots": [
+    {
+      "src": "/home.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ]
+}

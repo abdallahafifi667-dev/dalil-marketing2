@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Mail, Users, Shield, Sparkles, Star, Eye, BookOpen } from 'lucide-react';
 import SEO from '../../components/SEO';
+import Breadcrumb from '../../components/Breadcrumb';
 
 const About = () => {
   const { t } = useTranslation();
@@ -50,6 +51,7 @@ const About = () => {
         structuredData={structuredData}
       />
       <div className="min-h-screen bg-white dark:bg-slate-950 overflow-hidden">
+        <Breadcrumb items={[{ name: 'من نحن' }]} />
       {/* Hero — works in both light and dark mode */}
       <section className="relative bg-gradient-to-br from-slate-900 to-blue-950 dark:from-slate-950 dark:to-slate-900 pt-32 pb-28 overflow-hidden">
         <motion.div animate={{ x: [0, 80, -80, 0], y: [0, -60, 60, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}

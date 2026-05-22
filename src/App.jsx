@@ -36,6 +36,8 @@ const Market = lazy(() => import('./pages/Market'));
 const Landing = lazy(() => import('./pages/public/Landing'));
 const About = lazy(() => import('./pages/public/About'));
 const Contact = lazy(() => import('./pages/public/Contact'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const ServicePage = lazy(() => import('./pages/ServicePage'));
 
 import ScrollToTop from './components/ScrollToTop';
 
@@ -67,7 +69,7 @@ const AppContent = () => {
   );
 
   const publicPaths = ['/login', '/register', '/about', '/contact'];
-  const isPublicPage = publicPaths.includes(location.pathname) || (location.pathname === '/' && !isAuthenticated);
+  const isPublicPage = publicPaths.includes(location.pathname) || (location.pathname === '/' && !isAuthenticated) || location.pathname.startsWith('/services/');
 
   const shouldHideNav = location.pathname.startsWith('/chat/') ||
     location.pathname.startsWith('/craftsman/') ||
@@ -94,9 +96,11 @@ const AppContent = () => {
                 <Route path="/" element={<Landing />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/services/:serviceSlug" element={<ServicePage />} />
+                <Route path="/services/:serviceSlug/:citySlug" element={<ServicePage />} />
                 <Route path="/login" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
                 <Route path="/register" element={<Register onRegister={() => setIsAuthenticated(true)} />} />
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<NotFound />} />
               </>
             ) : (
               <>
@@ -106,6 +110,9 @@ const AppContent = () => {
                     ? <CraftsmanDashboard />
                     : <Home />
                 } />
+
+                <Route path="/services/:serviceSlug" element={<ServicePage />} />
+                <Route path="/services/:serviceSlug/:citySlug" element={<ServicePage />} />
 
                 <Route path="/crafts" element={<Crafts />} />
                 <Route path="/craftsmen" element={<Craftsmen />} />
@@ -130,7 +137,7 @@ const AppContent = () => {
                   localStorage.removeItem('userRole');
                   setIsAuthenticated(false);
                 }} />} />
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<NotFound />} />
               </>
             )}
           </Routes>

@@ -426,5 +426,24 @@
     "cancel": "Cancel Request",
     "fillRequired": "Please fill in all required fields",
     "success": "Your request has been broadcasted!"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "subtitle": "Sorry, the page you are trying to access does not exist, has been moved, or deleted.",
+    "home": "Back to Home",
+    "back": "Go Back"
+  },
+  "breadcrumb": {
+    "home": "Home"
+  },
+  "seo": {
+    "homeTitle": "Dalil Al-Harafeen | Best Plumber, Electrician, and Carpenter in Egypt",
+    "homeDesc": "The first platform in Egypt to search for the most skilled trusted craftsmen. Plumbing, electricity, carpentry, and comprehensive home maintenance with the highest quality.",
+    "aboutTitle": "About Us | Our Vision and Story serving the Egyptian community",
+    "aboutDesc": "Learn about Dalil Al-Harafeen team and our vision to develop the home services sector in Egypt through trust and transparency.",
+    "contactTitle": "Contact Us | Technical support and help 24/7",
+    "contactDesc": "Do you have an inquiry? Dalil Al-Harafeen support team is ready to answer your questions and help you anytime.",
+    "notFoundTitle": "Page Not Found - 404",
+    "notFoundDesc": "The page you are trying to access does not exist or has been moved."
   }
 }

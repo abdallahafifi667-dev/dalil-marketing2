@@ -10,6 +10,8 @@ const SEO = ({
   url,
   type = 'website',
   structuredData,
+  noindex = false,
+  nofollow = false,
 }) => {
   const { lang } = useLanguage();
   const isRtl = lang === 'ar';
@@ -33,6 +35,12 @@ const SEO = ({
       <title>{seoTitle}</title>
       <meta name="description" content={seoDescription} />
       <meta name="keywords" content={seoKeywords} />
+      
+      {noindex && <meta name="robots" content="noindex" />}
+      {nofollow && <meta name="robots" content="nofollow" />}
+      {(noindex || nofollow) && (
+        <meta name="googlebot" content={noindex ? 'noindex' : ''} />
+      )}
       
       <meta property="og:type" content={type} />
       <meta property="og:url" content={seoUrl} />

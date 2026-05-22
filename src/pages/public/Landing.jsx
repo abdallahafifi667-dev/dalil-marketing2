@@ -23,27 +23,99 @@ const Landing = () => {
   const navigate = useNavigate();
   const isRtl = lang === 'ar';
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "دليل الحرفيين - Craftsmen Directory",
-    "url": "https://dalil-marketing.vercel.app/",
-    "description": "المنصة الأولى والآمنة في مصر للبحث عن أمهر الحرفيين الموثقين",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://dalil-marketing.vercel.app/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    },
-    "inLanguage": ["ar", "en"],
-    "publisher": {
-      "@type": "Organization",
-      "name": "دليل الحرفيين",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://dalil-marketing.vercel.app/favicon.png"
+  const structuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "دليل الحرفيين - Craftsmen Directory",
+      "url": "https://dalil-marketing.vercel.app/",
+      "description": "المنصة الأولى والآمنة في مصر للبحث عن أمهر الحرفيين الموثقين",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://dalil-marketing.vercel.app/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": ["ar", "en"],
+      "publisher": {
+        "@type": "Organization",
+        "name": "دليل الحرفيين",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dalil-marketing.vercel.app/favicon.png"
+        }
       }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "دليل الحرفيين",
+      "alternateName": "Dalil Al Hirafeen",
+      "description": "المنصة الأولى في مصر للبحث عن أمهر الحرفيين الموثقين. سباكة، كهرباء، نجارة، نقاشة، وصيانة منزلية شاملة.",
+      "url": "https://dalil-marketing.vercel.app/",
+      "logo": "https://dalil-marketing.vercel.app/favicon.png",
+      "telephone": "+201211810733",
+      "email": "dalilalharafeen@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "EG",
+        "addressLocality": "القاهرة"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "30.0444",
+        "longitude": "31.2357"
+      },
+      "openingHours": "Mo-Su 09:00-18:00",
+      "priceRange": "$$",
+      "sameAs": [
+        "https://facebook.com/dalilhirafeen",
+        "https://twitter.com/dalilhirafeen",
+        "https://instagram.com/dalilhirafeen"
+      ],
+      "areaServed": {
+        "@type": "State",
+        "name": ["القاهرة", "الجيزة", "الإسكندرية", "مصر"]
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "هل الخدمة مضمونة؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نعم، جميع الخدمات المحجوزة عبر الموقع مضمونة من قبلنا. في حال عدم الرضا، نقوم بإعادة العمل أو التعويض."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "إزاي أسجل في الموقع؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "سهلة جداً! لو محتاج خدمة سجل كـ 'عميل'، ولو أنت صنايعي وعاوز شغل سجل كـ 'حرفي' وابدأ رحلتك معانا."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "إزاي أطلب خدمة كـ 'عميل'؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1-اختار الحرفة، املأ تفاصيل طلبك (زي الوصف والموقع والميعاد)، وانشر الطلب؛ الصنايعية هيبدأوا يبعتوا لك عروض وتختار الأنسب ليك. 2- يتم الاختيار بناءً على الملف الشخصي، مع أخذ نظرة عامة على المستخدم، بالإضافة إلى الاعتماد على الخبرة والموقع الجغرافي."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "إزاي أشتغل كـ 'حرفي' وأستلم طلبات؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "بعد تفعيل حسابك، هتشوف كل الطلبات المتاحة اختار الطلب اللي يناسبك وابعت عرض سعرك، ولو العميل وافق هتقدر تدردش معاه وتخلص المهمة."
+          }
+        }
+      ]
     }
-  };
+  ];
 
   const galleryImages = [
     "WhatsApp Image 2026-05-03 at 12.48.44 AM (1).jpeg",

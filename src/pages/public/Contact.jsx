@@ -4,6 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { MapPin, Mail, MessageCircle, Send, Link2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import SEO from '../../components/SEO';
+import Breadcrumb from '../../components/Breadcrumb';
 
 // ── EmailJS Configuration ─────────────────────────────────────────────────────
 const EMAILJS_SERVICE_ID = 'service_m9dm7rx';
@@ -77,6 +78,7 @@ const Contact = () => {
         structuredData={structuredData}
       />
       <div className="min-h-screen bg-white dark:bg-slate-950 overflow-y-auto pt-20">
+        <Breadcrumb items={[{ name: 'تواصل معنا' }]} />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-slate-900 to-blue-950 dark:from-slate-950 dark:to-slate-900 pt-20 pb-20 overflow-hidden text-center">
         <motion.div

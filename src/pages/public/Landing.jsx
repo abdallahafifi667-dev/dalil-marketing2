@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../../components/SEO';
 import {
   ArrowRight,
   Shield,
@@ -22,6 +23,28 @@ const Landing = () => {
   const navigate = useNavigate();
   const isRtl = lang === 'ar';
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "دليل الحرفيين - Craftsmen Directory",
+    "url": "https://dalil-marketing.vercel.app/",
+    "description": "المنصة الأولى والآمنة في مصر للبحث عن أمهر الحرفيين الموثقين",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://dalil-marketing.vercel.app/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "inLanguage": ["ar", "en"],
+    "publisher": {
+      "@type": "Organization",
+      "name": "دليل الحرفيين",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dalil-marketing.vercel.app/favicon.png"
+      }
+    }
+  };
+
   const galleryImages = [
     "WhatsApp Image 2026-05-03 at 12.48.44 AM (1).jpeg",
     "WhatsApp Image 2026-05-03 at 12.48.44 AM (2).jpeg",
@@ -32,7 +55,13 @@ const Landing = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[var(--bg-color)] overflow-x-hidden">
+    <>
+      <SEO
+        title="المنصة الأولى للحرفيين في مصر"
+        description="دليل الحرفيين - المنصة الأولى والآمنة في مصر للبحث عن أمهر الحرفيين الموثقين. سباكة، كهرباء، نجارة، نقاشة، وصيانة منزلية شاملة بأسعار عادلة وجودة مضمونة."
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-[var(--bg-color)] overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative pt-32 pb-24 px-6 overflow-hidden bg-gradient-to-br from-slate-900 to-blue-950 dark:from-slate-950 dark:to-slate-900">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full -mr-40 -mt-40" />
@@ -99,8 +128,9 @@ const Landing = () => {
             <div className="relative z-10 rounded-[48px] overflow-hidden shadow-2xl border-8 border-white/10">
               <img
                 src="/favicon.png"
-                alt="دليل الحرفيين"
+                alt="شعار دليل الحرفيين - المنصة الأولى للحرفيين في مصر"
                 className="w-full h-auto"
+                loading="lazy"
               />
             </div>
           </motion.div>
@@ -131,8 +161,9 @@ const Landing = () => {
           <div className="flex-1 relative">
             <img
               src="/home.png"
-              alt="App Preview"
+              alt="معاينة تطبيق دليل الحرفيين - واجهة البحث عن الحرفيين"
               className="rounded-[3rem] shadow-2xl border-4 border-[var(--border-color)]"
+              loading="lazy"
             />
           </div>
         </div>
@@ -245,7 +276,12 @@ const Landing = () => {
                 whileHover={{ scale: 1.05 }}
                 className="relative aspect-video rounded-3xl overflow-hidden shadow-lg border border-[var(--border-color)]"
               >
-                <img src={`/${img}`} alt={t('home.gallery.alt')} className="w-full h-full object-cover" />
+                <img 
+                  src={`/${img}`} 
+                  alt={`أعمال الحرفيين في دليل الحرفيين - صورة ${i + 1}`} 
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
               </motion.div>
             ))}
           </div>
@@ -266,6 +302,7 @@ const Landing = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 

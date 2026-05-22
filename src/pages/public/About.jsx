@@ -2,11 +2,27 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Mail, Users, Shield, Sparkles, Star, Eye, BookOpen } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 const About = () => {
   const { t } = useTranslation();
   const teamMembers = t('about.members', { returnObjects: true }) || [];
   const journeyItems = t('about.journey', { returnObjects: true }) || [];
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "عن دليل الحرفيين",
+    "description": "تعرف على فريق دليل الحرفيين ورؤيتنا ورسالتنا في تقديم أفضل خدمات الصيانة المنزلية في مصر",
+    "publisher": {
+      "@type": "Organization",
+      "name": "دليل الحرفيين",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dalil-marketing.vercel.app/favicon.png"
+      }
+    }
+  };
 
   const getMemberImage = (name) => {
     const manNames = [
@@ -26,7 +42,14 @@ const About = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 overflow-hidden">
+    <>
+      <SEO
+        title="عن دليل الحرفيين"
+        description="تعرف على فريق دليل الحرفيين ورؤيتنا ورسالتنا في تقديم أفضل خدمات الصيانة المنزلية في مصر. نبني الثقة من خلال الجودة والامان."
+        url="https://dalil-marketing.vercel.app/about"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-white dark:bg-slate-950 overflow-hidden">
       {/* Hero — works in both light and dark mode */}
       <section className="relative bg-gradient-to-br from-slate-900 to-blue-950 dark:from-slate-950 dark:to-slate-900 pt-32 pb-28 overflow-hidden">
         <motion.div animate={{ x: [0, 80, -80, 0], y: [0, -60, 60, 0] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
@@ -58,8 +81,9 @@ const About = () => {
           >
             <img
               src="/about-hero.png"
-              alt="Team"
+              alt="فريق دليل الحرفيين يعملون معاً على تطوير المنصة"
               className="w-full h-[400px] object-cover"
+              loading="lazy"
             />
           </motion.div>
         </div>
@@ -201,7 +225,12 @@ const About = () => {
                 >
                   <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-teal-100 dark:from-blue-900/40 dark:to-teal-900/40 rounded-2xl flex items-center justify-center shadow-inner overflow-hidden">
                     {getMemberImage(member.name) ? (
-                      <img src={getMemberImage(member.name)} alt={member.name} className="w-full h-full object-cover" />
+                      <img 
+                        src={getMemberImage(member.name)} 
+                        alt={`${member.name} - عضو مؤسس في دليل الحرفيين`} 
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     ) : (
                       <Users className="w-10 h-10 text-blue-600 dark:text-teal-400" />
                     )}
@@ -223,6 +252,7 @@ const About = () => {
       )}
 
     </div>
+    </>
   );
 };
 

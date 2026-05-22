@@ -4,6 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { loginAs } from '../../data';
 import { User, Mail, Lock, Briefcase, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../../components/SEO';
 
 const Register = ({ onRegister }) => {
   const { t, lang } = useLanguage();
@@ -45,7 +46,13 @@ const Register = ({ onRegister }) => {
   };
 
   return (
-    <motion.div
+    <>
+      <SEO
+        title="إنشاء حساب"
+        description="أنشئ حسابك في دليل الحرفيين الآن لتتمكن من العثور على أفضل الحرفيين الموثقين أو تقديم خدماتك كحرفي."
+        url="https://dalil-marketing.vercel.app/register"
+      />
+      <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="auth-page h-screen w-full flex flex-col justify-center items-center px-8 relative overflow-hidden bg-[var(--bg-color)] text-[var(--text-primary)]"
@@ -60,7 +67,7 @@ const Register = ({ onRegister }) => {
           animate={{ scale: 1, opacity: 1 }}
           className="w-16 h-16 bg-[var(--surface-color)] rounded-[24px] flex items-center justify-center shadow-xl border border-slate-100 dark:border-white/5"
         >
-          <img src="/favicon.png" alt="Logo" className="w-8 h-8 object-contain" />
+          <img src="/favicon.png" alt="شعار دليل الحرفيين" className="w-8 h-8 object-contain" />
         </motion.div>
         <div className="space-y-0.5">
           <h1 className="text-3xl font-black tracking-tight">{t('register')}</h1>
@@ -165,6 +172,7 @@ const Register = ({ onRegister }) => {
         </div>
       </div>
     </motion.div>
+    </>
   );
 };
 

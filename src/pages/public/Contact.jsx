@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../../context/LanguageContext';
 import { MapPin, Mail, MessageCircle, Send, Link2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import SEO from '../../components/SEO';
 
 // ── EmailJS Configuration ─────────────────────────────────────────────────────
 const EMAILJS_SERVICE_ID = 'service_m9dm7rx';
@@ -15,6 +16,29 @@ const Contact = () => {
   const formRef = useRef(null);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "تواصل معنا",
+    "description": "تواصل مع فريق دليل الحرفيين لأي استفسار أو اقتراح",
+    "publisher": {
+      "@type": "Organization",
+      "name": "دليل الحرفيين",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dalil-marketing.vercel.app/favicon.png"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+201211810733",
+        "contactType": "customer service",
+        "areaServed": "EG",
+        "availableLanguage": ["Arabic", "English"],
+        "email": "dalilalharafeen@gmail.com"
+      }
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,7 +69,14 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 overflow-y-auto pt-20">
+    <>
+      <SEO
+        title="تواصل معنا"
+        description="تواصل مع فريق دليل الحرفيين لأي استفسار أو اقتراح. نحن هنا لمساعدتك في العثور على أفضل الحرفيين في مصر."
+        url="https://dalil-marketing.vercel.app/contact"
+        structuredData={structuredData}
+      />
+      <div className="min-h-screen bg-white dark:bg-slate-950 overflow-y-auto pt-20">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-slate-900 to-blue-950 dark:from-slate-950 dark:to-slate-900 pt-20 pb-20 overflow-hidden text-center">
         <motion.div
@@ -151,6 +182,7 @@ const Contact = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

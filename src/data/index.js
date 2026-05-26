@@ -73,5 +73,5 @@ export const loginAs = (userId) => {
   if (user) {
     localStorage.setItem('userRole', user.role || 'client');
   }
-  window.location.reload();
+  // Don't reload, let the parent component handle state update
 };

@@ -77,7 +77,7 @@ const Contact = () => {
         url="https://dalil-marketing.vercel.app/contact"
         structuredData={structuredData}
       />
-      <div className="min-h-screen bg-white dark:bg-slate-950 overflow-y-auto pt-20">
+      <div className="min-h-screen bg-[var(--bg-color)] overflow-y-auto pt-20">
         <Breadcrumb items={[{ name: 'تواصل معنا' }]} />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-slate-900 to-blue-950 dark:from-slate-950 dark:to-slate-900 pt-20 pb-20 overflow-hidden text-center">
@@ -106,7 +106,7 @@ const Contact = () => {
             {t('contact.subtitle')}
           </p>
         </div>
-        <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-b from-transparent to-white dark:to-slate-950 pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-b from-transparent to-[var(--bg-color)] pointer-events-none" />
       </section>
 
       <div className="max-w-7xl mx-auto px-4 py-20">
@@ -126,17 +126,17 @@ const Contact = () => {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="flex items-center gap-5 bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-xl border border-slate-100 dark:border-slate-800"
+                className="flex items-center gap-5 bg-[var(--surface-color)] rounded-3xl p-6 shadow-xl border border-[var(--border-color)]"
               >
                 <div className={`w-14 h-14 ${item.bg} text-white rounded-2xl flex items-center justify-center shrink-0`}>
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="font-black text-slate-900 dark:text-white text-lg">{t(item.titleKey)}</h3>
+                  <h3 className="font-black text-[var(--text-primary)] text-lg">{t(item.titleKey)}</h3>
                   {item.link ? (
                     <a href={item.link} className="text-blue-600 dark:text-blue-400 hover:underline">{t(item.descKey)}</a>
                   ) : (
-                    <p className="text-slate-500 dark:text-slate-400">{t(item.descKey)}</p>
+                    <p className="text-[var(--text-secondary)]">{t(item.descKey)}</p>
                   )}
                 </div>
               </motion.div>
@@ -145,30 +145,30 @@ const Contact = () => {
 
           {/* Right Panel - Form */}
           <div className="lg:col-span-3">
-            <div className="bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl border border-slate-100 dark:border-slate-800 p-8 md:p-12">
+            <div className="bg-[var(--surface-color)] rounded-[3rem] shadow-2xl border border-[var(--border-color)] p-8 md:p-12">
               {submitted ? (
                 <div className="text-center py-16 space-y-6">
                   <div className="w-24 h-24 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto shadow-2xl">
                     <Send size={40} />
                   </div>
-                  <h3 className="text-4xl font-black text-slate-900 dark:text-white">{t('contact.successTitle')}</h3>
-                  <p className="text-lg text-slate-600 dark:text-slate-400">{t('contact.successDesc')}</p>
+                  <h3 className="text-4xl font-black text-[var(--text-primary)]">{t('contact.successTitle')}</h3>
+                  <p className="text-lg text-[var(--text-secondary)]">{t('contact.successDesc')}</p>
                 </div>
               ) : (
                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-                  <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-8">{t('contact.formTitle')}</h2>
+                  <h2 className="text-3xl font-black text-[var(--text-primary)] mb-8">{t('contact.formTitle')}</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('contact.form.name')}</label>
+                      <label className="text-sm font-bold text-[var(--text-secondary)]">{t('contact.form.name')}</label>
                       <input type="text" name="from_name" required className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border-2 border-slate-100 dark:border-slate-800 focus:border-primary outline-none transition-all" placeholder={t('contact.form.namePlaceholder')} />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('contact.form.email')}</label>
+                      <label className="text-sm font-bold text-[var(--text-secondary)]">{t('contact.form.email')}</label>
                       <input type="email" name="from_email" required className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border-2 border-slate-100 dark:border-slate-800 focus:border-primary outline-none transition-all" placeholder={t('contact.form.emailPlaceholder')} />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700 dark:text-slate-300">{t('contact.form.message')}</label>
+                    <label className="text-sm font-bold text-[var(--text-secondary)]">{t('contact.form.message')}</label>
                     <textarea name="message" rows={6} required className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border-2 border-slate-100 dark:border-slate-800 focus:border-primary outline-none transition-all resize-none" placeholder={t('contact.form.messagePlaceholder')} />
                   </div>
                   <button

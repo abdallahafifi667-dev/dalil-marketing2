@@ -43,6 +43,7 @@ const Register = ({ onRegister }) => {
     localStorage.setItem('registered_users', JSON.stringify(existingUsers));
 
     loginAs(newUser.id);
+    onRegister();
   };
 
   return (

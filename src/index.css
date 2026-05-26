@@ -17,6 +17,9 @@
     --text-secondary: #64748b;
     --border-color: #f1f5f9;
     --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.04);
+    --scrollbar-track: #f1f5f9;
+    --scrollbar-thumb: #94a3b8;
+    --scrollbar-thumb-hover: #64748b;
   }
 
   .dark {
@@ -26,12 +29,40 @@
     --text-secondary: #94a3b8;
     --border-color: #1e293b;
     --card-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+    --scrollbar-track: #0f172a;
+    --scrollbar-thumb: #475569;
+    --scrollbar-thumb-hover: #64748b;
   }
 
   html,
   body {
     @apply h-full w-full m-0 p-0 bg-[var(--bg-color)] font-sans antialiased transition-colors duration-300;
     -webkit-text-size-adjust: 100%;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   }
 
   /* Only hide overflow if we are in the app frame / dashboard mode */

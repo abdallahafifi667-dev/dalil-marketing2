@@ -104,6 +104,10 @@ const AppContent = () => {
               </>
             ) : (
               <>
+                {/* Redirect from login/register to home if authenticated */}
+                <Route path="/login" element={<Navigate to="/" replace />} />
+                <Route path="/register" element={<Navigate to="/" replace />} />
+                
                 {/* Role-based Home Routing */}
                 <Route path="/" element={
                   localStorage.getItem('userRole') === 'craftsman'

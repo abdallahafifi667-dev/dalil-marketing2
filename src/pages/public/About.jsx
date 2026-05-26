@@ -50,7 +50,7 @@ const About = () => {
         url="https://dalil-marketing.vercel.app/about"
         structuredData={structuredData}
       />
-      <div className="min-h-screen bg-white dark:bg-slate-950 overflow-hidden">
+      <div className="min-h-screen bg-[var(--bg-color)] overflow-hidden">
         <Breadcrumb items={[{ name: 'من نحن' }]} />
       {/* Hero — works in both light and dark mode */}
       <section className="relative bg-gradient-to-br from-slate-900 to-blue-950 dark:from-slate-950 dark:to-slate-900 pt-32 pb-28 overflow-hidden">
@@ -69,17 +69,17 @@ const About = () => {
           </motion.p>
         </div>
         {/* fade to next section */}
-        <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-b from-transparent to-white dark:to-slate-950 pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-b from-transparent to-[var(--bg-color)] pointer-events-none" />
       </section>
 
       {/* Re-adding decorative image */}
-      <section className="bg-white dark:bg-slate-900 pt-10 px-4">
+      <section className="bg-[var(--bg-color)] pt-10 px-4">
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white dark:border-slate-800"
+            className="rounded-[3rem] overflow-hidden shadow-2xl border-8 border-[var(--surface-color)]"
           >
             <img
               src="/about-hero.png"
@@ -92,9 +92,9 @@ const About = () => {
       </section>
 
       {/* Values Section — No Emojis */}
-      <section className="py-24 bg-white dark:bg-slate-900">
+      <section className="py-24 bg-[var(--bg-color)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-black text-slate-900 dark:text-white mb-16">{t('about.valuesTitle')}</h2>
+          <h2 className="text-4xl font-black text-[var(--text-primary)] mb-16">{t('about.valuesTitle')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {[
               { key: 'trust', icon: <Shield className="w-12 h-12" />, color: 'text-blue-600 bg-blue-50 dark:bg-blue-900/20' },
@@ -108,8 +108,8 @@ const About = () => {
                 <div className={`w-24 h-24 rounded-[2rem] flex items-center justify-center ${v.color}`}>
                   {v.icon}
                 </div>
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white">{t(`about.values.${v.key}`)}</h3>
-                <p className="text-lg text-slate-500 dark:text-slate-400 max-w-xs">{t(`about.values.${v.key}Desc`)}</p>
+                <h3 className="text-2xl font-black text-[var(--text-primary)]">{t(`about.values.${v.key}`)}</h3>
+                <p className="text-lg text-[var(--text-secondary)] max-w-xs">{t(`about.values.${v.key}Desc`)}</p>
               </motion.div>
             ))}
           </div>
@@ -117,7 +117,7 @@ const About = () => {
       </section>
 
       {/* Vision & Story */}
-      <section className="py-24 bg-white dark:bg-slate-900">
+      <section className="py-24 bg-[var(--bg-color)]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="space-y-10">
@@ -130,13 +130,13 @@ const About = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ type: 'spring', bounce: 0.4, delay: i * 0.1 }}
-                  className="bg-slate-50 dark:bg-slate-800 rounded-3xl p-10 shadow-xl border border-slate-100 dark:border-slate-700"
+                  className="bg-[var(--surface-color)] rounded-3xl p-10 shadow-xl border border-[var(--border-color)]"
                 >
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center mb-6 shadow-md`}>
                     {icon}
                   </div>
-                  <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-4">{t(`about.${key}`)}</h2>
-                  <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">{t(`about.${key}Desc`)}</p>
+                  <h2 className="text-3xl font-black text-[var(--text-primary)] mb-4">{t(`about.${key}`)}</h2>
+                  <p className="text-lg text-[var(--text-secondary)] leading-relaxed">{t(`about.${key}Desc`)}</p>
                 </motion.div>
               ))}
             </div>
@@ -165,8 +165,8 @@ const About = () => {
                 </motion.div>
               </motion.div>
               <div className="text-center">
-                <h3 className="text-3xl font-black text-slate-900 dark:text-white mb-2">{t('about.team')}</h3>
-                <p className="text-xl text-slate-500 dark:text-slate-400 max-w-xs">{t('about.teamDesc')}</p>
+                <h3 className="text-3xl font-black text-[var(--text-primary)] mb-2">{t('about.team')}</h3>
+                <p className="text-xl text-[var(--text-secondary)] max-w-xs">{t('about.teamDesc')}</p>
               </div>
             </div>
           </div>
@@ -174,11 +174,11 @@ const About = () => {
       </section>
 
       {/* Our Journey Section — Professional Timeline */}
-      <section className="py-24 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+      <section className="py-24 bg-[var(--bg-color)] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-black text-slate-900 dark:text-white mb-4">{t('about.journeyTitle')}</h2>
-            <p className="text-xl text-slate-500 dark:text-slate-400">{t('about.journeySubtitle')}</p>
+            <h2 className="text-4xl font-black text-[var(--text-primary)] mb-4">{t('about.journeyTitle')}</h2>
+            <p className="text-xl text-[var(--text-secondary)]">{t('about.journeySubtitle')}</p>
           </div>
           <div className="relative">
             {/* Timeline Line */}
@@ -190,18 +190,18 @@ const About = () => {
                 return (
                   <div key={i} className={`flex items-center justify-between w-full ${side === 'right' ? 'md:flex-row-reverse' : ''}`}>
                     <div className="hidden md:block w-5/12" />
-                    <div className="z-20 flex items-center justify-center w-12 h-12 bg-white dark:bg-slate-800 rounded-full border-4 border-blue-500 shadow-xl">
+                    <div className="z-20 flex items-center justify-center w-12 h-12 bg-[var(--surface-color)] rounded-full border-4 border-blue-500 shadow-xl">
                       <div className="w-3 h-3 bg-blue-500 rounded-full animate-ping" />
                     </div>
                     <motion.div
                       initial={{ opacity: 0, x: side === 'left' ? -50 : 50 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
-                      className="w-full md:w-5/12 p-8 bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl border border-slate-100 dark:border-slate-800"
+                      className="w-full md:w-5/12 p-8 bg-[var(--surface-color)] rounded-[2.5rem] shadow-2xl border border-[var(--border-color)]"
                     >
                       <span className="text-blue-600 dark:text-teal-400 font-black text-2xl">{item.year}</span>
-                      <h3 className="text-2xl font-black text-slate-900 dark:text-white mt-2 mb-3">{item.title}</h3>
-                      <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">{item.desc}</p>
+                      <h3 className="text-2xl font-black text-[var(--text-primary)] mt-2 mb-3">{item.title}</h3>
+                      <p className="text-lg text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
                     </motion.div>
                   </div>
                 );
@@ -213,7 +213,7 @@ const About = () => {
 
       {/* Team Section — Updated with provided images */}
       {teamMembers && teamMembers.length > 0 && (
-        <section className="py-24 bg-white dark:bg-slate-900">
+        <section className="py-24 bg-[var(--bg-color)]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {teamMembers.map((member, index) => (
@@ -223,7 +223,7 @@ const About = () => {
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ type: 'spring', bounce: 0.4, delay: index * 0.08 }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className="bg-slate-50 dark:bg-slate-800 rounded-3xl p-8 shadow-xl border border-slate-100 dark:border-slate-700 flex flex-col items-center text-center space-y-4"
+                  className="bg-[var(--surface-color)] rounded-3xl p-8 shadow-xl border border-[var(--border-color)] flex flex-col items-center text-center space-y-4"
                 >
                   <div className="w-20 h-20 bg-gradient-to-br from-blue-100 to-teal-100 dark:from-blue-900/40 dark:to-teal-900/40 rounded-2xl flex items-center justify-center shadow-inner overflow-hidden">
                     {getMemberImage(member.name) ? (
@@ -238,7 +238,7 @@ const About = () => {
                     )}
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2 leading-tight">
+                    <h3 className="text-xl font-black text-[var(--text-primary)] mb-2 leading-tight">
                       {member.name}
                     </h3>
                     <div className="flex items-center gap-2 text-blue-600 dark:text-teal-400 text-sm font-black justify-center">
